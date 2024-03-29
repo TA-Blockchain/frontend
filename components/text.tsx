@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { Link } from "./link";
+import Link from "next/link";
 
 export function Text({ className, ...props }: React.ComponentPropsWithoutRef<"p">) {
   return (
@@ -17,7 +17,7 @@ export function TextLink({ className, ...props }: React.ComponentPropsWithoutRef
       {...props}
       className={clsx(
         className,
-        "text-zinc-600 text-sm hover:underline decoration-zinc-600/50 data-[hover]:decoration-zinc-600 dark:text-white dark:decoration-white/50 dark:data-[hover]:decoration-white"
+        "text-zinc-500 text-sm hover:underline decoration-zinc-500/50 data-[hover]:decoration-zinc-500 dark:text-white dark:decoration-white/50 dark:data-[hover]:decoration-white"
       )}
     />
   );

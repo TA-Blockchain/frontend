@@ -11,11 +11,12 @@ const GoogleIcon = (props: any) => (
 export function LoginForm() {
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
-      {/* <div className="grid place-items-center">
-        <Image src="/logo/logo-no-background.svg" width={120} height={100} alt="logo" />
-      </div> */}
       <div className="w-full mx-auto max-w-sm mt-8">
-        <form action="#" method="POST">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <div className="mt-6">
             <label
               htmlFor="email"
@@ -24,7 +25,7 @@ export function LoginForm() {
               Email address
             </label>
             <TextInput
-              type="text"
+              type="email"
               id="email"
               name="email"
               placeholder=""
@@ -55,7 +56,7 @@ export function LoginForm() {
           </button>
         </form>
         <div className="grid place-items-center mt-8">
-          <TextLink href="/forgot-password" className="text-sm">
+          <TextLink href="/password/reset" className="text-sm">
             Forgot password?
           </TextLink>
         </div>

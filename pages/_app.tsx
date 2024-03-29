@@ -14,10 +14,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 const theme = process.env.NODE_ENV === "production" ? "light" : "dark";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppProps & {
+  Component: { title: string };
+}) {
   return (
     <ThemeProvider defaultTheme={theme} enableSystem={false} attribute="class">
-      <Seo />
+      <Seo title={Component.title} />
       <div className={inter.className}>
         <SWRConfig
           value={{

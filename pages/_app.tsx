@@ -8,6 +8,7 @@ import BaseLayout from "@/modules/layout/base-layout";
 import { api } from "@/lib";
 
 import { SWRConfig } from "swr";
+import { Seo } from "@/components/seo";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,6 +17,7 @@ const theme = process.env.NODE_ENV === "production" ? "light" : "dark";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider defaultTheme={theme} enableSystem={false} attribute="class">
+      <Seo />
       <div className={inter.className}>
         <SWRConfig
           value={{

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 const defaultMeta = {
-  title: "CarbonChain",
+  title: "Carbon Chain",
   siteName: "carbonchain.vercel.app",
   description:
     "CarbonChain merupakan platform untuk memantau dan memverifikasi jejak karbon dari sistem supply chain perusahaan.",
@@ -116,7 +116,7 @@ const favicons: Array<Favicons> = [
     rel: "icon",
     type: "image/x-icon",
     sizes: "16x16",
-    href: "/favicon/favicon.ico",
+    href: "/favicon/favicon-96x96.png",
   },
   {
     rel: "manifest",

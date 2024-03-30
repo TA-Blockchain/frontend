@@ -14,4 +14,4 @@ export default function LoginPage() {
   );
 }
 
-LoginPage.title = "Carbon Chain | Forgot Password";
+LoginPage.title = "Reset Password | Carbon Chain";

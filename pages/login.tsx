@@ -14,4 +14,4 @@ export default function LoginPage() {
   );
 }
 
-LoginPage.title = "Carbon Chain | Login";
+LoginPage.title = "Login | Carbon Chain";

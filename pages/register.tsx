@@ -13,4 +13,4 @@ export default function RegisterPage() {
   );
 }
 
-RegisterPage.title = "Carbon Chain | Registrasi Perusahaan";
+RegisterPage.title = "Registrasi Perusahaan | Carbon Chain";

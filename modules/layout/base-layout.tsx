@@ -1,6 +1,7 @@
 import { useUser } from "@/hooks/use-user";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { Header } from "./header";
 
 const unauthenticatedPaths = ["/login", "/register", "/password/reset"];
 
@@ -26,8 +27,11 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="py-4">
+      <Header />
       {state === "loading" && <PageLoader />}
-      {state === "authenticated" && children}
+      {state === "authenticated" && (
+        <div className="min-h-dvh pt-16 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</div>
+      )}
     </div>
   );
 }

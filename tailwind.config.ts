@@ -15,6 +15,8 @@ const config: Config = {
     current: "currentColor",
     extend: {
       colors: {
+        black: "#18181b",
+        white: "#f9f9f9",
         // light mode
         tremor: {
           brand: {

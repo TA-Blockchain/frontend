@@ -1,12 +1,6 @@
-import { ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import axios, { AxiosError } from "axios";
 
 import { UninterceptedApiError } from "@/types/api";
-
-export function classNames(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,

@@ -4,7 +4,6 @@ import { Tab, TabGroup, TabList } from "@tremor/react";
 import { RiMenuLine, RiNotificationLine, RiCloseLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import { ProfileMenu } from "./profile-menu";
 
 const navigation = [

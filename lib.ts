@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 import { UninterceptedApiError } from "@/types/api";
+import { toast } from "sonner";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
@@ -23,8 +24,17 @@ api.interceptors.response.use(
     return config;
   },
   (error: AxiosError<UninterceptedApiError>) => {
+    if (error.code === "ERR_NETWORK") {
+      toast.error("Network error, please try again later.");
+    }
     // parse error
-    if (error.response?.data.message) {
+    if (error.response?.data.error) {
+      const errorMessage = error.response.data.error;
+      if (typeof errorMessage === "string") {
+        toast.error(errorMessage, {
+          id: errorMessage,
+        });
+      }
       return Promise.reject({
         ...error,
         response: {
@@ -32,9 +42,9 @@ api.interceptors.response.use(
           data: {
             ...error.response.data,
             message:
-              typeof error.response.data.message === "string"
-                ? error.response.data.message
-                : Object.values(error.response.data.message)[0][0],
+              typeof error.response.data.error === "string"
+                ? error.response.data.error
+                : Object.values(error.response.data.error)[0][0],
           },
         },
       });

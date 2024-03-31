@@ -33,6 +33,7 @@ export function useUser(): {
   state: UserState;
   login: (payload: LoginFormValues) => Promise<void>;
   logout: () => Promise<void>;
+  isRequesting: boolean;
 } {
   const {
     data: user,
@@ -46,29 +47,35 @@ export function useUser(): {
     shouldRetryOnError: false,
   });
 
+  const [isRequesting, setIsRequesting] = React.useState(false);
+
   const router = useRouter();
 
   const login = React.useCallback(
     async (payload: LoginFormValues) => {
       try {
-        const response = await api.post<{ data: UserDataWithToken }>("/auth/login", payload);
-        const userData = response.data.data;
-        localStorage.setItem("token", userData.token);
+        setIsRequesting(true);
+        const userData = await mutate(async () => {
+          const response = await api.post<{ data: UserDataWithToken }>("/auth/login", payload);
+          const userData = response.data.data;
+          localStorage.setItem("token", userData.token);
 
-        const { token, ...rest } = userData;
+          const { token, ...rest } = userData;
 
-        localStorage.setItem("userData", JSON.stringify(rest));
-        mutate(rest);
-
-        router.replace("/dashboard");
-        toast.success(`Welcome back, ${userData.username}!`, {
-          position: "bottom-right",
-          id,
+          localStorage.setItem("userData", JSON.stringify(rest));
+          return rest;
         });
+
+        if (userData) {
+          router.replace("/dashboard");
+          toast.success(`Welcome back, ${userData.username}!`, {
+            position: "bottom-right",
+            id,
+          });
+        }
       } catch (err) {
-        toast.error("Invalid credentials, please try again.", {
-          id,
-        });
+      } finally {
+        setIsRequesting(false);
       }
     },
     [mutate, router]
@@ -103,5 +110,5 @@ export function useUser(): {
     if (!user) state = "unauthenticated";
   }
 
-  return { user, state, login, logout };
+  return { user, state, login, logout, isRequesting };
 }

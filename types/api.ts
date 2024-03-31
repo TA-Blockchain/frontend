@@ -8,7 +8,7 @@ export type ApiError = {
 };
 
 export type UninterceptedApiError = {
-  message: string | Record<string, string[]>;
+  error: string | Record<string, string[]>;
 };
 
 export interface PaginatedApiResponse<T> {

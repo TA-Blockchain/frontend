@@ -1,4 +1,4 @@
-import { TextInput } from "@tremor/react";
+import { Button, TextInput } from "@tremor/react";
 import { TextLink } from "@/components/text";
 import { FormProvider, useForm } from "react-hook-form";
 import { LoginFormValues, useUser } from "@/hooks/use-user";
@@ -8,7 +8,7 @@ export function LoginForm() {
 
   const { handleSubmit, register } = methods;
 
-  const { login } = useUser();
+  const { login, isRequesting } = useUser();
 
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
@@ -47,15 +47,13 @@ export function LoginForm() {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="mt-6 whitespace-nowrap rounded-tremor-small bg-tremor-brand px-4 py-2.5 text-tremor-default font-medium text-tremor-brand-inverted shadow-tremor-input hover:bg-tremor-brand-emphasis dark:bg-dark-tremor-brand dark:text-dark-tremor-brand-inverted dark:shadow-dark-tremor-input dark:hover:bg-dark-tremor-brand-emphasis w-full"
-            >
+
+            <Button loading={isRequesting} className="mt-6 rounded w-full" type="submit" variant="primary">
               Sign in to account
-            </button>
+            </Button>
           </form>
         </FormProvider>
-        <div className="grid place-items-center mt-8">
+        <div className="grid place-items-center mt-6">
           <TextLink href="/password/reset" className="text-sm">
             Forgot password?
           </TextLink>

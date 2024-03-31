@@ -9,10 +9,14 @@ import { api } from "@/lib";
 
 import { SWRConfig } from "swr";
 import { Seo } from "@/components/seo";
+import { Toaster } from "sonner";
+import { useUser } from "@/hooks/use-user";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const theme = process.env.NODE_ENV === "production" ? "light" : "dark";
+const isDevMode = process.env.VERCEL_ENV !== "production";
 
 export default function App({
   Component,
@@ -32,12 +36,34 @@ export default function App({
             },
           }}
         >
+          <Toaster richColors position="top-right" />
           <BaseLayout>
+            <PageLoader />
             <Component {...pageProps} />
           </BaseLayout>
         </SWRConfig>
-        <ThemeSwitch />
+        {isDevMode && <ThemeSwitch />}
       </div>
     </ThemeProvider>
   );
+}
+
+function PageLoader() {
+  const { state } = useUser();
+  const [showLoader, setShowLoader] = React.useState(true);
+
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
+
+  React.useEffect(() => {
+    clearTimeout(timeoutRef.current);
+    if (state !== "loading") {
+      timeoutRef.current = setTimeout(() => {
+        setShowLoader(false);
+      }, 150);
+    }
+  }, [state]);
+
+  if (!showLoader) return null;
+
+  return <div className="fixed z-[99] inset-0 w-screen h-dvh bg-white"></div>;
 }

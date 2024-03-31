@@ -16,40 +16,33 @@ const authenticatedPaths = [
 ];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  return (
-    <React.Fragment>
-      {unauthenticatedPaths.includes(pathname) ? children : <AuthLoader>{children}</AuthLoader>}
-    </React.Fragment>
-  );
-}
-
-function AuthLoader({ children }: { children: React.ReactNode }) {
-  const { state } = useUser({ devMode: true });
+  const { state } = useUser();
 
   const router = useRouter();
   const pathname = usePathname();
 
-  if (state === "unauthenticated" && !unauthenticatedPaths.includes(pathname)) {
-    router.replace("/login");
-  }
+  React.useEffect(() => {
+    if (state === "unauthenticated" && authenticatedPaths.includes(pathname)) {
+      router.replace("/login");
+    }
+  }, [pathname, router, state]);
+
+  React.useEffect(() => {
+    if (state === "authenticated" && unauthenticatedPaths.includes(pathname)) {
+      router.replace("/dashboard");
+    }
+  }, [pathname, router, state]);
+
+  if (state === "unauthenticated" && unauthenticatedPaths.includes(pathname)) return children;
+  if (state === "unauthenticated" && authenticatedPaths.includes(pathname)) return null;
 
   const showHeader = authenticatedPaths.some((path) => pathname?.includes(path));
-
   return (
     <div className="py-4">
       {showHeader && <Header />}
-      {state === "loading" && <PageLoader />}
-      {state === "authenticated" && (
-        <div className={clsx(showHeader && "min-h-dvh pt-16 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>
-          {children}
-        </div>
-      )}
+      <div className={clsx(showHeader && "min-h-dvh pt-16 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>
+        {children}
+      </div>
     </div>
   );
-}
-
-function PageLoader() {
-  return <div>Loading...</div>;
 }

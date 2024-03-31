@@ -5,6 +5,7 @@ import { RiMenuLine, RiNotificationLine, RiCloseLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
+import { NotificationsMenu } from "./notifications-menu";
 
 const navigation = [
   //   Manager Perusahaan
@@ -27,7 +28,7 @@ export function Header() {
   const selectedTab = navigation.findIndex((item) => pathname?.includes(item.href));
 
   return (
-    <header className="fixed bg-white inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
+    <header className="fixed bg-white dark:bg-black inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-x-6">
           <button type="button" className="-m-3 p-3 md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -37,20 +38,17 @@ export function Header() {
         </div>
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           <TabGroup index={selectedTab}>
-            <TabList variant="solid">
+            <TabList variant="solid" className="p-1">
               {navigation.map((item, itemIdx) => (
                 <Link key={itemIdx} href={item.href}>
-                  <Tab>{item.name}</Tab>
+                  <Tab className="px-4 py-1.5">{item.name}</Tab>
                 </Link>
               ))}
             </TabList>
           </TabGroup>
         </nav>
-        <div className="flex flex-1 items-center justify-end gap-x-8">
-          <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-            <span className="sr-only">View notifications</span>
-            <RiNotificationLine className="h-5 w-5" aria-hidden="true" />
-          </button>
+        <div className="flex flex-1 items-center justify-end gap-x-6">
+          <NotificationsMenu />
           <ProfileMenu
             profileUrl="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             email="admin@carbonchain.com"

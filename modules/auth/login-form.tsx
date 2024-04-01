@@ -48,7 +48,7 @@ export function LoginForm() {
               />
             </div>
 
-            <Button loading={isRequesting} className="mt-6 rounded w-full" type="submit" variant="primary">
+            <Button loading={isRequesting} className="mt-6 rounded-tremor-small w-full" type="submit" variant="primary">
               Sign in to account
             </Button>
           </form>

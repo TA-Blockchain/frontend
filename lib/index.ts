@@ -14,7 +14,7 @@ export const api = axios.create({
 api.interceptors.request.use(function (config) {
   const token = localStorage.getItem("token");
   if (config.headers) {
-    config.headers.Authorization = token ? `Bearer ${token}` : "";
+    config.headers.Authorization = token ?? "";
   }
   return config;
 });
@@ -27,26 +27,16 @@ api.interceptors.response.use(
     if (error.code === "ERR_NETWORK") {
       toast.error("Network error, please try again later.");
     }
-    // parse error
+
     if (error.response?.data.error) {
       const errorMessage = error.response.data.error;
-      if (typeof errorMessage === "string") {
-        toast.error(errorMessage, {
-          id: errorMessage,
-        });
-      }
-      return Promise.reject({
-        ...error,
-        response: {
-          ...error.response,
-          data: {
-            ...error.response.data,
-            message:
-              typeof error.response.data.error === "string"
-                ? error.response.data.error
-                : Object.values(error.response.data.error)[0][0],
-          },
-        },
+      toast.error(errorMessage, {
+        id: errorMessage,
+      });
+    } else if (error.response?.data?.message) {
+      const errorMessage = error.response.data?.message;
+      toast.error(errorMessage, {
+        id: errorMessage,
       });
     }
     return Promise.reject(error);

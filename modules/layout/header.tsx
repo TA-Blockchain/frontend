@@ -1,34 +1,43 @@
 import React from "react";
 import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@tremor/react";
-import { RiMenuLine, RiNotificationLine, RiCloseLine } from "@remixicon/react";
+import { RiMenuLine, RiCloseLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
 import { NotificationsMenu } from "./notifications-menu";
+import { UserType, useUser } from "@/hooks/use-user";
 
-const navigation = [
-  //   Manager Perusahaan
-  //   { name: "Dashboard", href: "/dashboard" },
-  //   { name: "Division", href: "/division" },
-  //   { name: "Vehicle", href: "/vehicle" },
-  //   { name: "Shipment", href: "/shipment" },
-  //   Admin Perusahaan
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Managers", href: "/managers" },
-  { name: "Company", href: "/company" },
-  { name: "Marketplace", href: "/marketplace" },
-];
+const navigation: {
+  [key in UserType]: Array<{
+    name: string;
+    href: string;
+  }>;
+} = {
+  "admin-kementerian": [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Staff", href: "/staff" },
+    { name: "Company Proposals", href: "/proposal/company" },
+    { name: "Marketplace", href: "/marketplace" },
+  ],
+  "admin-sc": [],
+  "manager-sc": [],
+  staff: [],
+};
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const pathname = usePathname();
 
-  const selectedTab = navigation.findIndex((item) => pathname?.includes(item.href));
+  const {
+    user: { userType },
+  } = useUser();
+
+  const selectedTab = navigation[userType].findIndex((item) => pathname?.includes(item.href));
 
   return (
-    <header className="fixed bg-white dark:bg-black inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
+    <header className="sticky bg-white dark:bg-black inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-x-6">
           <button type="button" className="-m-3 p-3 md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -39,7 +48,7 @@ export function Header() {
         <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
           <TabGroup index={selectedTab}>
             <TabList variant="solid" className="p-1">
-              {navigation.map((item, itemIdx) => (
+              {navigation[userType].map((item, itemIdx) => (
                 <Link key={itemIdx} href={item.href}>
                   <Tab className="px-4 py-1.5">{item.name}</Tab>
                 </Link>
@@ -49,10 +58,7 @@ export function Header() {
         </nav>
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <NotificationsMenu />
-          <ProfileMenu
-            profileUrl="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            email="admin@carbonchain.com"
-          />
+          <ProfileMenu />
         </div>
       </div>
 
@@ -66,7 +72,7 @@ export function Header() {
             </button>
           </div>
           <div className="mt-2 space-y-2">
-            {navigation.map((item) => (
+            {navigation[userType].map((item) => (
               <a
                 key={item.name}
                 href={item.href}

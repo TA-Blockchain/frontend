@@ -13,10 +13,12 @@ const authenticatedPaths = [
   "/marketplace",
   "/shipment",
   "/vehicle",
+  "/staff",
+  "/proposal/company",
 ];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {
-  const { state } = useUser();
+  const { state, user } = useUser();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -35,14 +37,13 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
 
   if (state === "unauthenticated" && unauthenticatedPaths.includes(pathname)) return children;
   if (state === "unauthenticated" && authenticatedPaths.includes(pathname)) return null;
+  if (!user) return null;
 
   const showHeader = authenticatedPaths.some((path) => pathname?.includes(path));
   return (
-    <div className="py-4">
+    <div className="pb-4">
       {showHeader && <Header />}
-      <div className={clsx(showHeader && "min-h-dvh pt-16 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>
-        {children}
-      </div>
+      <div className={clsx(showHeader && "pt-4 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>{children}</div>
     </div>
   );
 }

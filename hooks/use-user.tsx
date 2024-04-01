@@ -6,7 +6,7 @@ import useSWRImmutable from "swr/immutable";
 
 type UserState = "authenticated" | "unauthenticated" | "loading";
 
-type UserType = "admin-kementerian" | "admin-sc" | "manager-sc" | "staff";
+export type UserType = "admin-kementerian" | "admin-sc" | "manager-sc" | "staff";
 
 type UserData = {
   email: string;
@@ -29,7 +29,7 @@ export type LoginFormValues = {
 const id = "auth-toast";
 
 export function useUser(): {
-  user: UserData | null | undefined;
+  user: UserData;
   state: UserState;
   login: (payload: LoginFormValues) => Promise<void>;
   logout: () => Promise<void>;
@@ -39,12 +39,16 @@ export function useUser(): {
     data: user,
     isLoading,
     mutate,
-  } = useSWRImmutable<UserData | null>("/auth/me", {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnMount: false,
-    revalidateOnReconnect: false,
-    shouldRetryOnError: false,
+  } = useSWRImmutable<UserData | null>("/auth/me", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    const token = localStorage.getItem("token");
+    const userData = localStorage.getItem("userData");
+
+    if (token && userData) {
+      return JSON.parse(userData);
+    }
+
+    return null;
   });
 
   const [isRequesting, setIsRequesting] = React.useState(false);
@@ -92,17 +96,6 @@ export function useUser(): {
     });
   }, [mutate, router]);
 
-  React.useEffect(() => {
-    if (!isLoading && !user) {
-      const token = localStorage.getItem("token");
-      const userData = localStorage.getItem("userData");
-
-      if (token && userData) {
-        mutate(JSON.parse(userData));
-      }
-    }
-  }, [isLoading, mutate, user]);
-
   let state: UserState = "loading";
 
   if (!isLoading) {
@@ -110,5 +103,5 @@ export function useUser(): {
     if (!user) state = "unauthenticated";
   }
 
-  return { user, state, login, logout, isRequesting };
+  return { user: user as UserData, state, login, logout, isRequesting };
 }

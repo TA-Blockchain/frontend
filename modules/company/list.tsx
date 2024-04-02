@@ -3,6 +3,7 @@ import { CompanyListEmpty } from "./list-empty";
 import { CompanyListSkeleton } from "./list-skeleton";
 import clsx from "clsx";
 import { ProposalModal } from "./proposal-modal";
+import { RiBuildingLine } from "@remixicon/react";
 
 const statuses = {
   0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
@@ -55,24 +56,27 @@ export function CompanyList({ status }: CompanyListProps) {
   return (
     <ul role="list" className="divide-y divide-gray-100">
       {companies?.map((company) => (
-        <li key={company.id} className="flex items-center justify-between gap-x-6 py-5">
-          <div className="min-w-0">
-            <div className="flex items-start gap-x-3">
-              <p className="text-sm font-semibold leading-6 text-gray-900">{company.nama}</p>
-              <p
-                className={clsx(
-                  statuses[company.approvalStatus],
-                  "rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
-                )}
-              >
-                {statusText[company.approvalStatus]}
+        <li key={company.id} className="px-1 even:bg-gray-50 flex items-center justify-between gap-x-6 py-5">
+          <div className="flex items-center gap-4">
+            <RiBuildingLine className="w-8 h-8 text-gray-500" />
+            <div className="min-w-0">
+              <div className="flex items-start gap-x-3">
+                <p className="text-sm font-semibold leading-6 text-gray-900">{company.nama}</p>
+                <p
+                  className={clsx(
+                    statuses[company.approvalStatus],
+                    "max-sm:hidden rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                  )}
+                >
+                  {statusText[company.approvalStatus]}
+                </p>
+              </div>
+              <p className="mt-0.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                <a href={`mailto:${company.email}`} className="truncate hover:underline">
+                  {company.email}
+                </a>
               </p>
             </div>
-            <p className="mt-0.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-              <a href={`mailto:${company.email}`} className="truncate hover:underline">
-                {company.email}
-              </a>
-            </p>
           </div>
           <div className="flex flex-none items-center gap-x-4">
             <ProposalModal {...company} />

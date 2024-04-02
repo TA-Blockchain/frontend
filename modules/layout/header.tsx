@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@tremor/react";
-import { RiMenuLine, RiCloseLine, RiArrowGoBackLine } from "@remixicon/react";
+import { RiMenuLine, RiCloseLine, RiArrowGoBackLine, RiDashboardLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
@@ -10,28 +10,32 @@ import { UserType, useUser } from "@/hooks/use-user";
 
 const navigation: {
   [key in UserType]: Array<{
-    name: string;
+    name: string | React.ReactNode;
     href: string;
   }>;
 } = {
   "admin-kementerian": [
-    { name: "Dashboard", href: "/dashboard" },
+    { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
     { name: "Staff", href: "/staff" },
     { name: "Companies", href: "/companies" },
-  ],
-  "admin-perusahaan": [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Manager", href: "/managers" },
-  ],
-  "manager-perusahaan": [
-    { name: "Dashboard", href: "/dashboard" },
-    { name: "Division", href: "/division" },
-    { name: "Shipment", href: "/shipment" },
+    { name: "Marketplace", href: "/marketplace" },
   ],
   "staf-kementerian": [
-    { name: "Dashboard", href: "/dashboard" },
+    { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
     { name: "Staff", href: "/staff" },
     { name: "Companies", href: "/companies" },
+    { name: "Marketplace", href: "/marketplace" },
+  ],
+  "admin-perusahaan": [
+    { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
+    { name: "Division", href: "/division" },
+    { name: "Managers", href: "/managers" },
+    { name: "Marketplace", href: "/marketplace" },
+  ],
+  "manager-perusahaan": [
+    { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
+    { name: "Shipment", href: "/shipment" },
+    { name: "Vehicle", href: "/vehicle" },
   ],
 };
 
@@ -94,7 +98,7 @@ export function Header() {
           <div className="mt-2 space-y-2">
             {navigation[userType].map((item) => (
               <a
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >

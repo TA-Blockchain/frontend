@@ -1,13 +1,12 @@
 import { Label } from "@/components/label";
 import { useMutation } from "@/hooks/use-mutation";
-import { api } from "@/lib";
 import { RiAttachment2, RiPhoneLine } from "@remixicon/react";
 import { Button, Divider, Textarea, TextInput } from "@tremor/react";
 import { useRouter } from "next/navigation";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-type RegisterPerusahaanPayload = {
+type RegisterCompanyPayload = {
   username: string;
   email: string;
   namaPerusahaan: string;
@@ -17,16 +16,16 @@ type RegisterPerusahaanPayload = {
   urlSuratProposal: string;
 };
 
-export function RegisterPerusahaan() {
+export function RegisterCompany() {
   const router = useRouter();
 
-  const methods = useForm<RegisterPerusahaanPayload>();
+  const methods = useForm<RegisterCompanyPayload>();
 
   const { handleSubmit, register, reset } = methods;
 
-  const { trigger, status } = useMutation<RegisterPerusahaanPayload>("/company");
+  const { trigger, status } = useMutation<RegisterCompanyPayload>("/company");
 
-  const onSubmit = async (data: RegisterPerusahaanPayload) => {
+  const onSubmit = async (data: RegisterCompanyPayload) => {
     try {
       await trigger(data);
       toast.success("Company registration successful.", {

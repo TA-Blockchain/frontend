@@ -16,7 +16,6 @@ import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 const theme = process.env.NODE_ENV === "production" ? "light" : "dark";
-const isDevMode = process.env.VERCEL_ENV !== "production";
 
 export default function App({
   Component,
@@ -27,7 +26,12 @@ export default function App({
   return (
     <ThemeProvider defaultTheme={theme} enableSystem={false} attribute="class">
       <Seo title={Component.title} />
-      <div className={inter.className}>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <div>
         <SWRConfig
           value={{
             fetcher: (url) => {
@@ -42,7 +46,6 @@ export default function App({
             <Component {...pageProps} />
           </BaseLayout>
         </SWRConfig>
-        {/* {isDevMode && <ThemeSwitch />} */}
       </div>
     </ThemeProvider>
   );

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Grid } from "@/components/grid";
-import { RegisterPerusahaan } from "@/modules/perusahaan/register-perusahaan";
+import { RegisterCompany } from "@/modules/company/register-company";
 
 export default function RegisterPage() {
   return (
@@ -8,7 +8,7 @@ export default function RegisterPage() {
       <Image src="/images/cover.jpg" alt="" className="object-cover" fill />
       <Grid />
 
-      <RegisterPerusahaan />
+      <RegisterCompany />
     </main>
   );
 }

@@ -17,7 +17,7 @@ const navigation: {
   "admin-kementerian": [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Staff", href: "/staff" },
-    { name: "Company Proposals", href: "/proposal/company" },
+    { name: "Companies", href: "/companies" },
   ],
   "admin-perusahaan": [
     { name: "Dashboard", href: "/dashboard" },
@@ -31,7 +31,7 @@ const navigation: {
   "staf-kementerian": [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Staff", href: "/staff" },
-    { name: "Company Proposals", href: "/proposal/company" },
+    { name: "Companies", href: "/companies" },
   ],
 };
 

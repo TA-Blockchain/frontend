@@ -1,6 +1,12 @@
+import { Info } from "@/components/info";
 import { StafList } from "@/modules/staf/staf-list";
-import { Button, Divider, Metric, Text, TextInput, Title } from "@tremor/react";
+import { Button, Divider, Text, TextInput } from "@tremor/react";
 import React from "react";
+
+const info = {
+  title: "Invite new users",
+  description: "Staf Kementerian can manage companies and carbon trading.",
+};
 
 export default function StaffPage() {
   return (
@@ -9,8 +15,7 @@ export default function StaffPage() {
       <Text className="mt-0.5">Manage Staf Kementerian accounts.</Text>
 
       <div className="mt-8">
-        <p className="font-medium">Invite new users</p>
-        <Text className="mt-0.5">Staf Kementerian can manage companies and carbon trading.</Text>
+        <Info {...info} />
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -43,7 +48,7 @@ export default function StaffPage() {
       <Divider className="mt-8" />
 
       <div className="mt-8">
-        <p className="font-medium">Existing users</p>
+        <Info title="Existing users" />
 
         <StafList />
       </div>

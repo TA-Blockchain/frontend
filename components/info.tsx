@@ -2,7 +2,7 @@ export function Info({ title, description }: { title?: string; description?: str
   return (
     <>
       {title && (
-        <h4 className="font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">{title}</h4>
+        <h4 className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">{title}</h4>
       )}
       {description && (
         <p className="mt-1 text-tremor-default text-tremor-content dark:text-dark-tremor-content">{description}</p>

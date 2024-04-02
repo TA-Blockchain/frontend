@@ -2,6 +2,7 @@ import Avatar from "@/components/avatar";
 import useSWR from "swr";
 import { StafListEmpty } from "./staf-list-empty";
 import { StafRemoveConfirmaation } from "./staf-remove-confirmation";
+import { StafListSkeleton } from "./staf-list-skeleton";
 
 type Staf = {
   name: string;
@@ -9,9 +10,13 @@ type Staf = {
 };
 
 export function StafList() {
-  const { data } = useSWR<{ data: Array<Staf> }>("/auth/list/staf");
+  const { data, isLoading } = useSWR<{ data: Array<Staf> }>("/auth/list/staf");
 
-  if (data?.data.length === 0) {
+  if (isLoading) {
+    return <StafListSkeleton />;
+  }
+
+  if (data?.data.length === 0 || !data) {
     return <StafListEmpty />;
   }
 

@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useUser } from "@/hooks/use-user";
 import { RiUserLine } from "@remixicon/react";
+import { useRouter } from "next/navigation";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
@@ -9,6 +10,8 @@ function classNames(...classes: any[]) {
 
 export function ProfileMenu() {
   const { logout, user } = useUser();
+
+  const router = useRouter();
 
   return (
     <Menu as="div" className="relative text-left inline-block h-9 w-9">
@@ -34,9 +37,20 @@ export function ProfileMenu() {
             <p className="truncate text-sm font-medium text-gray-900">{user.email}</p>
           </div>
 
-          <div className="px-4 py-1">
-            <p className="text-sm text-gray-900">Your role</p>
-            <p className="truncate text-sm font-medium text-blue-500">{user.userType}</p>
+          <div className="py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={() => router.push("/account")}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block w-full px-4 py-2 text-left text-sm"
+                  )}
+                >
+                  Account settings
+                </button>
+              )}
+            </Menu.Item>
           </div>
 
           <div className="py-1">
@@ -45,7 +59,7 @@ export function ProfileMenu() {
                 <button
                   onClick={logout}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    active ? "bg-red-50 text-red-500" : "text-red-500",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >

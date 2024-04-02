@@ -1,11 +1,11 @@
 import React from "react";
 
 export function Label({
-  htmlFor,
+  htmlFor = "",
   required = false,
   children,
 }: {
-  htmlFor: string;
+  htmlFor?: string;
   required?: boolean;
   children: React.ReactNode;
 }) {

@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@tremor/react";
-import { RiMenuLine, RiCloseLine } from "@remixicon/react";
+import { RiMenuLine, RiCloseLine, RiArrowGoBackLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
-import { NotificationsMenu } from "./notifications-menu";
+import { NotificationsMenu } from "./notifications/notifications-menu";
 import { UserType, useUser } from "@/hooks/use-user";
 
 const navigation: {
@@ -55,17 +55,27 @@ export function Header() {
             <RiMenuLine className="h-5 w-5 text-gray-900" aria-hidden="true" />
           </button>
         </div>
-        <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
-          <TabGroup index={selectedTab}>
-            <TabList variant="solid" className="p-1">
-              {navigation[userType].map((item, itemIdx) => (
-                <Link key={itemIdx} href={item.href}>
-                  <Tab className="px-4 py-1.5">{item.name}</Tab>
-                </Link>
-              ))}
-            </TabList>
-          </TabGroup>
-        </nav>
+        {pathname === "/account" && (
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2 p-3 rounded-tremor-small text-tremor-content hover:bg-tremor-brand-faint hover:text-tremor-brand-subtle max-md:hidden"
+          >
+            <RiArrowGoBackLine className="w-4 h-4" />
+          </Link>
+        )}
+        {selectedTab !== -1 && (
+          <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">
+            <TabGroup index={selectedTab}>
+              <TabList variant="solid" className="p-1">
+                {navigation[userType].map((item, itemIdx) => (
+                  <Link key={itemIdx} href={item.href}>
+                    <Tab className="px-4 py-1.5">{item.name}</Tab>
+                  </Link>
+                ))}
+              </TabList>
+            </TabGroup>
+          </nav>
+        )}
         <div className="flex flex-1 items-center justify-end gap-x-6">
           <NotificationsMenu />
           <ProfileMenu />

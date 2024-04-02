@@ -43,7 +43,7 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="pb-4">
       {showHeader && <Header />}
-      <div className={clsx(showHeader && "pt-4 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>{children}</div>
+      <div className={clsx(showHeader && "min-h-dvh pt-4 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>{children}</div>
     </div>
   );
 }

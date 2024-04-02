@@ -6,7 +6,7 @@ import useSWRImmutable from "swr/immutable";
 
 type UserState = "authenticated" | "unauthenticated" | "loading";
 
-export type UserType = "admin-kementerian" | "admin-sc" | "manager-sc" | "staff";
+export type UserType = "admin-kementerian" | "admin-perusahaan" | "manager-perusahaan" | "staf-kementerian";
 
 type UserData = {
   email: string;

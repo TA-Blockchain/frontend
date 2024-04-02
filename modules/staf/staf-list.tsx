@@ -18,7 +18,7 @@ export function StafList() {
   return (
     <ul role="list" className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {data?.data.map((person) => (
-        <li key={person.email} className="flex justify-between gap-x-6 p-5 border rounded-md">
+        <li key={person.email} className="flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
           <div className="flex min-w-0 gap-x-4">
             <Avatar />
             <div className="min-w-0 flex-auto">

@@ -18,11 +18,21 @@ const navigation: {
     { name: "Dashboard", href: "/dashboard" },
     { name: "Staff", href: "/staff" },
     { name: "Company Proposals", href: "/proposal/company" },
-    { name: "Marketplace", href: "/marketplace" },
   ],
-  "admin-sc": [],
-  "manager-sc": [],
-  staff: [],
+  "admin-perusahaan": [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Manager", href: "/managers" },
+  ],
+  "manager-perusahaan": [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Division", href: "/division" },
+    { name: "Shipment", href: "/shipment" },
+  ],
+  "staf-kementerian": [
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Staff", href: "/staff" },
+    { name: "Company Proposals", href: "/proposal/company" },
+  ],
 };
 
 export function Header() {

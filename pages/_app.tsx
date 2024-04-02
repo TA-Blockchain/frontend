@@ -42,7 +42,7 @@ export default function App({
             <Component {...pageProps} />
           </BaseLayout>
         </SWRConfig>
-        {isDevMode && <ThemeSwitch />}
+        {/* {isDevMode && <ThemeSwitch />} */}
       </div>
     </ThemeProvider>
   );

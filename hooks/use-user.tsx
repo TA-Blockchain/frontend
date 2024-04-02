@@ -39,17 +39,26 @@ export function useUser(): {
     data: user,
     isLoading,
     mutate,
-  } = useSWRImmutable<UserData | null>("/auth/me", async () => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("userData");
+  } = useSWRImmutable<UserData | null>(
+    "/auth/me",
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const token = localStorage.getItem("token");
+      const userData = localStorage.getItem("userData");
 
-    if (token && userData) {
-      return JSON.parse(userData);
+      if (token && userData) {
+        return JSON.parse(userData);
+      }
+
+      return null;
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+      revalidateOnMount: false,
+      revalidateOnReconnect: false,
     }
-
-    return null;
-  });
+  );
 
   const [isRequesting, setIsRequesting] = React.useState(false);
 

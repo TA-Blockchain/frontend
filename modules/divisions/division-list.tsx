@@ -14,11 +14,7 @@ const placeholderProps = {
 type Division = {
   id: string;
   name: string;
-  perusahaan: string;
-  lat: string;
-  long: string;
   lokasi: string;
-  manajer: string;
 };
 
 export function DivisionList() {

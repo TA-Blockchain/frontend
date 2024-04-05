@@ -33,7 +33,10 @@ export default function App({
       <div>
         <SWRConfig
           value={{
-            fetcher,
+            fetcher: (url: string) => {
+              if (url.includes("undefined")) return undefined;
+              return api.get(url).then((res) => res.data);
+            },
           }}
         >
           <Toaster richColors position="bottom-right" />

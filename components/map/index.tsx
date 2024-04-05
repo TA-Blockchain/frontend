@@ -11,7 +11,6 @@ import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 import { getMarkerPosition } from "@/lib/helper";
 import { LocationMarker } from "./location-marker";
 import { MapContext } from "./use-map";
-import React from "react";
 import { LoadingMap } from "./loading-map";
 
 const { BaseLayer } = LayersControl;
@@ -75,10 +74,15 @@ export default function Map({ children }: { children: React.ReactNode }) {
 
   const distance: string = ((mapRef.current?.distance(markerPosition, pickedLatlong) ?? 0) / 1000).toFixed(3);
 
+  useEffect(() => {
+    setTimeout(function () {
+      window.dispatchEvent(new Event("resize"));
+    }, 200);
+  }, []);
+
   return (
     <MapContext.Provider value={{ handleUseCurrent }}>
-      {children}
-      <div className="space-y-2 rounded overflow-hidden">
+      <div className="space-y-2 overflow-hidden rounded">
         <MapContainer
           className="h-80 w-full"
           zoom={14}
@@ -104,6 +108,7 @@ export default function Map({ children }: { children: React.ReactNode }) {
           <p className="font-medium">Distance to Monas: {distance}km</p>
         </div> */}
       </div>
+      {children}
     </MapContext.Provider>
   );
 }

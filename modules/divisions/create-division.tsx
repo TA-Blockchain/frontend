@@ -9,6 +9,8 @@ import { SearchSelect, SearchSelectItem } from "@tremor/react";
 import useSWR from "swr";
 import { Manager } from "../managers/manager-list";
 import dynamic from "next/dynamic";
+import { RiSearchLine } from "@remixicon/react";
+import { MapDemo } from "../map";
 
 const Map = dynamic(() => import("@/components/map"), {
   ssr: false,
@@ -22,14 +24,17 @@ type CreateDivisionPayload = {
   idManajer: string;
 };
 
+const defaultValues = {
+  lat: (-6.1754).toString(),
+  lng: (106.8272).toString(),
+};
+
 export function CreateDivision() {
   const [isOpen, setIsOpen] = React.useState(false);
   const methods = useForm<CreateDivisionPayload>({
-    defaultValues: {
-      lat: (-6.1754).toString(),
-      lng: (106.8272).toString(),
-    },
+    defaultValues,
   });
+
   const {
     register,
     handleSubmit,
@@ -119,15 +124,9 @@ export function CreateDivision() {
                 setIsOpen(false);
               }}
               static={true}
-              className="z-[100]"
             >
               <DialogPanel className="sm:max-w-2xl">
-                <TextInput
-                  {...register("lokasi")}
-                  placeholder="Division Name"
-                  className="w-full sm:w-fit rounded-tremor-small"
-                  required
-                />
+                <TextInput icon={RiSearchLine} placeholder="Search for location" />
 
                 <div className="mt-4 space-y-3">
                   <Map>
@@ -137,6 +136,10 @@ export function CreateDivision() {
                     </div>
                   </Map>
                 </div>
+
+                <Button loading={isMutating} type="submit" className="mt-4 w-full rounded-tremor-small">
+                  Create Division
+                </Button>
               </DialogPanel>
             </Dialog>
           </div>

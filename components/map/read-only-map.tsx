@@ -30,6 +30,12 @@ export default function ReadOnlyMap({ pickedLatlong }: { pickedLatlong: { lat: n
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, markerPosition.lat, markerPosition.lng]);
 
+  useEffect(() => {
+    setTimeout(function () {
+      window.dispatchEvent(new Event("resize"));
+    }, 200);
+  }, []);
+
   return (
     <div className="space-y-2">
       <MapContainer

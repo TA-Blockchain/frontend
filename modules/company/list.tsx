@@ -1,10 +1,25 @@
 import useSWR from "swr";
-import { CompanyListEmpty } from "./list-empty";
-import { CompanyListSkeleton } from "./list-skeleton";
+
 import clsx from "clsx";
 import { ProposalModal } from "./proposal-modal";
 import { RiBuildingLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
+import { LoadingPlaceholder } from "../template/loading-placeholder";
+import { EmptyPlaceholder } from "../template/empty-placeholder";
+
+const approvedPlaceholderProps = {
+  title: "No companies registered yet",
+  description: (
+    <>
+      Incoming registration proposals will be displayed in the <b>Waiting for Approval</b> tab.
+    </>
+  ),
+};
+
+const waitingForApprovalPlaceholderProps = {
+  title: "No incoming registration proposals",
+  description: "Incoming registration proposals will be displayed here.",
+};
 
 const statuses = {
   0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
@@ -47,13 +62,16 @@ export function CompanyList({ status }: CompanyListProps) {
   const router = useRouter();
 
   if (isLoading) {
-    return <CompanyListSkeleton />;
+    return <LoadingPlaceholder />;
   }
 
   const companies = data?.data.filter((company) => company.approvalStatus === status);
 
   if (companies?.length === 0 || !data) {
-    return <CompanyListEmpty />;
+    if (status === 0) {
+      return <EmptyPlaceholder {...waitingForApprovalPlaceholderProps} />;
+    }
+    return <EmptyPlaceholder {...approvedPlaceholderProps} />;
   }
 
   return (

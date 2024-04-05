@@ -5,6 +5,11 @@ import { toast } from "sonner";
 
 import Router from "next/router";
 
+export const fetcher = async (url: string) => {
+  if (url.includes("undefined")) return undefined;
+  return api.get(url).then((res) => res.data);
+};
+
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
   headers: {

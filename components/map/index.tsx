@@ -11,6 +11,8 @@ import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 import { getMarkerPosition } from "@/lib/helper";
 import { LocationMarker } from "./location-marker";
 import { MapContext } from "./use-map";
+import React from "react";
+import { LoadingMap } from "./loading-map";
 
 const { BaseLayer } = LayersControl;
 
@@ -76,7 +78,7 @@ export default function Map({ children }: { children: React.ReactNode }) {
   return (
     <MapContext.Provider value={{ handleUseCurrent }}>
       {children}
-      <div className="space-y-2">
+      <div className="space-y-2 rounded overflow-hidden">
         <MapContainer
           className="h-80 w-full"
           zoom={14}
@@ -98,9 +100,9 @@ export default function Map({ children }: { children: React.ReactNode }) {
         {/* <Button type="button" onClick={handleUseCurrent}>
           Use GPS location
         </Button> */}
-        <div className="space-y-1">
+        {/* <div className="space-y-1">
           <p className="font-medium">Distance to Monas: {distance}km</p>
-        </div>
+        </div> */}
       </div>
     </MapContext.Provider>
   );

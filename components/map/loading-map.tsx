@@ -1,3 +1,3 @@
 export function LoadingMap() {
-  return <div className="h-[500]px bg-gray-400 w-full animate-pulse" />;
+  return <div className="aspect-[624/320] bg-gray-400 rounded w-full animate-pulse" />;
 }

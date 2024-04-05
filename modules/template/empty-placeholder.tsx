@@ -2,7 +2,7 @@ import { Text } from "@tremor/react";
 
 const placeholder = Array.from({ length: 6 }, (_) => null);
 
-export function EmptyPlaceholder({ title, description }: { title: string; description: string }) {
+export function EmptyPlaceholder({ title, description }: { title: string; description: string | React.ReactNode }) {
   return (
     <div className="relative mt-4 grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 max-h-96 overflow-hidden">
       {placeholder.map((i) => (

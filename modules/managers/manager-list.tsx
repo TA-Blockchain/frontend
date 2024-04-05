@@ -9,7 +9,8 @@ const placeholderProps = {
   description: "Invite new users to get started",
 };
 
-type Manager = {
+export type Manager = {
+  id: string;
   name: string;
   email: string;
 };

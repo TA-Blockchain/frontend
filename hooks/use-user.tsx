@@ -4,6 +4,8 @@ import React from "react";
 import { toast } from "sonner";
 import useSWR from "swr";
 
+import { mutate as swrMutate } from "swr";
+
 type UserState = "authenticated" | "unauthenticated" | "loading";
 
 export type UserType = "admin-kementerian" | "admin-perusahaan" | "manager-perusahaan" | "staf-kementerian";
@@ -100,13 +102,14 @@ export function useUser(): {
   const logout = React.useCallback(async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
-    mutate(null);
+
+    await swrMutate(() => true, undefined, { revalidate: false });
 
     router.replace("/login");
     toast.success("You have been logged out.", {
       id,
     });
-  }, [mutate, router]);
+  }, [router]);
 
   let state: UserState = "loading";
 

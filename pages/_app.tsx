@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 
 import { Inter } from "next/font/google";
 import BaseLayout from "@/modules/layout/base-layout";
-import { api } from "@/lib";
+import { api, fetcher } from "@/lib";
 
 import { SWRConfig } from "swr";
 import { Seo } from "@/components/seo";
@@ -33,10 +33,7 @@ export default function App({
       <div>
         <SWRConfig
           value={{
-            fetcher: (url) => {
-              if (url.includes("undefined")) return undefined;
-              return api.get(url).then((res) => res.data);
-            },
+            fetcher,
           }}
         >
           <Toaster richColors position="bottom-right" />

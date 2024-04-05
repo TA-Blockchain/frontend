@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Tab, TabGroup, TabList } from "@tremor/react";
 import { RiMenuLine, RiCloseLine, RiArrowGoBackLine, RiDashboardLine } from "@remixicon/react";
 import { Dialog } from "@headlessui/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
 import { NotificationsMenu } from "./notifications/notifications-menu";
 import { UserType, useUser } from "@/hooks/use-user";
@@ -47,7 +47,9 @@ export function Header() {
     user: { userType },
   } = useUser();
 
-  const selectedTab = navigation[userType].findIndex((item) => pathname?.includes(item.href));
+  const selectedTab = navigation[userType].findIndex((item) => pathname === item.href);
+
+  const router = useRouter();
 
   return (
     <header className="sticky bg-white dark:bg-black inset-x-0 top-0 z-50 flex h-16 border-b border-gray-900/10">
@@ -58,13 +60,19 @@ export function Header() {
             <RiMenuLine className="h-5 w-5 text-gray-900" aria-hidden="true" />
           </button>
         </div>
-        {pathname === "/account" && (
-          <Link
-            href="/dashboard"
+        {(pathname === "/account" || selectedTab === -1) && (
+          <button
+            onClick={() => {
+              if (window.history?.length > 2) {
+                router.back();
+              } else {
+                router.replace("/dashboard");
+              }
+            }}
             className="flex items-center gap-2 p-3 rounded-tremor-small text-tremor-content hover:bg-tremor-brand-faint hover:text-tremor-brand-subtle max-md:hidden"
           >
             <RiArrowGoBackLine className="w-4 h-4" />
-          </Link>
+          </button>
         )}
         {selectedTab !== -1 && (
           <nav className="hidden md:flex md:gap-x-11 md:text-sm md:font-semibold md:leading-6 md:text-gray-700">

@@ -9,10 +9,22 @@ import { MutationState, swrObserver } from "./state";
 export function useMutation<T, K = any>(
   key: string,
   mutatorFn: (url: string, payload: T) => Promise<AxiosResponse<K>> = async (url, payload) => {
-    return await api.post(url, payload);
+    switch (options?.method) {
+      case "POST":
+        return await api.post(url, payload);
+      case "PUT":
+        return await api.put(url, payload);
+      case "DELETE":
+        return await api.delete(url);
+      case "PATCH":
+        return await api.patch(url, payload);
+      default:
+        return await api.post(url, payload);
+    }
   },
   options?: {
     mutatedBy?: string;
+    method?: "POST" | "PUT" | "DELETE" | "PATCH";
   }
 ) {
   const [status, setStatus] = React.useState<MutationState>({

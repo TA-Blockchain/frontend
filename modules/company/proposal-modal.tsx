@@ -2,9 +2,19 @@ import { RiAttachment2 } from "@remixicon/react";
 import { Button, Dialog, DialogPanel } from "@tremor/react";
 import { useState } from "react";
 import { Company } from "./list";
+import { useMutation } from "@/hooks/use-mutation";
+import { toast } from "sonner";
+import { useOptimisticListUpdate } from "@/hooks/use-optimistic";
 
 export function ProposalModal(company: Company) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { trigger } = useMutation(`/company/approve/${company.id}`, undefined, {
+    method: "PUT",
+  });
+
+  const { mutate } = useOptimisticListUpdate("/company");
+
   return (
     <>
       <button
@@ -70,7 +80,21 @@ export function ProposalModal(company: Company) {
               </dl>
             </div>
             <div className="flex justify-end">
-              <Button className="rounded-tremor-small">Approve</Button>
+              <Button
+                onClick={async () => {
+                  await trigger();
+                  mutate(
+                    {
+                      approvalStatus: 1,
+                    },
+                    (item) => item.id === company.id
+                  );
+                  toast.success("Company approved");
+                }}
+                className="rounded-tremor-small"
+              >
+                Approve
+              </Button>
             </div>
           </div>
         </DialogPanel>

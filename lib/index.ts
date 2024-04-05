@@ -3,6 +3,8 @@ import axios, { AxiosError } from "axios";
 import { UninterceptedApiError } from "@/types/api";
 import { toast } from "sonner";
 
+import Router from "next/router";
+
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
   headers: {
@@ -64,6 +66,7 @@ const handleInvalidToken = (message: string, callback?: () => void) => {
     toast.error("Invalid token, please login again.");
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
+    Router.replace("/login");
   } else {
     callback?.();
   }

@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
 
 import { Inter } from "next/font/google";
-import { ThemeSwitch } from "@/modules/misc/theme-toggle";
 import BaseLayout from "@/modules/layout/base-layout";
 import { api } from "@/lib";
 

@@ -1,7 +1,6 @@
 import Avatar from "@/components/avatar";
 import useSWR from "swr";
 import { StafListEmpty } from "./staf-list-empty";
-import { StafRemoveConfirmaation } from "./staf-remove-confirmation";
 import { StafListSkeleton } from "./staf-list-skeleton";
 
 type Staf = {

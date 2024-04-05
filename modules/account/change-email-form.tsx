@@ -4,7 +4,7 @@ import { useMutation } from "@/hooks/use-mutation";
 import { UserDataWithToken, useUser } from "@/hooks/use-user";
 import { Button, TextInput } from "@tremor/react";
 import React from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const info = {
@@ -19,18 +19,16 @@ type ChangeEmailPayload = {
 export function ChangeEmailForm() {
   const { user, updateUserData } = useUser();
 
-  const methods = useForm<ChangeEmailPayload>({
-    values: {
-      email: user.email,
-    },
-  });
-
   const {
     register,
     handleSubmit,
     formState: { isDirty },
     resetField,
-  } = methods;
+  } = useForm<ChangeEmailPayload>({
+    values: {
+      email: user.email,
+    },
+  });
 
   const { trigger, isMutating } = useMutation<ChangeEmailPayload, { data: UserDataWithToken }>("/auth/edit/email");
 
@@ -46,23 +44,21 @@ export function ChangeEmailForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Info {...info} />
-        <div className="mt-6">
-          <Label htmlFor="email">Update email address</Label>
-          <TextInput
-            {...register("email")}
-            type="email"
-            id="email"
-            placeholder="john@company.com"
-            className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
-          />
-        </div>
-        <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
-          Update email
-        </Button>
-      </form>
-    </FormProvider>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Info {...info} />
+      <div className="mt-6">
+        <Label htmlFor="email">Update email address</Label>
+        <TextInput
+          {...register("email")}
+          type="email"
+          id="email"
+          placeholder="john@company.com"
+          className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+        />
+      </div>
+      <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
+        Update email
+      </Button>
+    </form>
   );
 }

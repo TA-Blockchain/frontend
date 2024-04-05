@@ -24,23 +24,47 @@ api.interceptors.response.use(
     return config;
   },
   (error: AxiosError<UninterceptedApiError>) => {
+    // Network Error
     if (error.code === "ERR_NETWORK") {
       toast.error("Network error, please try again later.");
-    }
 
-    if (error.response?.data.error) {
+      // API Error
+    } else if (error.response?.data.error) {
       const errorMessage = error.response.data.error;
-      toast.error(errorMessage, {
-        id: errorMessage,
-      });
+
+      handleInvalidToken(errorMessage, () =>
+        toast.error(errorMessage, {
+          id: errorMessage,
+        })
+      );
+
+      // API Error with message
     } else if (error.response?.data?.message) {
       const errorMessage = error.response.data?.message;
-      toast.error(errorMessage, {
-        id: errorMessage,
-      });
+
+      handleInvalidToken(errorMessage, () =>
+        toast.error(errorMessage, {
+          id: errorMessage,
+        })
+      );
+
+      // Invalid Token
+    } else if (error.response?.status === 401) {
+      handleInvalidToken("Invalid token");
     }
+
     return Promise.reject(error);
   }
 );
 
 export const loadingPlaceholder = (length: number) => Array.from({ length }, (_) => null);
+
+const handleInvalidToken = (message: string, callback?: () => void) => {
+  if (message === "Invalid token") {
+    toast.error("Invalid token, please login again.");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+  } else {
+    callback?.();
+  }
+};

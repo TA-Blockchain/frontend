@@ -2,7 +2,7 @@ import { api } from "@/lib";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
-import useSWRImmutable from "swr/immutable";
+import useSWR from "swr";
 
 type UserState = "authenticated" | "unauthenticated" | "loading";
 
@@ -17,7 +17,7 @@ type UserData = {
   username: string;
 };
 
-type UserDataWithToken = UserData & {
+export type UserDataWithToken = UserData & {
   token: string;
 };
 
@@ -33,13 +33,14 @@ export function useUser(): {
   state: UserState;
   login: (payload: LoginFormValues) => Promise<void>;
   logout: () => Promise<void>;
+  updateUserData: (userData: UserDataWithToken) => Promise<void>;
   isRequesting: boolean;
 } {
   const {
     data: user,
     isLoading,
     mutate,
-  } = useSWRImmutable<UserData | null>("/auth/me", async () => {
+  } = useSWR<UserData | null>("/auth/me", async () => {
     await new Promise((resolve) => setTimeout(resolve, 300));
     const token = localStorage.getItem("token");
     const userData = localStorage.getItem("userData");
@@ -54,6 +55,18 @@ export function useUser(): {
   const [isRequesting, setIsRequesting] = React.useState(false);
 
   const router = useRouter();
+
+  const updateUserData = React.useCallback(
+    async (userData: UserDataWithToken) => {
+      localStorage.setItem("token", userData.token);
+
+      const { token, ...rest } = userData;
+
+      localStorage.setItem("userData", JSON.stringify(rest));
+      await mutate(rest);
+    },
+    [mutate]
+  );
 
   const login = React.useCallback(
     async (payload: LoginFormValues) => {
@@ -73,7 +86,6 @@ export function useUser(): {
         if (userData) {
           router.replace("/dashboard");
           toast.success(`Welcome back, ${userData.username}!`, {
-            position: "bottom-right",
             id,
           });
         }
@@ -103,5 +115,5 @@ export function useUser(): {
     if (!user) state = "unauthenticated";
   }
 
-  return { user: user as UserData, state, login, logout, isRequesting };
+  return { user: user as UserData, state, login, logout, updateUserData, isRequesting };
 }

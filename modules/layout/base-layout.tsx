@@ -7,7 +7,7 @@ import clsx from "clsx";
 const unauthenticatedPaths = ["/login", "/register", "/password/reset"];
 const authenticatedPaths = [
   "/dashboard",
-  "/companies",
+  "/company",
   "/division",
   "/managers",
   "/marketplace",

@@ -4,6 +4,7 @@ import { CompanyListSkeleton } from "./list-skeleton";
 import clsx from "clsx";
 import { ProposalModal } from "./proposal-modal";
 import { RiBuildingLine } from "@remixicon/react";
+import { useRouter } from "next/navigation";
 
 const statuses = {
   0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
@@ -43,6 +44,8 @@ type CompanyListProps = {
 export function CompanyList({ status }: CompanyListProps) {
   const { data, isLoading } = useSWR<{ data: Array<Company> }>("/company");
 
+  const router = useRouter();
+
   if (isLoading) {
     return <CompanyListSkeleton />;
   }
@@ -79,7 +82,15 @@ export function CompanyList({ status }: CompanyListProps) {
             </div>
           </div>
           <div className="flex flex-none items-center gap-x-4">
-            <ProposalModal {...company} />
+            {company.approvalStatus === 0 && <ProposalModal {...company} />}
+            {company.approvalStatus === 1 && (
+              <button
+                onClick={() => router.push(`/company/${company.id}`)}
+                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
+              >
+                View company<span className="sr-only">, {company.nama}</span>
+              </button>
+            )}
           </div>
         </li>
       ))}

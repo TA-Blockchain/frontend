@@ -35,7 +35,7 @@ export default function Map({ children }: { children: React.ReactNode }) {
 
     if (map) {
       const provider = new GoogleProvider({
-        apiKey: "",
+        apiKey,
         params: {
           key: "",
           language: "id",

@@ -1,8 +1,10 @@
 import { Info } from "@/components/info";
 import { Label } from "@/components/label";
+import { useMutation } from "@/hooks/use-mutation";
 import { Button, TextInput } from "@tremor/react";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const info = {
   title: "Password",
@@ -17,9 +19,23 @@ type ChangePasswordPayload = {
 export function ChangePasswordForm() {
   const methods = useForm<ChangePasswordPayload>();
 
-  const { register, handleSubmit } = methods;
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+    reset,
+  } = methods;
 
-  const onSubmit = async (payload: ChangePasswordPayload) => {};
+  const { trigger, isMutating } = useMutation<ChangePasswordPayload>("/auth/edit/password");
+
+  const onSubmit = async (payload: ChangePasswordPayload) => {
+    if (!isDirty) return;
+    try {
+      await trigger(payload);
+      toast.success("Password changed successfully.");
+      reset();
+    } catch (error) {}
+  };
 
   return (
     <FormProvider {...methods}>
@@ -47,7 +63,7 @@ export function ChangePasswordForm() {
             required
           />
         </div>
-        <Button type="submit" className="rounded-tremor-small mt-6">
+        <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
           Update password
         </Button>
       </form>

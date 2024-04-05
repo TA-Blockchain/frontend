@@ -6,9 +6,9 @@ import { api } from "@/lib";
 
 import { MutationState, swrObserver } from "./state";
 
-export function useMutation<T>(
+export function useMutation<T, K = any>(
   key: string,
-  mutatorFn: (url: string, payload: T) => Promise<AxiosResponse> = async (url, payload) => {
+  mutatorFn: (url: string, payload: T) => Promise<AxiosResponse<K>> = async (url, payload) => {
     return await api.post(url, payload);
   },
   options?: {

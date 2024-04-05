@@ -17,13 +17,12 @@ const navigation: {
   "admin-kementerian": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
     { name: "Staff", href: "/staff" },
-    { name: "Companies", href: "/companies" },
+    { name: "Companies", href: "/company" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "staf-kementerian": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
-    { name: "Staff", href: "/staff" },
-    { name: "Companies", href: "/companies" },
+    { name: "Companies", href: "/company" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "admin-perusahaan": [

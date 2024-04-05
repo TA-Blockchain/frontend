@@ -1,9 +1,11 @@
 import { Info } from "@/components/info";
 import { Label } from "@/components/label";
-import { useUser } from "@/hooks/use-user";
+import { useMutation } from "@/hooks/use-mutation";
+import { UserDataWithToken, useUser } from "@/hooks/use-user";
 import { Button, TextInput } from "@tremor/react";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const info = {
   title: "Email",
@@ -15,17 +17,33 @@ type ChangeEmailPayload = {
 };
 
 export function ChangeEmailForm() {
-  const { user } = useUser();
+  const { user, updateUserData } = useUser();
 
   const methods = useForm<ChangeEmailPayload>({
-    defaultValues: {
+    values: {
       email: user.email,
     },
   });
 
-  const { register, handleSubmit } = methods;
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+    resetField,
+  } = methods;
 
-  const onSubmit = async (payload: ChangeEmailPayload) => {};
+  const { trigger, isMutating } = useMutation<ChangeEmailPayload, { data: UserDataWithToken }>("/auth/edit/email");
+
+  const onSubmit = async (payload: ChangeEmailPayload) => {
+    if (!isDirty) return;
+    try {
+      const userData = await trigger(payload);
+      updateUserData(userData.data.data);
+      toast.success("Email changed successfully.");
+    } catch (error) {
+      resetField("email");
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -41,7 +59,7 @@ export function ChangeEmailForm() {
             className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
           />
         </div>
-        <Button type="submit" className="rounded-tremor-small mt-6">
+        <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
           Update email
         </Button>
       </form>

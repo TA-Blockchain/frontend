@@ -35,9 +35,6 @@ export function ManagerList() {
               </p>
             </div>
           </div>
-          <div className="-mx-2.5 block px-2.5">
-            <ManagerRemoveConfirmaation />
-          </div>
         </li>
       ))}
     </ul>

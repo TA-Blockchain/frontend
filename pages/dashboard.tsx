@@ -10,7 +10,6 @@ export default function HomePage() {
         </li>
         <li>approve proposal</li>
         <li>list approved company</li>
-        <li>create manager</li>
         <li>create divisi</li>
         <li>list manager & staf kementerian ga perlu button delete</li>
         <li>vehicle management (manager)</li>

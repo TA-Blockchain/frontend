@@ -1,7 +1,13 @@
-import Avatar from "@/components/avatar";
 import useSWR from "swr";
-import { StafListEmpty } from "./staf-list-empty";
-import { StafListSkeleton } from "./staf-list-skeleton";
+
+import { Avatar } from "@/components/avatar";
+import { EmptyPlaceholder } from "../template/empty-placeholder";
+import { LoadingPlaceholder } from "../template/loading-placeholder";
+
+const placeholderProps = {
+  title: "No users created yet",
+  description: "Invite new users to get started",
+};
 
 type Staf = {
   name: string;
@@ -12,11 +18,11 @@ export function StafList() {
   const { data, isLoading } = useSWR<{ data: Array<Staf> }>("/auth/list/staf");
 
   if (isLoading) {
-    return <StafListSkeleton />;
+    return <LoadingPlaceholder />;
   }
 
   if (data?.data.length === 0 || !data) {
-    return <StafListEmpty />;
+    return <EmptyPlaceholder {...placeholderProps} />;
   }
 
   return (

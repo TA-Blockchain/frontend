@@ -1,8 +1,13 @@
-import Avatar from "@/components/avatar";
 import useSWR from "swr";
-import { ManagerListEmpty } from "./manager-list-empty";
-import { ManagerRemoveConfirmaation } from "./manager-remove-confirmation";
-import { ManagerListSkeleton } from "./manager-list-skeleton";
+
+import { Avatar } from "@/components/avatar";
+import { LoadingPlaceholder } from "../template/loading-placeholder";
+import { EmptyPlaceholder } from "../template/empty-placeholder";
+
+const placeholderProps = {
+  title: "No users created yet",
+  description: "Invite new users to get started",
+};
 
 type Manager = {
   name: string;
@@ -13,11 +18,11 @@ export function ManagerList() {
   const { data, isLoading } = useSWR<{ data: Array<Manager> }>("/auth/list/manager");
 
   if (isLoading) {
-    return <ManagerListSkeleton />;
+    return <LoadingPlaceholder />;
   }
 
   if (data?.data.length === 0 || !data) {
-    return <ManagerListEmpty />;
+    return <EmptyPlaceholder {...placeholderProps} />;
   }
 
   return (

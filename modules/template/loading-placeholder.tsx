@@ -1,11 +1,9 @@
 import { loadingPlaceholder } from "@/lib";
 
-const placeholder = loadingPlaceholder(6);
-
-export function ManagerListSkeleton() {
+export function LoadingPlaceholder({ amount = 6 }: { amount?: number }) {
   return (
     <ul className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {placeholder.map((index) => (
+      {loadingPlaceholder(amount).map((index) => (
         <li key={index} className="flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
           <div className="flex min-w-0 gap-x-4">
             <div className="w-10 h-10 rounded-full bg-gray-200"></div>

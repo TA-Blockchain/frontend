@@ -4,6 +4,8 @@ import { NotFoundPlaceholder } from "@/modules/template/not-found";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
+import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { VehicleList } from "@/modules/vehicle/vehicle-list";
 
 export default function DivisionDetailsPage() {
   const router = useRouter();
@@ -12,37 +14,33 @@ export default function DivisionDetailsPage() {
 
   const { data: division, isLoading } = useSWR<{ data: Division }>(`/company/division/detail/${id}`);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!division) {
-    return <NotFoundPlaceholder description="Sorry, we couldn't find the division you're looking for." />;
+  if (!division && !isLoading) {
+    return <NotFoundPlaceholder description="Maaf, divisi yang Anda cari tidak ditemukan." />;
   }
 
   return (
     <main>
-      {division && <DivisionDetails details={division.data} />}
-
-      {/* <h1 className="text-tremor-title font-semibold">Companies</h1>
-      <Text className="mt-0.5">Manage companies and review awaiting proposals.</Text>
+      <h1 className="text-tremor-title font-semibold">Rincian Divisi</h1>
+      <Text className="mt-0.5">Informasi umum, kendaraan, dan riwayat perjalanan divisi terkait.</Text>
 
       <div className="mt-4">
         <TabGroup className="mt-6">
           <TabList>
-            <Tab>Approved</Tab>
-            <Tab>Waiting for Approval</Tab>
+            <Tab>Rincian</Tab>
+            <Tab>Kendaraan</Tab>
+            <Tab>Riwayat Perjalanan</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <DivisionList status={1} />
+              <DivisionDetails details={division?.data} isLoading={isLoading} />
             </TabPanel>
             <TabPanel>
-              <DivisionList status={0} />
+              <VehicleList idDivisi={id} />
             </TabPanel>
+            <TabPanel>{/* <DetailEmisiKarbon details={company?.data} /> */}</TabPanel>
           </TabPanels>
         </TabGroup>
-      </div> */}
+      </div>
     </main>
   );
 }

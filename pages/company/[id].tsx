@@ -16,7 +16,7 @@ export default function CompanyDetailsPage() {
   const { data: company, isLoading } = useSWR<{ data: Company }>(`/company/${id}`);
 
   if (!company && !isLoading) {
-    return <NotFoundPlaceholder description="Sorry, we couldn't find the company you're looking for." />;
+    return <NotFoundPlaceholder description="Maaf, perusahaan yang Anda cari tidak ditemukan." />;
   }
 
   return (

@@ -71,12 +71,6 @@ export default function Map({ children }: { children: React.ReactNode }) {
           </LayersControl>
           <LocationMarker setIsDragging={setIsDragging} />
         </MapContainer>
-        {/* <Button type="button" onClick={handleUseCurrent}>
-          Use GPS location
-        </Button> */}
-        {/* <div className="space-y-1">
-          <p className="font-medium">Distance to Monas: {distance}km</p>
-        </div> */}
       </div>
       {children}
     </MapContext.Provider>

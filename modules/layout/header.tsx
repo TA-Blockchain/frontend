@@ -18,11 +18,13 @@ const navigation: {
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
     { name: "Staf", href: "/staff" },
     { name: "Perusahaan", href: "/company" },
+    { name: "Supply Chain", href: "/supply-chain" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "staf-kementerian": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
     { name: "Perusahaan", href: "/company" },
+    { name: "Supply Chain", href: "/supply-chain" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "admin-perusahaan": [

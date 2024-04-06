@@ -67,6 +67,12 @@ function LocationMarker({ markerPosition }: { markerPosition: { lat: number; lng
     },
   });
 
+  useEffect(() => {
+    if (markerPosition) {
+      map.flyTo(markerPosition, map.getZoom());
+    }
+  }, [map, markerPosition]);
+
   return <Marker position={markerPosition} icon={DefaultIcon}></Marker>;
 }
 

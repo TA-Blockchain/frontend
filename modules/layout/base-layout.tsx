@@ -7,14 +7,15 @@ import clsx from "clsx";
 const unauthenticatedPaths = ["/login", "/register", "/password/reset"];
 const authenticatedPaths = [
   "/dashboard",
+  "/account",
+  "/staff",
+  "/supply-chain",
   "/company",
   "/division",
   "/managers",
-  "/marketplace",
   "/shipment",
   "/vehicle",
-  "/staff",
-  "/account",
+  "/marketplace",
 ];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {

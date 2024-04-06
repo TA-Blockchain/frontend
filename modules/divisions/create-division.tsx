@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Dialog, DialogPanel, TextInput } from "@tremor/react";
+import React, { useEffect } from "react";
+import { Button, Dialog, DialogPanel, Textarea, TextInput } from "@tremor/react";
 import { Controller, useForm, FormProvider } from "react-hook-form";
 import { useMutation } from "@/hooks/use-mutation";
 import { toast } from "sonner";
@@ -9,8 +9,7 @@ import { SearchSelect, SearchSelectItem } from "@tremor/react";
 import useSWR from "swr";
 import { Manager } from "../managers/manager-list";
 import dynamic from "next/dynamic";
-import { RiSearchLine } from "@remixicon/react";
-import { MapDemo } from "../map";
+import SearchLocation from "./search-location";
 
 const Map = dynamic(() => import("@/components/map"), {
   ssr: false,
@@ -42,6 +41,7 @@ export function CreateDivision() {
     resetField,
     control,
     formState: { dirtyFields },
+    getValues,
   } = methods;
 
   const { trigger, isMutating } = useMutation<CreateDivisionPayload>("/company/division");
@@ -126,15 +126,43 @@ export function CreateDivision() {
               static={true}
             >
               <DialogPanel className="sm:max-w-2xl">
-                <TextInput icon={RiSearchLine} placeholder="Search for location" />
+                <SearchLocation
+                  onChange={({ lat, lng, location }) => {
+                    resetField("lat", {
+                      defaultValue: lat,
+                    });
+                    resetField("lng", {
+                      defaultValue: lng,
+                    });
+                    resetField("lokasi", {
+                      defaultValue: location,
+                    });
+                  }}
+                />
 
                 <div className="mt-4 space-y-3">
                   <Map>
-                    <div className="mt-4 grid grid-cols-2 gap-2">
+                    <div className="hidden">
                       <TextInput readOnly {...register("lat")} placeholder="Latitude" />
                       <TextInput readOnly {...register("lng")} placeholder="Longitude" />
                     </div>
                   </Map>
+                  <Controller
+                    render={({ field }) => (
+                      <Textarea
+                        {...field}
+                        readOnly
+                        id="lokasi"
+                        className="bg-gray-100 cursor-not-allowed hover:bg-gray-100"
+                        autoComplete="off"
+                        placeholder="Pilih lokasi pada map"
+                        required
+                      />
+                    )}
+                    name="lokasi"
+                    defaultValue=""
+                    control={control}
+                  />
                 </div>
 
                 <Button loading={isMutating} type="submit" className="mt-4 w-full rounded-tremor-small">

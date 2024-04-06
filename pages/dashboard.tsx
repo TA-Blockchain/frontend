@@ -1,5 +1,3 @@
-import { MapDemo } from "@/modules/map";
-
 export default function HomePage() {
   return (
     <>
@@ -11,13 +9,9 @@ export default function HomePage() {
         <li>forgot password</li>
         <li>company details</li>
         <li>create divisi & divisi details</li>
-        <li>list manager & staf kementerian ga perlu button delete</li>
         <li>vehicle management (manager)</li>
         <li>breadcrumbs</li>
       </ul>
-      <div className="h-80">
-        <MapDemo />
-      </div>
     </>
   );
 }

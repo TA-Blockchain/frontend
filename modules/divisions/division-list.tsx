@@ -36,18 +36,18 @@ export function DivisionList() {
       {data?.data.map((division) => (
         <li
           key={division.id}
-          className="group relative hover:bg-tremor-brand-faint hover:border-tremor-brand-muted border shadow-sm rounded-md"
+          className="group relative hover:border-tremor-brand-subtle transition border shadow-sm rounded-md"
         >
           <Link href={`/division/${division.id}`} className="flex justify-between gap-x-6 p-5">
             <div className="w-full flex min-w-0 gap-x-4">
-              <RiCommunityLine className="w-10 h-10 text-gray-500 group-hover:text-tremor-brand-subtle" />
+              <RiCommunityLine className="w-10 h-10 text-gray-500" />
               <div className="min-w-0 flex-auto">
                 <p className="text-sm font-semibold leading-6 text-gray-900">{division.name}</p>
                 <p className="flex text-xs leading-5 text-gray-500 truncate">{division.lokasi}</p>
               </div>
             </div>
             <span
-              className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-brand-subtle"
+              className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle transition group-hover:text-tremor-brand-subtle"
               aria-hidden={true}
             >
               <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />

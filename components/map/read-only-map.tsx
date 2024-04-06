@@ -19,10 +19,6 @@ export default function ReadOnlyMap({ pickedLatlong }: { pickedLatlong: { lat: n
   const { watch } = useFormContext();
   const markerPosition = getMarkerPosition(watch, pickedLatlong);
 
-  const handleMapCreated = (map: L.Map) => {
-    setMap(map);
-  };
-
   // Move map if input is changing
   // TODO Optimize setView calling
   useEffect(() => {

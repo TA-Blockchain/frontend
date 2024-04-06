@@ -3,7 +3,6 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/assets/css/leaflet.css";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { GoogleProvider, SearchControl } from "leaflet-geosearch";
 import { useFormContext } from "react-hook-form";
 import { LayersControl, MapContainer } from "react-leaflet";
 import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
@@ -11,7 +10,6 @@ import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
 import { getMarkerPosition } from "@/lib/helper";
 import { LocationMarker } from "./location-marker";
 import { MapContext } from "./use-map";
-import { LoadingMap } from "./loading-map";
 
 const { BaseLayer } = LayersControl;
 
@@ -23,39 +21,11 @@ export type LatLong = {
 };
 
 export default function Map({ children }: { children: React.ReactNode }) {
-  const [map, setMap] = useState<L.Map | undefined>(undefined);
-
   const mapRef = useRef() as MutableRefObject<L.Map>;
 
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { watch } = useFormContext();
   const markerPosition = getMarkerPosition(watch);
-
-  const handleMapCreated = (map: L.Map) => {
-    setMap(map);
-
-    if (map) {
-      const provider = new GoogleProvider({
-        apiKey,
-        params: {
-          key: "",
-          language: "id",
-          region: "id",
-        },
-      });
-
-      map.addControl(
-        // @ts-ignore
-        new SearchControl({
-          provider: provider,
-          style: "bar",
-          showMarker: false,
-          showPopup: false,
-          searchLabel: "Search (Won't work due to no API Key)",
-        })
-      );
-    }
-  };
 
   const handleUseCurrent = () => {
     if (mapRef) {
@@ -70,7 +40,7 @@ export default function Map({ children }: { children: React.ReactNode }) {
 
     mapRef.current?.setView(markerPosition);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDragging, map, markerPosition.lat, markerPosition.lng]);
+  }, [isDragging, markerPosition.lat, markerPosition.lng]);
 
   const distance: string = ((mapRef.current?.distance(markerPosition, pickedLatlong) ?? 0) / 1000).toFixed(3);
 

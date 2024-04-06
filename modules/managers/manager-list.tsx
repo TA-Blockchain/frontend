@@ -5,14 +5,20 @@ import { LoadingPlaceholder } from "../template/loading-placeholder";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 
 const placeholderProps = {
-  title: "No users created yet",
-  description: "Invite new users to get started",
+  title: "Belum ada manajer yang terdaftar",
+  description: "Undang manajer baru untuk memulai",
 };
 
 export type Manager = {
   id: string;
   name: string;
   email: string;
+  "data-manager": {
+    idPerusahaan: string;
+    idDivisi: string;
+    idPerjalanan: Array<string>;
+    nik: string;
+  };
 };
 
 export function ManagerList() {

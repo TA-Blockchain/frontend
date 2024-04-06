@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const info = {
-  title: "Password",
-  description: "Update your password associated with this account.",
+  title: "Kata sandi",
+  description: "Perbarui kata sandi Anda.",
 };
 
 type ChangePasswordPayload = {
@@ -30,7 +30,7 @@ export function ChangePasswordForm() {
     if (!isDirty) return;
     try {
       await trigger(payload);
-      toast.success("Password changed successfully.");
+      toast.success("Kata sandi berhasil diubah.");
       reset();
     } catch (error) {}
   };
@@ -39,7 +39,7 @@ export function ChangePasswordForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Info {...info} />
       <div className="mt-6">
-        <Label htmlFor="current-password">Current password</Label>
+        <Label htmlFor="current-password">Kata sandi saat ini</Label>
         <TextInput
           {...register("currentPassword")}
           type="password"
@@ -50,7 +50,7 @@ export function ChangePasswordForm() {
         />
       </div>
       <div className="mt-4">
-        <Label htmlFor="new-password">New password</Label>
+        <Label htmlFor="new-password">Kata sandi baru</Label>
         <TextInput
           {...register("newPassword")}
           type="password"
@@ -61,7 +61,7 @@ export function ChangePasswordForm() {
         />
       </div>
       <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
-        Update password
+        Perbarui kata sandi
       </Button>
     </form>
   );

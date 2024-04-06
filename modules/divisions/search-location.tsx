@@ -37,17 +37,7 @@ export default function SearchLocation({
         "https://places.googleapis.com/v1/places:searchText",
         {
           textQuery: keyword,
-          //   includeQueryPredictions: true,
           maxResultCount: 10,
-          locationBias: {
-            circle: {
-              center: {
-                latitude: -6.1754,
-                longitude: 106.8272,
-              },
-              radius: 5000,
-            },
-          },
           regionCode: "ID",
         },
         {
@@ -95,7 +85,7 @@ export default function SearchLocation({
           />
           <Combobox.Input
             className="h-10 w-full border-0 bg-transparent pl-10 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-            placeholder="Search for location"
+            placeholder="Cari lokasi"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />

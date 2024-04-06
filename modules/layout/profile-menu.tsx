@@ -33,7 +33,7 @@ export function ProfileMenu() {
       >
         <Menu.Items className="absolute -right-1 sm:right-0 z-10 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-4 py-3">
-            <p className="text-sm text-gray-900">Signed in as</p>
+            <p className="text-sm text-gray-900">Masuk sebagai</p>
             <p className="truncate text-sm font-medium text-gray-900">{user.email}</p>
           </div>
 
@@ -47,7 +47,7 @@ export function ProfileMenu() {
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  Account settings
+                  Pengaturan akun
                 </button>
               )}
             </Menu.Item>
@@ -63,7 +63,7 @@ export function ProfileMenu() {
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  Sign out
+                  Keluar
                 </button>
               )}
             </Menu.Item>

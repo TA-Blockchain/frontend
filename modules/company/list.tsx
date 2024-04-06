@@ -8,17 +8,17 @@ import { LoadingPlaceholder } from "../template/loading-placeholder";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 
 const approvedPlaceholderProps = {
-  title: "No companies registered yet",
+  title: "Belum ada perusahaan yang terdaftar",
   description: (
     <>
-      Incoming registration proposals will be displayed in the <b>Waiting for Approval</b> tab.
+      Proposal pendaftaran yang masuk akan ditampilkan di tab <b>Menunggu Persetujuan</b>.
     </>
   ),
 };
 
 const waitingForApprovalPlaceholderProps = {
-  title: "No incoming registration proposals",
-  description: "Incoming registration proposals will be displayed here.",
+  title: "Proposal pendaftaran kosong",
+  description: "Proposal pendaftaran yang masuk akan ditampilkan di halaman ini.",
 };
 
 const statuses = {
@@ -106,7 +106,7 @@ export function CompanyList({ status }: CompanyListProps) {
                 onClick={() => router.push(`/company/${company.id}`)}
                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
               >
-                View company<span className="sr-only">, {company.nama}</span>
+                Lihat rincian<span className="sr-only">, {company.nama}</span>
               </button>
             )}
           </div>

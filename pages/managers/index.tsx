@@ -5,15 +5,15 @@ import { Divider, Text } from "@tremor/react";
 import React from "react";
 
 const info = {
-  title: "Invite new users",
-  description: "Company managers can manage their assigned division, shipment, and vehicles.",
+  title: "Undang manajer baru",
+  description: "Manajer perusahaan dapat mengelola divisi, pengiriman, dan kendaraan perusahaan terkait.",
 };
 
 export default function ManagersPage() {
   return (
     <main>
-      <h1 className="text-tremor-title font-semibold">Managers Management</h1>
-      <Text className="mt-0.5">Manage your company&apos;s division managers accounts.</Text>
+      <h1 className="text-tremor-title font-semibold">Manajemen Manajer</h1>
+      <Text className="mt-0.5">Daftar Manajer Perusahaan yang terdaftar di platform Carbon Chain.</Text>
 
       <div className="mt-8 space-y-8">
         <div>
@@ -32,4 +32,4 @@ export default function ManagersPage() {
   );
 }
 
-ManagersPage.title = "Managers Management | Carbon Chain";
+ManagersPage.title = "Manajemen Manajer | Carbon Chain";

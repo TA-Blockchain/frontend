@@ -5,8 +5,8 @@ import { EmptyPlaceholder } from "../template/empty-placeholder";
 import { LoadingPlaceholder } from "../template/loading-placeholder";
 
 const placeholderProps = {
-  title: "No users created yet",
-  description: "Invite new users to get started",
+  title: "Belum ada staf yang terdaftar",
+  description: "Undang staf baru untuk memulai",
 };
 
 type Staf = {

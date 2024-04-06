@@ -89,7 +89,7 @@ export function ProposalModal(company: Company) {
                     },
                     (item) => item.id === company.id
                   );
-                  toast.success("Company approved");
+                  toast.success("Perusahaan disetujui.");
                 }}
                 className="rounded-tremor-small"
               >

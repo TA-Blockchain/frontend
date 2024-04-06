@@ -87,7 +87,7 @@ export function useUser(): {
 
         if (userData) {
           router.replace("/dashboard");
-          toast.success(`Welcome back, ${userData.username}!`, {
+          toast.success(`Selamat datang, ${userData.username}!`, {
             id,
           });
         }
@@ -106,7 +106,7 @@ export function useUser(): {
     await swrMutate(() => true, undefined, { revalidate: false });
 
     router.replace("/login");
-    toast.success("You have been logged out.", {
+    toast.success("Anda telah keluar.", {
       id,
     });
   }, [router]);

@@ -5,15 +5,15 @@ import { Divider, Text } from "@tremor/react";
 import React from "react";
 
 const info = {
-  title: "Create new divisions",
-  description: "A division is a sub-organization that can manage their assigned shipments and vehicles.",
+  title: "Buat divisi baru",
+  description: "Divisi adalah sub-organisasi yang dapat mengelola pengiriman dan kendaraan perusahaan.",
 };
 
 export default function DivisionPage() {
   return (
     <main>
-      <h1 className="text-tremor-title font-semibold">Division Management</h1>
-      <Text className="mt-0.5">Manage your company&apos;s internal divisions.</Text>
+      <h1 className="text-tremor-title font-semibold">Manajemen Divisi</h1>
+      <Text className="mt-0.5">Kelola divisi internal perusahaan terkait.</Text>
 
       <div className="mt-8 space-y-8">
         <div>
@@ -24,7 +24,7 @@ export default function DivisionPage() {
         <Divider />
 
         <div>
-          <Info title="Existing divisions" />
+          <Info title="Divisi yang terdaftar" />
           <DivisionList />
         </div>
       </div>
@@ -32,4 +32,4 @@ export default function DivisionPage() {
   );
 }
 
-DivisionPage.title = "Divisions | Carbon Chain";
+DivisionPage.title = "Manajemen Divisi | Carbon Chain";

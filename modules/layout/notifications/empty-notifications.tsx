@@ -10,7 +10,7 @@ export function EmptyNotifications() {
         />
 
         <p className="mt-2 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-          No notifications yet
+          Tidak ada notifikasi
         </p>
       </div>
     </div>

@@ -16,25 +16,25 @@ const navigation: {
 } = {
   "admin-kementerian": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
-    { name: "Staff", href: "/staff" },
-    { name: "Companies", href: "/company" },
+    { name: "Staf", href: "/staff" },
+    { name: "Perusahaan", href: "/company" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "staf-kementerian": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
-    { name: "Companies", href: "/company" },
+    { name: "Perusahaan", href: "/company" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "admin-perusahaan": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
-    { name: "Division", href: "/division" },
-    { name: "Managers", href: "/managers" },
+    { name: "Divisi", href: "/division" },
+    { name: "Manajer", href: "/managers" },
     { name: "Marketplace", href: "/marketplace" },
   ],
   "manager-perusahaan": [
     { name: <RiDashboardLine className="w-5 h-5" />, href: "/dashboard" },
-    { name: "Shipment", href: "/shipment" },
-    { name: "Vehicle", href: "/vehicle" },
+    { name: "Perjalanan", href: "/shipment" },
+    { name: "Kendaraan", href: "/vehicle" },
   ],
 };
 

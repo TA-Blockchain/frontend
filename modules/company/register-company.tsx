@@ -26,7 +26,7 @@ export function RegisterCompany() {
   const onSubmit = async (data: RegisterCompanyPayload) => {
     try {
       await trigger(data);
-      toast.success("Company registration successful.", {
+      toast.success("Perusahaan telah didaftarkan.", {
         duration: 5000,
       });
       reset();

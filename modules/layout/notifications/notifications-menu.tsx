@@ -11,7 +11,7 @@ export function NotificationsMenu() {
   return (
     <Menu as="div" className="relative text-left inline-block h-5 w-5">
       <Menu.Button className="text-gray-400 hover:text-gray-500">
-        <span className="sr-only">View notifications</span>
+        <span className="sr-only">Lihat notifikasi</span>
         <RiNotificationLine className="h-5 w-5" aria-hidden="true" />
       </Menu.Button>
 
@@ -26,7 +26,7 @@ export function NotificationsMenu() {
       >
         <Menu.Items className="absolute -right-16 max-w-[calc(100vw-2.5rem)] sm:-right-4 z-10 mt-2.5 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-4 py-3">
-            <p className="font-medium text-gray-900">Inbox</p>
+            <p className="font-medium text-gray-900">Pesan masuk</p>
           </div>
 
           <div className="whitespace-nowrap p-4">

@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { useSWRConfig } from "swr";
 
+// Used when adding a new item to a list
 export function useOptimisticList(key: string) {
   const { data, mutate: swrMutate } = useSWR(key);
   const { mutate: globalMutate } = useSWRConfig();
@@ -20,6 +21,7 @@ export function useOptimisticList(key: string) {
   };
 }
 
+// Used when updating an item in a list
 export function useOptimisticListUpdate(key: string) {
   const { data, mutate: swrMutate } = useSWR(key);
   const { mutate: globalMutate } = useSWRConfig();
@@ -51,6 +53,7 @@ export function useOptimisticListUpdate(key: string) {
   };
 }
 
+// Used when updating an object
 export function useOptimistic(key: string) {
   const { data, mutate: swrMutate } = useSWR(key);
   const { mutate: globalMutate } = useSWRConfig();

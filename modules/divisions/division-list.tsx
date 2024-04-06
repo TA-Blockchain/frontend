@@ -11,10 +11,14 @@ const placeholderProps = {
   description: "Create new divisions to get started",
 };
 
-type Division = {
+export type Division = {
   id: string;
   name: string;
   lokasi: string;
+  perusahaan: string;
+  lat: string;
+  long: string;
+  manajer: string;
 };
 
 export function DivisionList() {
@@ -38,12 +42,12 @@ export function DivisionList() {
           key={division.id}
           className="group relative hover:border-tremor-brand-subtle transition border shadow-sm rounded-md"
         >
-          <Link href={`/division/${division.id}`} className="flex justify-between gap-x-6 p-5">
-            <div className="w-full flex min-w-0 gap-x-4">
-              <RiCommunityLine className="w-10 h-10 text-gray-500" />
-              <div className="min-w-0 flex-auto">
+          <Link href={`/division/${division.id}`} className="h-full flex justify-between gap-x-6 p-5">
+            <div className="w-full flex items-center min-w-0 gap-x-4">
+              <RiCommunityLine className="shrink-0 w-10 h-10 text-gray-500" />
+              <div>
                 <p className="text-sm font-semibold leading-6 text-gray-900">{division.name}</p>
-                <p className="flex text-xs leading-5 text-gray-500 truncate">{division.lokasi}</p>
+                <p className="text-xs leading-5 text-gray-500 line-clamp-2">{division.lokasi}</p>
               </div>
             </div>
             <span

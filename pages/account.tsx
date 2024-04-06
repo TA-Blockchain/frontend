@@ -10,20 +10,20 @@ export default function AccountSettingsPage() {
   return (
     <>
       <h3 className="text-tremor-title font-bold text-tremor-content-strong dark:text-dark-tremor-content-strong">
-        Account Settings
+        Pengaturan akun
       </h3>
       <p className="mt-2 text-tremor-default leading-6 text-tremor-content dark:text-dark-tremor-content">
-        Manage your personal details.
+        Kelola rincian dan informasi umum yang terkait.
       </p>
 
       <div className="mt-8 space-y-8">
         <div className="mt-8">
-          <h4 className="font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">General</h4>
+          <h4 className="font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">Umum</h4>
           <p className="mt-1 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-            Your general information associated with this account.
+            Informasi umum yang terkait dengan akun anda.
           </p>
           <div className="mt-6">
-            <Label>Organization Name</Label>
+            <Label>Nama organisasi</Label>
             <TextInput
               value={user.organizationName}
               className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
@@ -31,7 +31,7 @@ export default function AccountSettingsPage() {
             />
           </div>
           <div className="mt-4">
-            <Label>Role</Label>
+            <Label>Peran</Label>
             <TextInput value={user.userType} className="mt-2 w-full rounded-tremor-small sm:max-w-lg" disabled />
           </div>
         </div>

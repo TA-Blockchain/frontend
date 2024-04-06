@@ -31,9 +31,14 @@ api.interceptors.response.use(
     return config;
   },
   (error: AxiosError<UninterceptedApiError>) => {
+    console.log(error);
     // Network Error
     if (error.code === "ERR_NETWORK") {
       toast.error("Network error, please try again later.");
+
+      // Interval Server Error
+    } else if (error.response?.status === 500) {
+      toast.error("Something wrong, please try again later.");
 
       // API Error
     } else if (error.response?.data.error) {

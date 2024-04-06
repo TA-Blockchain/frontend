@@ -7,10 +7,8 @@ export default function HomePage() {
           <code className="bg-gray-800 text-white px-1 py-0.5 rounded-sm">node app.js</code>
         </li>
         <li>forgot password</li>
-        <li>company details</li>
         <li>create divisi & divisi details</li>
         <li>vehicle management (manager)</li>
-        <li>breadcrumbs</li>
       </ul>
     </>
   );

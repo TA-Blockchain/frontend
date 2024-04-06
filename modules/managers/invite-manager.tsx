@@ -26,7 +26,7 @@ export function InviteManager() {
     try {
       await trigger({ ...payload, ...additionalPayload });
 
-      toast.success("Manager invited successfully.");
+      toast.success("Manager telah diundang untuk bergabung.");
       reset();
 
       await mutate({
@@ -51,12 +51,12 @@ export function InviteManager() {
             {...register("email")}
             type="email"
             id="email"
-            placeholder="Add email..."
+            placeholder="Masukkan email..."
             className="w-full rounded-tremor-small sm:max-w-xs"
             required
           />
           <Button loading={isMutating} type="submit" className="rounded-tremor-small">
-            Invite
+            Undang
           </Button>
         </div>
       </div>

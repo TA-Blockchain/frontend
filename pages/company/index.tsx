@@ -5,14 +5,14 @@ import React from "react";
 export default function CompanyPage() {
   return (
     <main>
-      <h1 className="text-tremor-title font-semibold">Companies</h1>
-      <Text className="mt-0.5">Manage companies and review awaiting proposals.</Text>
+      <h1 className="text-tremor-title font-semibold">Perusahaan</h1>
+      <Text className="mt-0.5">Kelola perusahaan dan tinjau proposal yang menunggu persetujuan.</Text>
 
       <div className="mt-4">
         <TabGroup className="mt-6">
           <TabList>
-            <Tab>Approved</Tab>
-            <Tab>Waiting for Approval</Tab>
+            <Tab>Disetujui</Tab>
+            <Tab>Menunggu Persetujuan</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -28,4 +28,4 @@ export default function CompanyPage() {
   );
 }
 
-CompanyPage.title = "Companies | Carbon Chain";
+CompanyPage.title = "Perusahaan | Carbon Chain";

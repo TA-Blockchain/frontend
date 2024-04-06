@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 const info = {
   title: "Email",
-  description: "Update your email address associated with this account.",
+  description: "Perbarui alamat email Anda.",
 };
 
 type ChangeEmailPayload = {
@@ -37,7 +37,7 @@ export function ChangeEmailForm() {
     try {
       const userData = await trigger(payload);
       updateUserData(userData.data.data);
-      toast.success("Email changed successfully.");
+      toast.success("Email berhasil diubah.");
     } catch (error) {
       resetField("email");
     }
@@ -47,7 +47,7 @@ export function ChangeEmailForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Info {...info} />
       <div className="mt-6">
-        <Label htmlFor="email">Update email address</Label>
+        <Label htmlFor="email">Perbarui alamat email</Label>
         <TextInput
           {...register("email")}
           type="email"
@@ -57,7 +57,7 @@ export function ChangeEmailForm() {
         />
       </div>
       <Button loading={isMutating} type="submit" className="rounded-tremor-small mt-6">
-        Update email
+        Perbarui email
       </Button>
     </form>
   );

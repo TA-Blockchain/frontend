@@ -5,15 +5,15 @@ import { Divider, Text } from "@tremor/react";
 import React from "react";
 
 const info = {
-  title: "Invite new users",
-  description: "Staf Kementerian can manage companies and carbon trading.",
+  title: "Undang staf baru",
+  description: "Staf Kementerian dapat mengelola perusahaan dan perdagangan karbon.",
 };
 
 export default function StaffPage() {
   return (
     <main>
-      <h1 className="text-tremor-title font-semibold">Staff Management</h1>
-      <Text className="mt-0.5">Manage Staf Kementerian accounts.</Text>
+      <h1 className="text-tremor-title font-semibold">Manajemen Staf</h1>
+      <Text className="mt-0.5">Daftar Staf Kementerian yang terdaftar di platform Carbon Chain.</Text>
 
       <div className="mt-8 space-y-8">
         <div>
@@ -24,7 +24,7 @@ export default function StaffPage() {
         <Divider />
 
         <div>
-          <Info title="Existing users" />
+          <Info title="Staf yang terdaftar" />
           <StafList />
         </div>
       </div>
@@ -32,4 +32,4 @@ export default function StaffPage() {
   );
 }
 
-StaffPage.title = "Staff Management | Carbon Chain";
+StaffPage.title = "Manajemen Staf | Carbon Chain";

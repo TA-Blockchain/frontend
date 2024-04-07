@@ -3,6 +3,11 @@ import { Company } from "./list";
 import { RiAttachment2 } from "@remixicon/react";
 import clsx from "clsx";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
+import { Button } from "@tremor/react";
+import { useMutation } from "@/hooks/use-mutation";
+import { useOptimistic, useOptimisticListUpdate } from "@/hooks/use-optimistic";
+import { toast } from "sonner";
+import { useUser } from "@/hooks/use-user";
 
 const statuses = {
   0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
@@ -15,6 +20,17 @@ const statusText = {
 };
 
 export function CompanyDetails({ details, isLoading }: { details: Company | undefined; isLoading: boolean }) {
+  const { trigger, isMutating } = useMutation(`/company/approve/${details?.id}`, undefined, {
+    method: "PUT",
+  });
+
+  const { mutate: mutateList } = useOptimisticListUpdate("/company");
+  const { mutate } = useOptimistic(`/company/${details?.id}`);
+
+  const {
+    user: { userType },
+  } = useUser();
+
   if (isLoading) {
     return <LoadingDetailsPlaceholder />;
   }
@@ -87,6 +103,33 @@ export function CompanyDetails({ details, isLoading }: { details: Company | unde
           </dd>
         </div>
       </dl>
+
+      {(userType === "admin-kementerian" || userType === "staf-kementerian") && (
+        <div className="flex justify-end">
+          <Button
+            disabled={details.approvalStatus === 1}
+            loading={isMutating}
+            onClick={async () => {
+              await trigger();
+              mutateList(
+                {
+                  approvalStatus: 1,
+                },
+                (item) => item.id === details.id
+              );
+
+              mutate({
+                approvalStatus: 1,
+              });
+
+              toast.success("Perusahaan disetujui.");
+            }}
+            className="rounded-tremor-small"
+          >
+            Setujui Proposal
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

@@ -93,7 +93,7 @@ export function ProposalModal(company: Company) {
                 }}
                 className="rounded-tremor-small"
               >
-                Approve
+                Setujui Proposal
               </Button>
             </div>
           </div>

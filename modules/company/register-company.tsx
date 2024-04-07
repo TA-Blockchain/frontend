@@ -38,10 +38,10 @@ export function RegisterCompany() {
       <div className="relative grid place-items-center h-dvh pt-4">
         <div className="sm:mx-auto sm:max-w-xl w-full sm:text-center">
           <h3 className="text-tremor-title font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
-            Thank you for registering your company&apos;s workspace
+            Perusahaan Anda telah didaftarkan.
           </h3>
           <p className="mt-1 text-tremor-default leading-6 text-tremor-content dark:text-dark-tremor-content">
-            We will review your registration and notify you through email.
+            Formulir Anda segera kami tinjau dan konfirmasi melalui email.
           </p>
         </div>
       </div>
@@ -52,10 +52,10 @@ export function RegisterCompany() {
     <div className="relative grid place-items-center h-full pt-4">
       <div className="sm:mx-auto sm:max-w-xl w-full">
         <h3 className="text-tremor-title font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
-          Register to workspace
+          Daftarkan perusahaan Anda
         </h3>
         <p className="mt-1 text-tremor-default leading-6 text-tremor-content dark:text-dark-tremor-content">
-          Take a few moments to register for your company&apos;s workspace
+          Isi formulir di bawah ini untuk mendaftarkan perusahaan Anda.
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
           <div className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-6">
@@ -154,7 +154,7 @@ export function RegisterCompany() {
                     {...field}
                     id="deskripsi"
                     autoComplete="off"
-                    placeholder="John Doe Inc. is a company that specializes in providing services for..."
+                    placeholder="John Doe Inc. adalah perusahaan yang bergerak di bidang teknologi..."
                     className="mt-2"
                     required
                   />

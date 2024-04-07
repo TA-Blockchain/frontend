@@ -46,12 +46,12 @@ export function LoginForm() {
           </div>
 
           <Button loading={isRequesting} className="mt-6 rounded-tremor-small w-full" type="submit" variant="primary">
-            Sign in to account
+            Masuk
           </Button>
         </form>
         <div className="grid place-items-center mt-6">
           <TextLink href="/password/reset" className="text-sm">
-            Forgot password?
+            Lupa kata sandi Anda?
           </TextLink>
         </div>
       </div>

@@ -16,6 +16,7 @@ const authenticatedPaths = [
   "/shipment",
   "/vehicle",
   "/marketplace",
+  "/notifications",
 ];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {

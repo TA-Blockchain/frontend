@@ -48,4 +48,4 @@ export default function CompanyDetailsPage() {
   );
 }
 
-CompanyDetailsPage.title = "Company Details | Carbon Chain";
+CompanyDetailsPage.title = "Rincian Perusahaan | Carbon Chain";

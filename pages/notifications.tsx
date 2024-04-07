@@ -1,4 +1,3 @@
-import { NotFoundPlaceholder } from "@/modules/template/not-found";
 import React from "react";
 import useSWR from "swr";
 import { Text } from "@tremor/react";
@@ -7,7 +6,7 @@ import { Notification } from "@/modules/layout/notifications/notifications-menu"
 import { NotificationsListLarge } from "@/modules/layout/notifications/notifications-list-large";
 
 export default function NotificationsPage() {
-  const { data, isLoading } = useSWR<{ data: Notification }>("/notifications");
+  const { data } = useSWR<{ data: Notification }>("/notifications");
 
   const {
     user: { userType },
@@ -40,23 +39,13 @@ export default function NotificationsPage() {
       break;
   }
 
-  // Check if any notifications exist
-  const hasNotifications =
-    Object.values(notificationObject).some((item) => {
-      return item && Array.isArray(item) && item.length > 0;
-    }) && !isLoading;
-
   return (
     <main>
       <h1 className="text-tremor-title font-semibold">Notifikasi</h1>
       <Text className="mt-0.5">Kelola notifikasi yang masuk di akun Anda.</Text>
 
       <div className="mt-4">
-        {hasNotifications ? (
-          <NotificationsListLarge notificationObject={notificationObject as Notification} />
-        ) : (
-          <NotFoundPlaceholder description="Tidak ada notifikasi yang ditemukan." />
-        )}
+        <NotificationsListLarge notificationObject={notificationObject as Notification} />
       </div>
     </main>
   );

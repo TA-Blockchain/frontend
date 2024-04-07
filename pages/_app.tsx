@@ -4,7 +4,7 @@ import { ThemeProvider } from "next-themes";
 
 import { Inter } from "next/font/google";
 import BaseLayout from "@/modules/layout/base-layout";
-import { api, fetcher } from "@/lib";
+import { fetcher } from "@/lib";
 
 import { SWRConfig } from "swr";
 import { Seo } from "@/components/seo";
@@ -14,8 +14,6 @@ import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const theme = process.env.NODE_ENV === "production" ? "light" : "dark";
-
 export default function App({
   Component,
   pageProps,
@@ -23,7 +21,7 @@ export default function App({
   Component: { title: string };
 }) {
   return (
-    <ThemeProvider defaultTheme={theme} enableSystem={false} attribute="class">
+    <ThemeProvider enableSystem={false} attribute="class">
       <Seo title={Component.title} />
       <style jsx global>{`
         html {
@@ -33,10 +31,7 @@ export default function App({
       <div>
         <SWRConfig
           value={{
-            fetcher: (url: string) => {
-              if (url.includes("undefined")) return undefined;
-              return api.get(url).then((res) => res.data);
-            },
+            fetcher,
           }}
         >
           <Toaster richColors position="bottom-right" />

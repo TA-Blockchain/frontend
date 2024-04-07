@@ -1,5 +1,5 @@
 import React from "react";
-import { Company } from "./list";
+import { Company, statuses, statusText } from "./list";
 import { RiAttachment2 } from "@remixicon/react";
 import clsx from "clsx";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
@@ -9,18 +9,12 @@ import { useOptimistic, useOptimisticListUpdate } from "@/hooks/use-optimistic";
 import { toast } from "sonner";
 import { useUser } from "@/hooks/use-user";
 
-const statuses = {
-  0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-  1: "text-green-700 bg-green-50 ring-green-600/20",
-};
-
-const statusText = {
-  0: "Waiting for approval",
-  1: "Approved",
-};
-
 export function CompanyDetails({ details, isLoading }: { details: Company | undefined; isLoading: boolean }) {
   const { trigger, isMutating } = useMutation(`/company/approve/${details?.id}`, undefined, {
+    method: "PUT",
+  });
+
+  const { trigger: reject, isMutating: isRejecting } = useMutation(`/company/reject/${details?.id}`, undefined, {
     method: "PUT",
   });
 
@@ -105,29 +99,54 @@ export function CompanyDetails({ details, isLoading }: { details: Company | unde
       </dl>
 
       {(userType === "admin-kementerian" || userType === "staf-kementerian") && (
-        <div className="flex justify-end">
-          <Button
-            disabled={details.approvalStatus === 1}
-            loading={isMutating}
-            onClick={async () => {
-              await trigger();
-              mutateList(
-                {
+        <div className="flex justify-end gap-2">
+          {details.approvalStatus === 0 && (
+            <Button
+              loading={isRejecting || isMutating}
+              onClick={async () => {
+                await reject();
+                mutateList(
+                  {
+                    approvalStatus: -1,
+                  },
+                  (item) => item.id === details.id
+                );
+
+                mutate({
+                  approvalStatus: -1,
+                });
+
+                toast.success("Proposal perusahaan ditolak.");
+              }}
+              className="rounded-tremor-small bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600"
+            >
+              Tolak proposal
+            </Button>
+          )}
+          {details.approvalStatus !== -1 && (
+            <Button
+              disabled={details.approvalStatus === 1}
+              loading={isMutating || isRejecting}
+              onClick={async () => {
+                await trigger();
+                mutateList(
+                  {
+                    approvalStatus: 1,
+                  },
+                  (item) => item.id === details.id
+                );
+
+                mutate({
                   approvalStatus: 1,
-                },
-                (item) => item.id === details.id
-              );
+                });
 
-              mutate({
-                approvalStatus: 1,
-              });
-
-              toast.success("Perusahaan disetujui.");
-            }}
-            className="rounded-tremor-small"
-          >
-            Setujui Proposal
-          </Button>
+                toast.success("Proposal perusahaan disetujui.");
+              }}
+              className="rounded-tremor-small"
+            >
+              {details.approvalStatus === 0 ? "Setujui Proposal" : "Proposal Sudah Disetujui"}
+            </Button>
+          )}
         </div>
       )}
     </div>

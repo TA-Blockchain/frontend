@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
-import { VehicleList } from "@/modules/vehicle/vehicle-list";
+import { VehicleListReadOnly } from "@/modules/vehicle/vehicle-list-read-only";
+import { ShipmentListReadOnly } from "@/modules/shipment/shipment-list-read-only";
 
 export default function DivisionDetailsPage() {
   const router = useRouter();
@@ -35,9 +36,11 @@ export default function DivisionDetailsPage() {
               <DivisionDetails details={division?.data} isLoading={isLoading} />
             </TabPanel>
             <TabPanel>
-              <VehicleList idDivisi={id} />
+              <VehicleListReadOnly idDivisi={id} />
             </TabPanel>
-            <TabPanel>{/* <DetailEmisiKarbon details={company?.data} /> */}</TabPanel>
+            <TabPanel>
+              <ShipmentListReadOnly idDivisi={id} />
+            </TabPanel>
           </TabPanels>
         </TabGroup>
       </div>

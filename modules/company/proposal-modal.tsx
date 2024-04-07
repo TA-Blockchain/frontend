@@ -9,7 +9,11 @@ import { useOptimisticListUpdate } from "@/hooks/use-optimistic";
 export function ProposalModal(company: Company) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { trigger } = useMutation(`/company/approve/${company.id}`, undefined, {
+  const { trigger, isMutating: isApproving } = useMutation(`/company/approve/${company.id}`, undefined, {
+    method: "PUT",
+  });
+
+  const { trigger: reject, isMutating: isRejecting } = useMutation(`/company/reject/${company.id}`, undefined, {
     method: "PUT",
   });
 
@@ -79,8 +83,26 @@ export function ProposalModal(company: Company) {
                 </div>
               </dl>
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end gap-2">
               <Button
+                loading={isRejecting || isApproving}
+                onClick={async () => {
+                  await reject();
+                  mutate(
+                    {
+                      approvalStatus: -1,
+                    },
+                    (item) => item.id === company.id
+                  );
+
+                  toast.success("Proposal perusahaan ditolak.");
+                }}
+                className="rounded-tremor-small bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600"
+              >
+                Tolak proposal
+              </Button>
+              <Button
+                loading={isRejecting || isApproving}
                 onClick={async () => {
                   await trigger();
                   mutate(
@@ -89,7 +111,7 @@ export function ProposalModal(company: Company) {
                     },
                     (item) => item.id === company.id
                   );
-                  toast.success("Perusahaan disetujui.");
+                  toast.success("Proposal perusahaan disetujui.");
                 }}
                 className="rounded-tremor-small"
               >

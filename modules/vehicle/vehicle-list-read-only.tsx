@@ -6,7 +6,7 @@ import { LoadingPlaceholder } from "../template/loading-placeholder";
 
 const placeholderProps = {
   title: "Kendaraan tidak ditemukan",
-  description: "Daftarkan kendaraan baru untuk memulai",
+  description: "Setiap kendaraan yang terdaftar akan tercatat disini.",
 };
 
 type Vehicle = {
@@ -17,7 +17,7 @@ type Vehicle = {
   kmUsage: string;
 };
 
-export function VehicleList({ idDivisi }: { idDivisi: string }) {
+export function VehicleListReadOnly({ idDivisi }: { idDivisi: string }) {
   const { data, isLoading } = useSWR<{ data: Array<Vehicle> }>(`/company/vehicle/${idDivisi}`);
 
   if (isLoading) {

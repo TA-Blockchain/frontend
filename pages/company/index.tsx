@@ -13,6 +13,7 @@ export default function CompanyPage() {
           <TabList>
             <Tab>Disetujui</Tab>
             <Tab>Menunggu Persetujuan</Tab>
+            <Tab>Ditolak</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -20,6 +21,9 @@ export default function CompanyPage() {
             </TabPanel>
             <TabPanel>
               <CompanyList status={0} />
+            </TabPanel>
+            <TabPanel>
+              <CompanyList status={-1} />
             </TabPanel>
           </TabPanels>
         </TabGroup>

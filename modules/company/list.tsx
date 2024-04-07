@@ -21,14 +21,21 @@ const waitingForApprovalPlaceholderProps = {
   description: "Proposal pendaftaran yang masuk akan ditampilkan di halaman ini.",
 };
 
-const statuses = {
-  0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-  1: "text-green-700 bg-green-50 ring-green-600/20",
+const rejectedPlaceholderProps = {
+  title: "Proposal pendaftaran kosong",
+  description: "Proposal pendaftaran yang ditolak akan ditampilkan di halaman ini.",
 };
 
-const statusText = {
-  0: "Waiting for approval",
-  1: "Approved",
+export const statuses = {
+  0: "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
+  1: "text-green-700 bg-green-50 ring-green-600/20",
+  "-1": "text-red-700 bg-red-50 ring-red-600/20",
+};
+
+export const statusText = {
+  0: "Menunggu Persetujuan",
+  1: "Disetujui",
+  "-1": "Ditolak",
 };
 
 export type Company = {
@@ -39,7 +46,7 @@ export type Company = {
   lokasi: string;
   deskripsi: string;
   urlSuratProposal: string;
-  approvalStatus: 0 | 1;
+  approvalStatus: 0 | 1 | -1;
   participantStatus: number;
   supplyChain: Array<any>;
   proposalSupplyChain: Array<any>;
@@ -53,7 +60,7 @@ export type Company = {
 };
 
 type CompanyListProps = {
-  status: 0 | 1;
+  status: 0 | 1 | -1;
 };
 
 export function CompanyList({ status }: CompanyListProps) {
@@ -70,8 +77,10 @@ export function CompanyList({ status }: CompanyListProps) {
   if (companies?.length === 0 || !data) {
     if (status === 0) {
       return <EmptyPlaceholder {...waitingForApprovalPlaceholderProps} />;
+    } else if (status === 1) {
+      return <EmptyPlaceholder {...approvedPlaceholderProps} />;
     }
-    return <EmptyPlaceholder {...approvedPlaceholderProps} />;
+    return <EmptyPlaceholder {...rejectedPlaceholderProps} />;
   }
 
   return (
@@ -101,7 +110,7 @@ export function CompanyList({ status }: CompanyListProps) {
           </div>
           <div className="flex flex-none items-center gap-x-4">
             {company.approvalStatus === 0 && <ProposalModal {...company} />}
-            {company.approvalStatus === 1 && (
+            {(company.approvalStatus === 1 || company.approvalStatus === -1) && (
               <button
                 onClick={() => router.push(`/company/${company.id}`)}
                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"

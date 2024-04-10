@@ -1,7 +1,9 @@
-import { ExclamationTriangleIcon, HandThumbUpIcon, UserIcon } from "@heroicons/react/20/solid";
+import { ExclamationTriangleIcon, HandThumbUpIcon, QuestionMarkCircleIcon, UserIcon } from "@heroicons/react/20/solid";
 import { Notification } from "./notifications-menu";
 
 import { Company } from "@/modules/company/list";
+import { Shipment } from "@/modules/shipment/shipment-list";
+import { getReadableDateTime } from "@/lib";
 
 function handleNotificationType(key: keyof Notification, value: any) {
   // Handle single values
@@ -24,29 +26,37 @@ function handleNotificationType(key: keyof Notification, value: any) {
           Perusahaan <b>{company.nama}</b> menunggu persetujuan proposal registrasi.
         </span>
       );
+      href = `/company/${company.id}`;
       icon = ExclamationTriangleIcon;
       iconBackground = "bg-yellow-500";
-      href = `/company/${company.id}`;
       break;
     case "supplyChain":
-      content = "Menunggu persetujuan rantai pasok";
+      content = "Menunggu persetujuan Anda untuk memvalidasi proposal Supply Chain";
       icon = HandThumbUpIcon;
       iconBackground = "bg-blue-500";
       break;
     case "carbonTransaction":
-      content = "Menunggu persetujuan transaksi karbon";
+      content = "Menunggu persetujuan Anda untuk memvalidasi transaksi karbon";
       icon = HandThumbUpIcon;
       iconBackground = "bg-blue-500";
       break;
     case "supplyChainPending":
-      content = "Menunggu persetujuan rantai pasok";
+      content = "Menunggu persetujuan Anda untuk bergabung ke Supply Chain";
       icon = HandThumbUpIcon;
       iconBackground = "bg-blue-500";
       break;
     case "shipment":
-      content = "Menunggu persetujuan pengiriman";
-      icon = HandThumbUpIcon;
-      iconBackground = "bg-blue-500";
+      const shipment = value as Shipment;
+      console.log(shipment);
+      const waktuBerangkat = getReadableDateTime(shipment.waktuBerangkat);
+      content = (
+        <span>
+          Menunggu persetujuan perjalanan <b>{waktuBerangkat}</b>
+        </span>
+      );
+      href = `/shipment/${shipment.id}`;
+      icon = QuestionMarkCircleIcon;
+      iconBackground = "bg-orange-400";
       break;
     default:
       break;

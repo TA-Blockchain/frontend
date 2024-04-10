@@ -96,3 +96,25 @@ export function getDateTime(date: Date, time: string) {
 
   return tanggalBerangkat;
 }
+
+export function getCurrentTime() {
+  const currentDate = new Date();
+  const currentHour = currentDate.getHours().toString().padStart(2, "0");
+  const currentMinute = currentDate.getMinutes().toString().padStart(2, "0");
+  return `${currentHour}:${currentMinute}`;
+}
+
+export function getReadableDateTime(date: string) {
+  return (
+    new Date(date).toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }) +
+    ", " +
+    new Date(date).toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  );
+}

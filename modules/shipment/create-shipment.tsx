@@ -10,7 +10,7 @@ import { SearchSelect, SearchSelectItem } from "@tremor/react";
 import { Division } from "../divisions/division-list";
 import useSWR from "swr";
 import { Vehicle } from "../vehicle/vehicle-list";
-import { getDateTime } from "@/lib";
+import { getCurrentTime, getDateTime } from "@/lib";
 
 type CreateShipmentPayload = {
   idSupplyChain: string;
@@ -214,9 +214,10 @@ export function CreateShipment() {
                   </Label>
                   <div className="mt-2">
                     <input
+                      {...register("waktuBerangkat")}
                       className="text-gray-700 focus:ring-2 focus:ring-[#bfdbfe] transition duration-100 text-sm w-full border border-gray-200 focus:border-tremor-brand-subtle rounded-tremor-small"
                       type="time"
-                      {...register("waktuBerangkat")}
+                      min={getCurrentTime()}
                       required
                     />
                   </div>

@@ -1,18 +1,35 @@
 import useSWR from "swr";
 
+import { Avatar } from "@/components/avatar";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 import { LoadingPlaceholder } from "../template/loading-placeholder";
-import { Shipment } from "./shipment-list";
+import { useUser } from "@/hooks/use-user";
 
 const placeholderProps = {
   title: "Perjalanan tidak ditemukan",
   description: "Setiap perjalanan antar divisi akan tercatat disini.",
 };
 
-export function ShipmentListReadOnly({ idDivisi }: { idDivisi: string }) {
-  const { data, isLoading } = useSWR<{ data: Array<Shipment> }>(`/company/shipment/${idDivisi}`);
+export type Shipment = {
+  id: string;
+  idPerusahaan: string;
+  idSupplyChain: string;
+  idDivisiPengirim: string;
+  idDivisiPenerima: string;
+  status: "Need Approval" | "Approved" | "Rejected";
+  waktuBerangkat: string;
+  waktuSampai: string;
+  idTransportasi: string;
+  beratMuatan: number;
+  emisiKarbon: number;
+};
 
-  console.log(data);
+export function ShipmentList() {
+  const {
+    user: { idDivisi },
+  } = useUser();
+
+  const { data, isLoading } = useSWR<{ data: Array<Shipment> }>(`/company/shipment/${idDivisi}`);
 
   if (isLoading) {
     return <LoadingPlaceholder />;

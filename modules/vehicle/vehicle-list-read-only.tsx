@@ -3,18 +3,11 @@ import useSWR from "swr";
 import { Avatar } from "@/components/avatar";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 import { LoadingPlaceholder } from "../template/loading-placeholder";
+import { Vehicle } from "./vehicle-list";
 
 const placeholderProps = {
   title: "Kendaraan tidak ditemukan",
   description: "Setiap kendaraan yang terdaftar akan tercatat disini.",
-};
-
-type Vehicle = {
-  id: string;
-  divisi: string;
-  carModel: string;
-  fuelType: string;
-  kmUsage: string;
 };
 
 export function VehicleListReadOnly({ idDivisi }: { idDivisi: string }) {

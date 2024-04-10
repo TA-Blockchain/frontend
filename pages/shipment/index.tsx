@@ -1,6 +1,6 @@
 import { Info } from "@/components/info";
-import { CreateDivision } from "@/modules/divisions/create-division";
-import { DivisionList } from "@/modules/divisions/division-list";
+import { ShipmentList } from "@/modules/shipment/shipment-list";
+import { CreateShipment } from "@/modules/shipment/create-shipment";
 import { Divider, Text } from "@tremor/react";
 import React from "react";
 
@@ -18,14 +18,14 @@ export default function ShipmentPage() {
       <div className="mt-8 space-y-8">
         <div>
           <Info {...info} />
-          {/* <CreateShipment /> */}
+          <CreateShipment />
         </div>
 
         <Divider />
 
         <div>
-          <Info title="Kendaraan yang terdaftar" />
-          {/* <ShipmentList /> */}
+          <Info title="Perjalanan yang tercatat" />
+          <ShipmentList />
         </div>
       </div>
     </main>

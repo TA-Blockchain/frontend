@@ -2,10 +2,14 @@ import { Label } from "@/components/label";
 import { useUser } from "@/hooks/use-user";
 import { ChangeEmailForm } from "@/modules/account/change-email-form";
 import { ChangePasswordForm } from "@/modules/account/change-password-form";
+import { Division } from "@/modules/divisions/division-list";
 import { Divider, TextInput } from "@tremor/react";
+import useSWR from "swr";
 
 export default function AccountSettingsPage() {
   const { user } = useUser();
+
+  const { data: divisi } = useSWR<{ data: Division }>(`/company/division/detail/${user.idDivisi}`);
 
   return (
     <>
@@ -34,6 +38,12 @@ export default function AccountSettingsPage() {
             <Label>Peran</Label>
             <TextInput value={user.userType} className="mt-2 w-full rounded-tremor-small sm:max-w-lg" disabled />
           </div>
+          {user.idDivisi && (
+            <div className="mt-4">
+              <Label>Divisi</Label>
+              <TextInput value={divisi?.data.name} className="mt-2 w-full rounded-tremor-small sm:max-w-lg" disabled />
+            </div>
+          )}
         </div>
 
         <Divider />

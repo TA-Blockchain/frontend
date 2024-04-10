@@ -1,6 +1,6 @@
 import { Info } from "@/components/info";
-import { CreateDivision } from "@/modules/divisions/create-division";
-import { DivisionList } from "@/modules/divisions/division-list";
+import { CreateVehicle } from "@/modules/vehicle/create-vehicle";
+import { VehicleList } from "@/modules/vehicle/vehicle-list";
 import { Divider, Text } from "@tremor/react";
 import React from "react";
 
@@ -18,14 +18,14 @@ export default function VehiclePage() {
       <div className="mt-8 space-y-8">
         <div>
           <Info {...info} />
-          {/* <CreateVehicle /> */}
+          <CreateVehicle />
         </div>
 
         <Divider />
 
         <div>
           <Info title="Kendaraan yang terdaftar" />
-          {/* <VehicleList /> */}
+          <VehicleList />
         </div>
       </div>
     </main>

@@ -14,6 +14,7 @@ type UserData = {
   email: string;
   id: string;
   idPerusahaan: string;
+  idDivisi: string;
   organizationName: string;
   userType: UserType;
   username: string;

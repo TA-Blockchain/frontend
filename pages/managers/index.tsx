@@ -24,7 +24,7 @@ export default function ManagersPage() {
         <Divider />
 
         <div>
-          <Info title="Existing users" />
+          <Info title="Manajer yang terdaftar" />
           <ManagerList />
         </div>
       </div>

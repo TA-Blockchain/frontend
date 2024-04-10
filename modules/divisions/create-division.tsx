@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Dialog, DialogPanel, Textarea, TextInput } from "@tremor/react";
 import { Controller, useForm, FormProvider } from "react-hook-form";
 import { useMutation } from "@/hooks/use-mutation";

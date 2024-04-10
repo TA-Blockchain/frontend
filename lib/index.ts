@@ -81,3 +81,18 @@ const handleInvalidToken = (message: string, callback?: () => void) => {
     callback?.();
   }
 };
+
+export function getDateTime(date: Date, time: string) {
+  const tanggalBerangkat = new Date(date);
+
+  // Extracting the time components
+  var timeComponents = time.split(":");
+  var hours = parseInt(timeComponents[0]);
+  var minutes = parseInt(timeComponents[1]);
+
+  // Setting the time components to the date object
+  tanggalBerangkat.setHours(hours);
+  tanggalBerangkat.setMinutes(minutes);
+
+  return tanggalBerangkat;
+}

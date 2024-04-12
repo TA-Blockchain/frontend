@@ -1,4 +1,4 @@
-import { CompanyList } from "@/modules/company/list";
+import { SupplyChainList } from "@/modules/supply-chain/supply-chain-list";
 import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
 import React from "react";
 
@@ -11,15 +11,19 @@ export default function SupplyChainPage() {
       <div className="mt-4">
         <TabGroup className="mt-6">
           <TabList>
-            <Tab>Disetujui</Tab>
+            <Tab>Aktif</Tab>
             <Tab>Menunggu Persetujuan</Tab>
+            <Tab>Ditolak</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
-              <CompanyList status={1} />
+              <SupplyChainList status="approve" />
             </TabPanel>
             <TabPanel>
-              <CompanyList status={0} />
+              <SupplyChainList status="pending" />
+            </TabPanel>
+            <TabPanel>
+              <SupplyChainList status="reject" />
             </TabPanel>
           </TabPanels>
         </TabGroup>

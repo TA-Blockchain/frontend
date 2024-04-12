@@ -66,8 +66,6 @@ type CompanyListProps = {
 export function CompanyList({ status }: CompanyListProps) {
   const { data, isLoading } = useSWR<{ data: Array<Company> }>("/company");
 
-  const router = useRouter();
-
   if (isLoading) {
     return <LoadingPlaceholder />;
   }
@@ -86,41 +84,49 @@ export function CompanyList({ status }: CompanyListProps) {
   return (
     <ul role="list" className="divide-y divide-gray-100">
       {companies?.map((company) => (
-        <li key={company.id} className="px-1 even:bg-gray-50 flex items-center justify-between gap-x-6 py-5">
-          <div className="flex items-center gap-4">
-            <RiBuildingLine className="w-8 h-8 text-gray-500" />
-            <div className="min-w-0">
-              <div className="flex items-start gap-x-3">
-                <p className="text-sm font-semibold leading-6 text-gray-900">{company.nama}</p>
-                <p
-                  className={clsx(
-                    statuses[company.approvalStatus],
-                    "max-sm:hidden rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
-                  )}
-                >
-                  {statusText[company.approvalStatus]}
-                </p>
-              </div>
-              <p className="mt-0.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-                <a href={`mailto:${company.email}`} className="truncate hover:underline">
-                  {company.email}
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-none items-center gap-x-4">
-            {company.approvalStatus === 0 && <ProposalModal {...company} />}
-            {(company.approvalStatus === 1 || company.approvalStatus === -1) && (
-              <button
-                onClick={() => router.push(`/company/${company.id}`)}
-                className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
-              >
-                Lihat rincian<span className="sr-only">, {company.nama}</span>
-              </button>
-            )}
-          </div>
-        </li>
+        <CompanyListItem key={company.id} company={company} />
       ))}
     </ul>
+  );
+}
+
+export function CompanyListItem({ company }: { company: Company }) {
+  const router = useRouter();
+
+  return (
+    <li key={company.id} className="px-1 even:bg-gray-50 flex items-center justify-between gap-x-6 py-5">
+      <div className="flex items-center gap-4">
+        <RiBuildingLine className="w-8 h-8 text-gray-500" />
+        <div className="min-w-0">
+          <div className="flex items-start gap-x-3">
+            <p className="text-sm font-semibold leading-6 text-gray-900">{company.nama}</p>
+            <p
+              className={clsx(
+                statuses[company.approvalStatus],
+                "max-sm:hidden rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+              )}
+            >
+              {statusText[company.approvalStatus]}
+            </p>
+          </div>
+          <p className="mt-0.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+            <a href={`mailto:${company.email}`} className="truncate hover:underline">
+              {company.email}
+            </a>
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-none items-center gap-x-4">
+        {company.approvalStatus === 0 && <ProposalModal {...company} />}
+        {(company.approvalStatus === 1 || company.approvalStatus === -1) && (
+          <button
+            onClick={() => router.push(`/company/${company.id}`)}
+            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
+          >
+            Lihat rincian<span className="sr-only">, {company.nama}</span>
+          </button>
+        )}
+      </div>
+    </li>
   );
 }

@@ -1,4 +1,10 @@
-import { ExclamationTriangleIcon, HandThumbUpIcon, QuestionMarkCircleIcon, UserIcon } from "@heroicons/react/20/solid";
+import {
+  ExclamationTriangleIcon,
+  HandThumbUpIcon,
+  MegaphoneIcon,
+  QuestionMarkCircleIcon,
+  UserIcon,
+} from "@heroicons/react/20/solid";
 import { Notification } from "./notifications-menu";
 
 import { Company } from "@/modules/company/list";
@@ -32,8 +38,8 @@ function handleNotificationType(key: keyof Notification, value: any) {
       break;
     case "supplyChain":
       content = "Menunggu persetujuan Anda untuk memvalidasi proposal Supply Chain";
-      icon = HandThumbUpIcon;
-      iconBackground = "bg-blue-500";
+      icon = MegaphoneIcon;
+      iconBackground = "bg-yellow-500";
       break;
     case "carbonTransaction":
       content = "Menunggu persetujuan Anda untuk memvalidasi transaksi karbon";

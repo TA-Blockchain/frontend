@@ -175,10 +175,10 @@ export function RegisterCompany() {
               type="button"
               className="whitespace-nowrap rounded-tremor-small px-4 py-2.5 text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong"
             >
-              Cancel
+              Batal
             </button>
             <Button loading={status.state === "loading"} type="submit" className="rounded-tremor-small">
-              Submit
+              Daftar
             </Button>
           </div>
         </form>

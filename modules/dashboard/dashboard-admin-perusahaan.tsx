@@ -1,10 +1,9 @@
 import React from "react";
-import { RiExternalLinkLine } from "@remixicon/react";
 import { Card } from "@tremor/react";
 import { useUser } from "@/hooks/use-user";
 import useSWR from "swr";
 import { CompanyDetails } from "@/modules/company/details";
-import { DetailSupplyChain } from "@/modules/company/supply-chain";
+import { ListSupplyChain } from "@/modules/company/supply-chain/list-supply-chain";
 import { DetailEmisiKarbon } from "@/modules/company/emisi-karbon";
 import { Company } from "@/modules/company/list";
 import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
@@ -68,7 +67,7 @@ export default function DashboardAdminPerusahaan() {
               <CompanyDetails details={company?.data} isLoading={isLoading} />
             </TabPanel>
             <TabPanel>
-              <DetailSupplyChain details={company?.data} />
+              <ListSupplyChain details={company?.data} />
             </TabPanel>
             <TabPanel>
               <DetailEmisiKarbon details={company?.data} />

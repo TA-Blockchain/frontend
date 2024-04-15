@@ -45,7 +45,10 @@ export type SupplyChain = {
   id: string;
   listPerusahaan: Array<string>;
   status: "pending" | "Menunggu Persetujuan Perusahaan" | "reject" | "approve";
-  proposalSupplyChain: Array<any>;
+  proposalSupplyChain: Array<{
+    id: string;
+    status: "pending" | "reject" | "approve";
+  }>;
 };
 
 type SupplyChainListProps = {

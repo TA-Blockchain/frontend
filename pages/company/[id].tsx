@@ -5,7 +5,7 @@ import { NotFoundPlaceholder } from "@/modules/template/not-found";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
-import { DetailSupplyChain } from "@/modules/company/supply-chain";
+import { DetailSupplyChain } from "@/modules/company/supply-chain/list-supply-chain";
 import { DetailEmisiKarbon } from "@/modules/company/emisi-karbon";
 
 export default function CompanyDetailsPage() {

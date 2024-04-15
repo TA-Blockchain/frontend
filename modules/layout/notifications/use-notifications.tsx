@@ -10,6 +10,7 @@ import { Notification } from "./notifications-menu";
 import { Company } from "@/modules/company/list";
 import { Shipment } from "@/modules/shipment/shipment-list";
 import { getReadableDateTime } from "@/lib";
+import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
 
 function handleNotificationType(key: keyof Notification, value: any) {
   // Handle single values
@@ -37,7 +38,9 @@ function handleNotificationType(key: keyof Notification, value: any) {
       iconBackground = "bg-yellow-500";
       break;
     case "supplyChain":
+      const supplyChain = value as SupplyChain;
       content = "Menunggu persetujuan Anda untuk memvalidasi proposal Supply Chain";
+      href = `/supply-chain/${supplyChain.id}`;
       icon = MegaphoneIcon;
       iconBackground = "bg-yellow-500";
       break;
@@ -47,13 +50,14 @@ function handleNotificationType(key: keyof Notification, value: any) {
       iconBackground = "bg-blue-500";
       break;
     case "supplyChainPending":
+      const supplyChainPending = value as SupplyChain;
       content = "Menunggu persetujuan Anda untuk bergabung ke Supply Chain";
-      icon = HandThumbUpIcon;
-      iconBackground = "bg-blue-500";
+      href = `/supply-chain/${supplyChainPending.id}`;
+      icon = MegaphoneIcon;
+      iconBackground = "bg-orange-500";
       break;
     case "shipment":
       const shipment = value as Shipment;
-      console.log(shipment);
       const waktuBerangkat = getReadableDateTime(shipment.waktuBerangkat);
       content = (
         <span>

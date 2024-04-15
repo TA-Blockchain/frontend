@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
-import { SupplyChainDetails } from "@/modules/supply-chain/supply-chain-details";
+import { SupplyChainDetails } from "@/modules/supply-chain/details/supply-chain-details";
 
 export default function SupplyChainDetailsPage() {
   const router = useRouter();

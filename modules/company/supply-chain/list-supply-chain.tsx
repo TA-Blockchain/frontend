@@ -1,15 +1,16 @@
 import React from "react";
-import { Company } from "./list";
-import { EmptyPlaceholder } from "../template/empty-placeholder";
+import { Company } from "../list";
+import { EmptyPlaceholder } from "@/modules/template/empty-placeholder";
 import { Button } from "@tremor/react";
 import { useUser } from "@/hooks/use-user";
+import { SupplyChainItem } from "./supply-chain-item";
 
 const info = {
   title: "Data supply chain tidak ditemukan",
   description: "Ikut serta dalam supply chain untuk melihat data supply chain perusahaan.",
 };
 
-export function DetailSupplyChain({ details }: { details: Company | undefined }) {
+export function ListSupplyChain({ details }: { details: Company | undefined }) {
   const {
     user: { idPerusahaan },
   } = useUser();
@@ -27,5 +28,11 @@ export function DetailSupplyChain({ details }: { details: Company | undefined })
     );
   }
 
-  return <div>supply-chain</div>;
+  return (
+    <ul role="list" className="divide-y divide-gray-100">
+      {details.supplyChain.map((id) => {
+        return <SupplyChainItem key={id} id={id} />;
+      })}
+    </ul>
+  );
 }

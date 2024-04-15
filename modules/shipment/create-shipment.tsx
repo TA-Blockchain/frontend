@@ -116,7 +116,13 @@ export function CreateShipment() {
                         }
                       }}
                       enableClear
-                      placeholder={isLoadingDivisi ? "Memuat divisi penerima..." : "Pilih divisi penerima"}
+                      placeholder={
+                        isLoadingDivisi
+                          ? "Memuat divisi penerima..."
+                          : divisions.length === 0
+                          ? "Divisi tidak tersedia"
+                          : "Pilih divisi penerima"
+                      }
                       className="mt-2 w-full rounded-tremor-small"
                       required
                     >
@@ -147,7 +153,13 @@ export function CreateShipment() {
                           }
                         }}
                         enableClear
-                        placeholder={isLoadingKendaraan ? "Memuat kendaraan..." : "Pilih kendaraan"}
+                        placeholder={
+                          isLoadingKendaraan
+                            ? "Memuat kendaraan..."
+                            : vehicles.length === 0
+                            ? "Kendaraan tidak tersedia"
+                            : "Pilih kendaraan"
+                        }
                         className="mt-2 w-full rounded-tremor-small"
                         required
                       >

@@ -34,11 +34,11 @@ api.interceptors.response.use(
     console.log(error);
     // Network Error
     if (error.code === "ERR_NETWORK") {
-      toast.error("Network error, please try again later.");
+      toast.error("Terjadi kesalahan jaringan.");
 
       // Interval Server Error
     } else if (error.response?.status === 500) {
-      toast.error("Something wrong, please try again later.");
+      toast.error("Terjadi kesalahan pada server.");
 
       // API Error
     } else if (error.response?.data.error) {
@@ -73,7 +73,7 @@ export const loadingPlaceholder = (length: number) => Array.from({ length }, (_)
 
 const handleInvalidToken = (message: string, callback?: () => void) => {
   if (message === "Invalid token") {
-    toast.error("Invalid token, please login again.");
+    toast.error("Token tidak valid. Silahkan login kembali.");
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     Router.replace("/login");

@@ -7,8 +7,8 @@ import { RiArrowRightUpLine, RiCommunityLine } from "@remixicon/react";
 import Link from "next/link";
 
 const placeholderProps = {
-  title: "No divisions found",
-  description: "Create new divisions to get started",
+  title: "Divisi belum tersedia",
+  description: "Tambahkan divisi perusahaan Anda untuk memulai.",
 };
 
 export type Division = {

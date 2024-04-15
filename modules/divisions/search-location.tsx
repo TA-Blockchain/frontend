@@ -122,7 +122,9 @@ export default function SearchLocation({
         )}
 
         {keyword !== "" && places.length === 0 && (
-          <p className="absolute w-full p-4 text-sm bg-[#ffffff] text-gray-500">No places found.</p>
+          <p className="absolute w-full p-4 text-sm bg-[#ffffff] text-gray-500">
+            Tidak ada hasil yang ditemukan untuk <b>{keyword}</b>
+          </p>
         )}
       </Combobox>
     </div>

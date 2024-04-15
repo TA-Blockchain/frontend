@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import useSWR from "swr";
 
 import { mutate as swrMutate } from "swr";
+import { useBanner } from "./use-banner";
 
 type UserState = "authenticated" | "unauthenticated" | "loading";
 
@@ -54,6 +55,8 @@ export function useUser(): {
 
     return null;
   });
+
+  const { resetBanner } = useBanner();
 
   const [isRequesting, setIsRequesting] = React.useState(false);
 
@@ -110,7 +113,9 @@ export function useUser(): {
     toast.success("Anda telah keluar.", {
       id,
     });
-  }, [router]);
+
+    resetBanner();
+  }, [resetBanner, router]);
 
   let state: UserState = "loading";
 

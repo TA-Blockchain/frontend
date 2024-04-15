@@ -122,7 +122,13 @@ export function CreateDivision() {
                     }
                   }}
                   enableClear
-                  placeholder={isLoadingManagers ? "Memuat manajer..." : "Pilih manajer"}
+                  placeholder={
+                    isLoadingManagers
+                      ? "Memuat manajer..."
+                      : managers.length === 0
+                      ? "Manajer tidak tersedia"
+                      : "Pilih manajer"
+                  }
                   className="w-full rounded-tremor-small sm:max-w-xs"
                   required
                 >

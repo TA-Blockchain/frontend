@@ -11,6 +11,7 @@ import { Seo } from "@/components/seo";
 import { Toaster } from "sonner";
 import { useUser } from "@/hooks/use-user";
 import React from "react";
+import { BannerProvider } from "@/hooks/use-banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,10 +36,12 @@ export default function App({
           }}
         >
           <Toaster richColors position="bottom-right" />
-          <BaseLayout>
-            <PageLoader />
-            <Component {...pageProps} />
-          </BaseLayout>
+          <BannerProvider>
+            <BaseLayout>
+              <PageLoader />
+              <Component {...pageProps} />
+            </BaseLayout>
+          </BannerProvider>
         </SWRConfig>
       </div>
     </ThemeProvider>

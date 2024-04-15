@@ -105,7 +105,7 @@ export function SupplyChainList({ status }: SupplyChainListProps) {
                 <p
                   className={clsx(
                     statuses[sc.status],
-                    "max-sm:hidden rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                    "rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
                   )}
                 >
                   {statusText[sc.status]}

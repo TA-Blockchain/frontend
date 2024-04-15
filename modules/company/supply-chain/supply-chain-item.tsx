@@ -3,7 +3,6 @@ import React from "react";
 import useSWR from "swr";
 import { SmallLoadingPlaceholder } from "@/modules/template/small-loading-placeholder";
 import { statuses, statusText, SupplyChain } from "@/modules/supply-chain/supply-chain-list";
-import { useRouter } from "next/router";
 import { RiArrowRightUpLine, RiBuilding2Line } from "@remixicon/react";
 import clsx from "clsx";
 import Link from "next/link";
@@ -22,8 +21,6 @@ export function SupplyChainItem({ id }: { id: string }) {
 }
 
 function SupplyChainListItem({ supplyChain }: { supplyChain: SupplyChain }) {
-  const router = useRouter();
-
   return (
     <Link href={`/supply-chain/${supplyChain.id}`} key={supplyChain.id}>
       <Card className="group px-4 pt-5 pb-1">
@@ -47,7 +44,7 @@ function SupplyChainListItem({ supplyChain }: { supplyChain: SupplyChain }) {
             <p
               className={clsx(
                 statuses[supplyChain.status],
-                "max-sm:hidden rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                "rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
               )}
             >
               {statusText[supplyChain.status]}

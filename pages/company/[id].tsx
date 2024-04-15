@@ -5,7 +5,7 @@ import { NotFoundPlaceholder } from "@/modules/template/not-found";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
-import { DetailSupplyChain } from "@/modules/company/supply-chain/list-supply-chain";
+import { ListSupplyChain } from "@/modules/company/supply-chain/list-supply-chain";
 import { DetailEmisiKarbon } from "@/modules/company/emisi-karbon";
 
 export default function CompanyDetailsPage() {
@@ -36,7 +36,7 @@ export default function CompanyDetailsPage() {
               <CompanyDetails details={company?.data} isLoading={isLoading} />
             </TabPanel>
             <TabPanel>
-              <DetailSupplyChain details={company?.data} />
+              <ListSupplyChain details={company?.data} />
             </TabPanel>
             <TabPanel>
               <DetailEmisiKarbon details={company?.data} />

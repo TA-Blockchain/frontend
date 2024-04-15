@@ -4,8 +4,10 @@ import useSWR from "swr";
 import { SmallLoadingPlaceholder } from "@/modules/template/small-loading-placeholder";
 import { statuses, statusText, SupplyChain } from "@/modules/supply-chain/supply-chain-list";
 import { useRouter } from "next/router";
-import { RiBuilding2Line } from "@remixicon/react";
+import { RiArrowRightUpLine, RiBuilding2Line } from "@remixicon/react";
 import clsx from "clsx";
+import Link from "next/link";
+import { Card } from "@tremor/react";
 
 export function SupplyChainItem({ id }: { id: string }) {
   const { data, isLoading } = useSWR<{ data: SupplyChain }>(`/company/supply_chain/${id}`);
@@ -23,36 +25,42 @@ function SupplyChainListItem({ supplyChain }: { supplyChain: SupplyChain }) {
   const router = useRouter();
 
   return (
-    <li key={supplyChain.id} className="px-1 even:bg-gray-50 flex items-center justify-between gap-x-6 py-5">
-      <div className="flex items-center gap-4">
-        <RiBuilding2Line className="shrink-0 w-8 h-8 text-gray-500" />
-        <div className="overflow-hidden">
-          <div className="flex items-start gap-x-3">
-            <p className="text-sm font-semibold leading-6 text-gray-900">Lorem</p>
+    <Link href={`/supply-chain/${supplyChain.id}`} key={supplyChain.id}>
+      <Card className="group px-4 pt-5 pb-1">
+        <div className="flex space-x-2">
+          <div className="p-2 shrink-0">
+            <RiBuilding2Line className="w-12 h-12 text-gray-600" />
+          </div>
+          <div className="mt-1 overflow-hidden">
+            <p className="truncate text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+              Lorem Ipsum
+            </p>
+            <p className="mt-1 line-clamp-2 text-xs text-tremor-content dark:text-dark-tremor-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi voluptate delectus consequuntur, modi
+              excepturi aut natus mollitia accusantium adipisci earum tenetur inventore, ipsa ullam repudiandae
+              laudantium autem iure reprehenderit? Aut.
+            </p>
+          </div>
+        </div>
+        <div className="mt-2 grid place-items-end divide-x divide-tremor-border border-t border-tremor-border dark:divide-dark-tremor-border dark:border-dark-tremor-border">
+          <div className="py-2">
             <p
               className={clsx(
                 statuses[supplyChain.status],
-                "max-sm:hidden rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
+                "max-sm:hidden rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
               )}
             >
               {statusText[supplyChain.status]}
             </p>
           </div>
-          <p className="mt-0.5 gap-x-2 text-xs leading-5 text-gray-500 max-w-2xl line-clamp-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, velit laborum dolor nemo temporibus aut, qui
-            unde sunt voluptatibus nostrum aliquid, voluptatem quisquam! Nam reiciendis reprehenderit maxime facilis at
-            odit.
-          </p>
         </div>
-      </div>
-      <div className="flex flex-none items-center gap-x-4">
-        <button
-          onClick={() => router.push(`/supply-chain/${supplyChain.id}`)}
-          className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
+        <span
+          className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-content dark:text-dark-tremor-content-subtle group-hover:dark:text-dark-tremor-content"
+          aria-hidden={true}
         >
-          Lihat rincian<span className="sr-only">, Lorem</span>
-        </button>
-      </div>
-    </li>
+          <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />
+        </span>
+      </Card>
+    </Link>
   );
 }

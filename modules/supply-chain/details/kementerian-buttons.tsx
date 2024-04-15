@@ -69,7 +69,9 @@ export function KementerianButtons({ details }: { details: SupplyChain }) {
             }}
             className="rounded-tremor-small"
           >
-            {details.status === "pending" ? "Setujui Proposal" : "Proposal Sudah Disetujui"}
+            {details.status === "pending" && "Setujui Proposal"}
+            {details.status === "Menunggu Persetujuan Perusahaan" && "Proposal Sudah Disetujui"}
+            {details.status === "approve" && "Supply Chain Sudah Disetujui"}
           </Button>
         )}
       </div>

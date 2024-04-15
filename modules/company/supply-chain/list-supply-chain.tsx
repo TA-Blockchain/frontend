@@ -29,10 +29,10 @@ export function ListSupplyChain({ details }: { details: Company | undefined }) {
   }
 
   return (
-    <ul role="list" className="divide-y divide-gray-100">
+    <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {details.supplyChain.map((id) => {
         return <SupplyChainItem key={id} id={id} />;
       })}
-    </ul>
+    </div>
   );
 }

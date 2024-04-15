@@ -68,7 +68,7 @@ export function Header() {
               if (window.history?.length > 2) {
                 router.back();
               } else {
-                router.replace("/dashboard");
+                router.push("/dashboard");
               }
             }}
             className="flex items-center gap-2 p-3 rounded-tremor-small text-tremor-content hover:bg-tremor-brand-faint hover:text-tremor-brand-subtle max-md:hidden"

@@ -61,7 +61,7 @@ export function PerusahaanButtons({ details }: { details: SupplyChain }) {
             Tolak proposal
           </Button>
         )}
-        {!hasPerusahaanReject && !data && (
+        {!hasPerusahaanReject && !data && details.status !== "approve" && (
           <Button
             disabled={hasPerusahaanApproved}
             loading={isMutating}

@@ -22,7 +22,7 @@ export function SupplyChainDetails({ details, isLoading }: { details: SupplyChai
       <dl className="divide-y divide-gray-100">
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Nama</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Lorem</dd>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.Nama}</dd>
         </div>
 
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -42,10 +42,7 @@ export function SupplyChainDetails({ details, isLoading }: { details: SupplyChai
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Deskripsi</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <div className="sm:w-3/4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quam harum aut, architecto illum facilis non
-              alias illo aliquid voluptatibus? Dicta sed aliquam quisquam necessitatibus amet, doloribus porro sequi et.
-            </div>
+            <div className="sm:w-3/4">{details.Deskripsi}</div>
           </dd>
         </div>
 

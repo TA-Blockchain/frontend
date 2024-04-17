@@ -4,6 +4,7 @@ import { EmptyPlaceholder } from "@/modules/template/empty-placeholder";
 import { Button } from "@tremor/react";
 import { useUser } from "@/hooks/use-user";
 import { SupplyChainItem } from "./supply-chain-item";
+import { CreateSupplyChain } from "./create-supply-chain";
 
 const info = {
   title: "Data supply chain tidak ditemukan",
@@ -20,12 +21,7 @@ export function ListSupplyChain({ details }: { details: Company | undefined }) {
   const supplyChainIds = details.supplyChain;
   if (!supplyChainIds || supplyChainIds.length === 0) {
     const isOwner = details?.id === idPerusahaan;
-    return (
-      <EmptyPlaceholder
-        {...info}
-        button={isOwner ? <Button className="rounded-tremor-small">Buat supply chain</Button> : null}
-      />
-    );
+    return <EmptyPlaceholder {...info} button={isOwner ? <CreateSupplyChain details={details} /> : null} />;
   }
 
   return (

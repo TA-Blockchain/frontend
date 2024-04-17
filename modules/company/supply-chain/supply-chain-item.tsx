@@ -30,12 +30,10 @@ function SupplyChainListItem({ supplyChain }: { supplyChain: SupplyChain }) {
           </div>
           <div className="mt-1 overflow-hidden">
             <p className="truncate text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-              Lorem Ipsum
+              {supplyChain.Nama}
             </p>
             <p className="mt-1 line-clamp-2 text-xs text-tremor-content dark:text-dark-tremor-content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi voluptate delectus consequuntur, modi
-              excepturi aut natus mollitia accusantium adipisci earum tenetur inventore, ipsa ullam repudiandae
-              laudantium autem iure reprehenderit? Aut.
+              {supplyChain.Deskripsi}
             </p>
           </div>
         </div>

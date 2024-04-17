@@ -1,6 +1,5 @@
 import useSWR from "swr";
 
-import { useRouter } from "next/navigation";
 import { LoadingPlaceholder } from "../template/loading-placeholder";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 import { RiArrowRightUpLine, RiBuilding2Line } from "@remixicon/react";
@@ -43,6 +42,8 @@ export const statusText = {
 
 export type SupplyChain = {
   id: string;
+  Nama: string;
+  Deskripsi: string;
   listPerusahaan: Array<string>;
   status: "pending" | "Menunggu Persetujuan Perusahaan" | "reject" | "approve";
   proposalSupplyChain: Array<{
@@ -57,8 +58,6 @@ type SupplyChainListProps = {
 
 export function SupplyChainList({ status }: SupplyChainListProps) {
   const { data, isLoading } = useSWR<{ data: Array<SupplyChain> }>("/company/supply_chain");
-
-  const router = useRouter();
 
   if (isLoading) {
     return <LoadingPlaceholder />;
@@ -91,12 +90,10 @@ export function SupplyChainList({ status }: SupplyChainListProps) {
               </div>
               <div className="mt-1 overflow-hidden">
                 <p className="truncate text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                  Lorem Ipsum
+                  {sc.Nama}
                 </p>
                 <p className="mt-1 line-clamp-2 text-xs text-tremor-content dark:text-dark-tremor-content">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi voluptate delectus consequuntur, modi
-                  excepturi aut natus mollitia accusantium adipisci earum tenetur inventore, ipsa ullam repudiandae
-                  laudantium autem iure reprehenderit? Aut.
+                  {sc.Deskripsi}
                 </p>
               </div>
             </div>

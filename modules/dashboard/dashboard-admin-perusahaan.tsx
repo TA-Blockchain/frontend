@@ -16,7 +16,7 @@ export default function DashboardAdminPerusahaan() {
     user: { idPerusahaan, username },
   } = useUser();
 
-  const { data: company, isLoading, mutate } = useSWR<{ data: Company }>(`/company/${idPerusahaan}`);
+  const { data: company, isLoading } = useSWR<{ data: Company }>(`/company/${idPerusahaan}`);
 
   const isSupplyChainEmpty = company?.data.supplyChain.length === 0;
 
@@ -68,7 +68,7 @@ export default function DashboardAdminPerusahaan() {
               <CompanyDetails details={company?.data} isLoading={isLoading} />
             </TabPanel>
             <TabPanel>
-              <CreateSupplyChain details={company?.data} revalidate={mutate} />
+              {company?.data.supplyChain.length !== 0 && <CreateSupplyChain details={company?.data} />}
               <ListSupplyChain details={company?.data} />
             </TabPanel>
             <TabPanel>

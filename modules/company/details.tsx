@@ -71,31 +71,34 @@ export function CompanyDetails({ details, isLoading }: { details: Company | unde
           <dt className="text-sm font-medium leading-6 text-gray-900">Deskripsi Perusahaan</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.deskripsi}</dd>
         </div>
-        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
-          <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-              <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                <div className="flex w-0 flex-1 items-center">
-                  <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                  <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                    <span className="truncate font-medium">proposal_perusahaan.pdf</span>
+
+        {(userType === "admin-kementerian" || userType === "staf-kementerian") && (
+          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+              <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
+                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                  <div className="flex w-0 flex-1 items-center">
+                    <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                      <span className="truncate font-medium">proposal_perusahaan.pdf</span>
+                    </div>
                   </div>
-                </div>
-                <div className="ml-4 flex-shrink-0">
-                  <a
-                    href={details.urlSuratProposal}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
-                  >
-                    Download
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </dd>
-        </div>
+                  <div className="ml-4 flex-shrink-0">
+                    <a
+                      href={details.urlSuratProposal}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
+                    >
+                      Download
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </dd>
+          </div>
+        )}
       </dl>
 
       {(userType === "admin-kementerian" || userType === "staf-kementerian") && (

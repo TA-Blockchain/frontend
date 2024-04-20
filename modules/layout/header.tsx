@@ -106,13 +106,13 @@ export function Header() {
           </div>
           <div className="mt-2 space-y-2">
             {navigation[userType].map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
         </Dialog.Panel>

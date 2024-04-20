@@ -11,6 +11,7 @@ import { Division } from "../divisions/division-list";
 import useSWR from "swr";
 import { Vehicle } from "../vehicle/vehicle-list";
 import { getCurrentTime, getDateTime } from "@/lib";
+import { SupplyChain } from "../supply-chain/supply-chain-list";
 
 type CreateShipmentPayload = {
   idSupplyChain: string;
@@ -36,8 +37,14 @@ export function CreateShipment() {
     user: { idDivisi },
   } = useUser();
 
+  const [selectedSupplyChain, setSelectedSupplyChain] = React.useState<string | undefined>(undefined);
+
+  const { data: supplyChain, isLoading: isLoadingSupplyChain } = useSWR<{ data: Array<SupplyChain> }>(
+    "/company/supply_chain"
+  );
+
   const { data: divisi, isLoading: isLoadingDivisi } = useSWR<{ data: Array<Division> }>(
-    `/company/division/${idDivisi}`
+    `/company/division/supplychain/${selectedSupplyChain}`
   );
 
   const { data: kendaraan, isLoading: isLoadingKendaraan } = useSWR<{ data: Array<Vehicle> }>(
@@ -78,8 +85,35 @@ export function CreateShipment() {
   return (
     <FormProvider {...methods}>
       <div className="mt-4 grid gap-3 sm:gap-2 sm:flex">
+        <div>
+          <SearchSelect
+            disabled={isLoadingSupplyChain}
+            value={selectedSupplyChain}
+            onValueChange={setSelectedSupplyChain}
+            enableClear
+            placeholder={
+              isLoadingSupplyChain
+                ? "Memuat supply chain..."
+                : supplyChain?.data.length === 0
+                ? "Supply chain tidak tersedia"
+                : "Pilih supply chain"
+            }
+            className="rounded-tremor-small sm:max-w-xs"
+            required
+          >
+            {supplyChain?.data.map((sc) => {
+              if (sc.status !== "approve") return null;
+              return (
+                <SearchSelectItem key={sc.id} value={sc.id}>
+                  {sc.Nama}
+                </SearchSelectItem>
+              );
+            })}
+          </SearchSelect>
+        </div>
         <Button
           onClick={() => {
+            if (!selectedSupplyChain) return;
             setIsOpen(true);
           }}
           loading={isMutating}

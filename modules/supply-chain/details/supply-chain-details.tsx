@@ -4,8 +4,6 @@ import { statuses, statusText, SupplyChain } from "../supply-chain-list";
 import clsx from "clsx";
 import { Company, CompanyListItem } from "../../company/list";
 import useSWR from "swr";
-import { Button } from "@tremor/react";
-import { toast } from "sonner";
 import { SmallLoadingPlaceholder } from "../../template/small-loading-placeholder";
 import { KementerianButtons } from "./kementerian-buttons";
 import { PerusahaanButtons } from "./perusahaan-buttons";

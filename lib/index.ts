@@ -105,6 +105,8 @@ export function getCurrentTime() {
 }
 
 export function getReadableDateTime(date: string) {
+  const isAM = new Date(date).getHours() < 12;
+
   return (
     new Date(date).toLocaleDateString("id-ID", {
       year: "numeric",

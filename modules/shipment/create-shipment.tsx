@@ -55,7 +55,7 @@ export function CreateShipment() {
     shouldUnregister: true,
   });
 
-  const { register, handleSubmit, reset, resetField, control } = methods;
+  const { register, handleSubmit, reset, resetField, control, watch } = methods;
 
   const { trigger, isMutating } = useMutation<CreateShipmentApiPayload>("/company/shipment");
 
@@ -81,6 +81,8 @@ export function CreateShipment() {
 
   const divisions = divisi?.data.filter((d) => d.id !== idDivisi) || [];
   const vehicles = kendaraan?.data || [];
+
+  const isSameDate = watch("tanggalBerangkat")?.toDateString() === new Date().toDateString();
 
   return (
     <FormProvider {...methods}>
@@ -263,7 +265,7 @@ export function CreateShipment() {
                       {...register("waktuBerangkat")}
                       className="text-gray-700 focus:ring-2 focus:ring-[#bfdbfe] transition duration-100 text-sm w-full border border-gray-200 focus:border-tremor-brand-subtle rounded-tremor-small"
                       type="time"
-                      min={getCurrentTime()}
+                      min={isSameDate ? getCurrentTime() : undefined}
                       required
                     />
                   </div>

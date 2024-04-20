@@ -12,8 +12,6 @@ const placeholderProps = {
 export function ShipmentListReadOnly({ idDivisi }: { idDivisi: string }) {
   const { data, isLoading } = useSWR<{ data: Array<Shipment> }>(`/company/shipment/${idDivisi}`);
 
-  console.log(data);
-
   if (isLoading) {
     return <LoadingPlaceholder />;
   }

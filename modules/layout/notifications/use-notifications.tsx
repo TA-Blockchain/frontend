@@ -3,6 +3,7 @@ import {
   HandThumbUpIcon,
   MegaphoneIcon,
   QuestionMarkCircleIcon,
+  TruckIcon,
   UserIcon,
 } from "@heroicons/react/20/solid";
 import { Notification } from "./notifications-menu";
@@ -11,8 +12,9 @@ import { Company } from "@/modules/company/list";
 import { Shipment } from "@/modules/shipment/shipment-list";
 import { getReadableDateTime } from "@/lib";
 import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
+import { UserData, useUser } from "@/hooks/use-user";
 
-function handleNotificationType(key: keyof Notification, value: any) {
+function handleNotificationType(key: keyof Notification, value: any, currentUser: UserData) {
   // Handle single values
   let content: string | React.ReactNode = "";
   let icon = UserIcon;
@@ -51,7 +53,18 @@ function handleNotificationType(key: keyof Notification, value: any) {
       break;
     case "supplyChainPending":
       const supplyChainPending = value as SupplyChain;
-      content = "Menunggu persetujuan Anda untuk bergabung ke Supply Chain";
+      const hasSelfApprove = supplyChainPending.proposalSupplyChain.some(
+        (proposal) => proposal.status === "approve" && proposal.id === currentUser.idPerusahaan
+      );
+      content = hasSelfApprove ? (
+        <span>
+          Menunggu perusahaan lain untuk bergabung ke Supply Chain <b>{supplyChainPending.Nama}</b>
+        </span>
+      ) : (
+        <span>
+          Menunggu persetujuan Anda untuk bergabung ke Supply Chain <b>{supplyChainPending.Nama}</b>
+        </span>
+      );
       href = `/supply-chain/${supplyChainPending.id}`;
       icon = MegaphoneIcon;
       iconBackground = "bg-orange-500";
@@ -59,13 +72,18 @@ function handleNotificationType(key: keyof Notification, value: any) {
     case "shipment":
       const shipment = value as Shipment;
       const waktuBerangkat = getReadableDateTime(shipment.waktuBerangkat);
-      content = (
+      const isWaitingBerangkat = new Date(shipment.waktuBerangkat) > new Date() && shipment.status === "Need Approval";
+      content = isWaitingBerangkat ? (
         <span>
-          Menunggu persetujuan perjalanan <b>{waktuBerangkat}</b>
+          Pengiriman baru akan diantarkan pada <b>{waktuBerangkat}</b>
+        </span>
+      ) : (
+        <span>
+          Menunggu Anda menyelesaikan perjalanan <b>{waktuBerangkat}</b>
         </span>
       );
       href = `/shipment/${shipment.id}`;
-      icon = QuestionMarkCircleIcon;
+      icon = isWaitingBerangkat ? TruckIcon : QuestionMarkCircleIcon;
       iconBackground = "bg-orange-400";
       break;
     default:
@@ -82,6 +100,8 @@ function handleNotificationType(key: keyof Notification, value: any) {
 }
 
 export function useNotifications(notificationObject: Notification) {
+  const { user } = useUser();
+
   const notifications = Object.entries(notificationObject).flatMap(([untypedKey, value]) => {
     const key = untypedKey as keyof Notification;
 
@@ -93,11 +113,11 @@ export function useNotifications(notificationObject: Notification) {
     // Handle arrays with more than one value
     if (Array.isArray(value) && value.length > 1) {
       return value.map((item) => {
-        return handleNotificationType(key, item);
+        return handleNotificationType(key, item, user);
       });
     }
 
-    return [handleNotificationType(key, value[0])];
+    return [handleNotificationType(key, value[0], user)];
   });
 
   return notifications;

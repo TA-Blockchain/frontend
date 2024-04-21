@@ -59,12 +59,13 @@ export function CreateShipment() {
 
   const { trigger, isMutating } = useMutation<CreateShipmentApiPayload>("/company/shipment");
 
-  const { mutate } = useOptimisticList(`/company/shipment/${idDivisi}`);
+  const { mutate } = useOptimisticList(`/company/shipment/divisi_pengirim/${idDivisi}`);
 
   const onSubmit = async (payload: CreateShipmentPayload) => {
     try {
       await trigger({
         ...payload,
+        idSupplyChain: selectedSupplyChain ?? "",
         waktuBerangkat: getDateTime(payload.tanggalBerangkat, payload.waktuBerangkat),
       });
 

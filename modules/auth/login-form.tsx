@@ -49,11 +49,11 @@ export function LoginForm() {
             Masuk
           </Button>
         </form>
-        <div className="grid place-items-center mt-6">
+        {/* <div className="grid place-items-center mt-6">
           <TextLink href="/password/reset" className="text-sm">
             Lupa kata sandi Anda?
           </TextLink>
-        </div>
+        </div> */}
       </div>
     </div>
   );

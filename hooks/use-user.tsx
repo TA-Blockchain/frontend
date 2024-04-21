@@ -11,7 +11,7 @@ type UserState = "authenticated" | "unauthenticated" | "loading";
 
 export type UserType = "admin-kementerian" | "admin-perusahaan" | "manager-perusahaan" | "staf-kementerian";
 
-type UserData = {
+export type UserData = {
   email: string;
   id: string;
   idPerusahaan: string;

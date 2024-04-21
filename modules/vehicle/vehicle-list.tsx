@@ -5,6 +5,7 @@ import { LoadingPlaceholder } from "../template/loading-placeholder";
 import { useUser } from "@/hooks/use-user";
 import Link from "next/link";
 import { RiArrowRightUpLine, RiCarLine } from "@remixicon/react";
+import { Division } from "../divisions/division-list";
 
 const placeholderProps = {
   title: "Kendaraan tidak ditemukan",
@@ -13,7 +14,7 @@ const placeholderProps = {
 
 export type Vehicle = {
   id: string;
-  divisi: string;
+  divisi: Division;
   carModel: string;
   fuelType: string;
   kmUsage: string;

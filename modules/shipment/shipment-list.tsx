@@ -1,6 +1,5 @@
 import useSWR from "swr";
 
-import { Avatar } from "@/components/avatar";
 import { EmptyPlaceholder } from "../template/empty-placeholder";
 import { LoadingPlaceholder } from "../template/loading-placeholder";
 import { useUser } from "@/hooks/use-user";
@@ -9,6 +8,8 @@ import { Card } from "@tremor/react";
 import { RiArrowRightUpLine, RiTruckLine } from "@remixicon/react";
 import { getReadableDateTime } from "@/lib";
 import clsx from "clsx";
+import { Division } from "../divisions/division-list";
+import { Vehicle } from "../vehicle/vehicle-list";
 
 const placeholderProps = {
   title: "Perjalanan tidak ditemukan",
@@ -19,12 +20,12 @@ export type Shipment = {
   id: string;
   idPerusahaan: string;
   idSupplyChain: string;
-  idDivisiPengirim: string;
-  idDivisiPenerima: string;
+  divisiPengirim: Division;
+  divisiPenerima: Division;
   status: "Need Approval" | "Approved" | "Rejected";
   waktuBerangkat: string;
   waktuSampai: string;
-  idTransportasi: string;
+  transportasi: Vehicle;
   beratMuatan: number;
   emisiKarbon: number;
 };
@@ -41,12 +42,12 @@ export const statusText = {
   Rejected: "Perjalanan Dibatalkan",
 };
 
-export function ShipmentList() {
+export function ShipmentList({ type }: { type: "divisi_pengirim" | "divisi_penerima" }) {
   const {
     user: { idDivisi },
   } = useUser();
 
-  const { data, isLoading } = useSWR<{ data: Array<Shipment> }>(`/company/shipment/${idDivisi}`);
+  const { data, isLoading } = useSWR<{ data: Array<Shipment> }>(`/company/shipment/${type}/${idDivisi}`);
 
   if (isLoading) {
     return <LoadingPlaceholder />;

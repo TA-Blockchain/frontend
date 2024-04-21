@@ -27,11 +27,10 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
     user: { userType, idPerusahaan, idDivisi },
   } = useUser();
 
-  const isOwner = details.idDivisiPengirim === idDivisi;
+  const isOwner = details.divisiPengirim.id === idDivisi;
   const isRejected = details.status === "Rejected";
   const isPending = details.status === "Need Approval" && new Date(details.waktuBerangkat) < new Date();
-  //   const canApprove = details.idDivisiPenerima === idDivisi;
-  const canApprove = true;
+  const canApprove = details.divisiPenerima.id === idDivisi;
   const isApproved = details.status === "Approved";
 
   return (
@@ -43,6 +42,9 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
             onClick={async () => {
               await trigger({
                 ...replaceNullWithEmptyString(details),
+                divisiPengirim: details.divisiPengirim.id,
+                divisiPenerima: details.divisiPenerima.id,
+                transportasi: details.transportasi.id,
                 status: "Rejected",
               });
 
@@ -64,6 +66,9 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
             onClick={async () => {
               await trigger({
                 ...replaceNullWithEmptyString(details),
+                divisiPengirim: details.divisiPengirim.id,
+                divisiPenerima: details.divisiPenerima.id,
+                transportasi: details.transportasi.id,
                 status: "Approved",
               });
 

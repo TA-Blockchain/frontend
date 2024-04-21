@@ -20,16 +20,6 @@ export default function HomePage() {
         {userType === "admin-perusahaan" && <DashboardAdminPerusahaan />}
         {userType === "manager-perusahaan" && <DashboardManajerPerusahaan />}
       </Suspense>
-
-      {/* <ul>
-        <li>
-          otomatis register admin kementerian di awal run
-          <code className="bg-gray-800 text-white px-1 py-0.5 rounded-sm">node app.js</code>
-        </li>
-        <li>list perjalanan sesuai divisi (manager)</li>
-        <li>create perjalanan (manager)</li>
-        <li>approve perjalanan (manager)</li>
-      </ul> */}
     </>
   );
 }

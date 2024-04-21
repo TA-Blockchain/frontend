@@ -74,7 +74,7 @@ export function ProposalModal(company: Company) {
                             rel="noopener noreferrer"
                             className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
                           >
-                            Download
+                            Unduh
                           </a>
                         </div>
                       </li>

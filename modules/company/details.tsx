@@ -91,7 +91,7 @@ export function CompanyDetails({ details, isLoading }: { details: Company | unde
                       rel="noopener noreferrer"
                       className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
                     >
-                      Download
+                      Unduh
                     </a>
                   </div>
                 </li>

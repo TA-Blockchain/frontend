@@ -1,10 +1,12 @@
-import { Text } from "@tremor/react";
+import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
 import { NotFoundPlaceholder } from "@/modules/template/not-found";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
 import { Vehicle } from "@/modules/vehicle/vehicle-list";
 import { VehicleDetails } from "@/modules/vehicle/vehicle-details";
+import { Info } from "@/components/info";
+import { ShipmentListVehicleReadOnly } from "@/modules/shipment/shipment-list-vehicle-read-only";
 
 export default function VehicleDetailsPage() {
   const router = useRouter();
@@ -23,7 +25,27 @@ export default function VehicleDetailsPage() {
       <Text className="mt-0.5">Kelola detail mengenai kendaraan terkait.</Text>
 
       <div className="mt-4">
-        <VehicleDetails details={vehicle?.data} isLoading={isLoading} />
+        <TabGroup className="mt-6">
+          <TabList>
+            <Tab>Rincian</Tab>
+            <Tab>Riwayat Perjalanan</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <VehicleDetails details={vehicle?.data} isLoading={isLoading} />
+            </TabPanel>
+
+            <TabPanel>
+              <div className="mt-4">
+                <Info
+                  title="Perjalanan yang tercatat"
+                  description="Riwayat perjalanan yang dimiliki kendaraan terkait."
+                />
+                <ShipmentListVehicleReadOnly idDivisi={id} />
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
       </div>
     </main>
   );

@@ -89,12 +89,8 @@ export function SupplyChainList({ status }: SupplyChainListProps) {
                 <RiBuilding2Line className="w-12 h-12 text-gray-600" />
               </div>
               <div className="mt-1 overflow-hidden">
-                <p className="truncate text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-                  {sc.Nama}
-                </p>
-                <p className="mt-1 line-clamp-2 text-xs text-tremor-content dark:text-dark-tremor-content">
-                  {sc.Deskripsi}
-                </p>
+                <p className="truncate text-tremor-default font-medium text-tremor-content-strong">{sc.Nama}</p>
+                <p className="mt-1 line-clamp-2 text-xs text-tremor-content">{sc.Deskripsi}</p>
               </div>
             </div>
             <div className="mt-2 grid place-items-end divide-x divide-tremor-border border-t border-tremor-border dark:divide-dark-tremor-border dark:border-dark-tremor-border">

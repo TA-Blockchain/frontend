@@ -1,5 +1,6 @@
+import { Tabs } from "@/components/tabs";
 import { CompanyList } from "@/modules/company/list";
-import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { Text } from "@tremor/react";
 import React from "react";
 
 export default function CompanyPage() {
@@ -9,24 +10,14 @@ export default function CompanyPage() {
       <Text className="mt-0.5">Kelola perusahaan dan tinjau proposal yang menunggu persetujuan.</Text>
 
       <div className="mt-4">
-        <TabGroup className="mt-6">
-          <TabList>
-            <Tab>Disetujui</Tab>
-            <Tab>Menunggu Persetujuan</Tab>
-            <Tab>Ditolak</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <CompanyList status={1} />
-            </TabPanel>
-            <TabPanel>
-              <CompanyList status={0} />
-            </TabPanel>
-            <TabPanel>
-              <CompanyList status={-1} />
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
+        <Tabs
+          tabList={["Disetujui", "Menunggu Persetujuan", "Ditolak"]}
+          tabPanels={[
+            () => <CompanyList status={1} />,
+            () => <CompanyList status={0} />,
+            () => <CompanyList status={-1} />,
+          ]}
+        />
       </div>
     </main>
   );

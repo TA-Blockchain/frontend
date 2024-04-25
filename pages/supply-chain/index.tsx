@@ -1,5 +1,6 @@
+import { Tabs } from "@/components/tabs";
 import { SupplyChainList } from "@/modules/supply-chain/supply-chain-list";
-import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { Text } from "@tremor/react";
 import React from "react";
 
 export default function SupplyChainPage() {
@@ -9,24 +10,14 @@ export default function SupplyChainPage() {
       <Text className="mt-0.5">Kelola supply chain perusahaan yang terdaftar di platform Carbon Chain.</Text>
 
       <div className="mt-4">
-        <TabGroup className="mt-6">
-          <TabList>
-            <Tab>Aktif</Tab>
-            <Tab>Menunggu Persetujuan</Tab>
-            <Tab>Ditolak</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <SupplyChainList status="approve" />
-            </TabPanel>
-            <TabPanel>
-              <SupplyChainList status="pending" />
-            </TabPanel>
-            <TabPanel>
-              <SupplyChainList status="reject" />
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
+        <Tabs
+          tabList={["Aktif", "Menunggu Persetujuan", "Ditolak"]}
+          tabPanels={[
+            () => <SupplyChainList status="approve" />,
+            () => <SupplyChainList status="pending" />,
+            () => <SupplyChainList status="reject" />,
+          ]}
+        />
       </div>
     </main>
   );

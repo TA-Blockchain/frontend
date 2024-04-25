@@ -26,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
+    "react-intersection-observer": "^9.8.2",
     "react-leaflet": "^4.2.1",
     "react-leaflet-google-layer": "^2.2.0",
     "sonner": "^1.4.41",

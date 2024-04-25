@@ -6,10 +6,11 @@ import { CompanyDetails } from "@/modules/company/details";
 import { ListSupplyChain } from "@/modules/company/supply-chain/list-supply-chain";
 import { DetailEmisiKarbon } from "@/modules/company/emisi-karbon";
 import { Company } from "@/modules/company/list";
-import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { Text } from "@tremor/react";
 import clsx from "clsx";
 import { useBanner } from "@/hooks/use-banner";
 import { CreateSupplyChain } from "../company/supply-chain/create-supply-chain";
+import { Tabs } from "@/components/tabs";
 
 export default function DashboardAdminPerusahaan() {
   const {
@@ -52,25 +53,19 @@ export default function DashboardAdminPerusahaan() {
       <Text className="mt-0.5">Informasi umum, supply chain, dan emisi karbon perusahaan Anda.</Text>
 
       <div className="mt-4">
-        <TabGroup className="mt-6">
-          <TabList>
-            <Tab>Rincian</Tab>
-            <Tab>Supply Chain</Tab>
-            <Tab>Emisi Karbon</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <CompanyDetails details={company?.data} isLoading={isLoading} />
-            </TabPanel>
-            <TabPanel>
-              {company?.data.supplyChain.length !== 0 && <CreateSupplyChain details={company?.data} />}
-              <ListSupplyChain details={company?.data} />
-            </TabPanel>
-            <TabPanel>
-              <DetailEmisiKarbon details={company?.data} />
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
+        <Tabs
+          tabList={["Rincian", "Supply Chain", "Emisi Karbon"]}
+          tabPanels={[
+            () => <CompanyDetails details={company?.data} isLoading={isLoading} />,
+            () => (
+              <>
+                {company?.data.supplyChain.length !== 0 && <CreateSupplyChain details={company?.data} />}
+                <ListSupplyChain details={company?.data} />
+              </>
+            ),
+            () => <DetailEmisiKarbon details={company?.data} />,
+          ]}
+        />
       </div>
     </main>
   );

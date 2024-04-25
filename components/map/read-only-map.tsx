@@ -1,10 +1,11 @@
-import L, { marker } from "leaflet";
+import L from "leaflet";
 
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/assets/css/leaflet.css";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { LayersControl, MapContainer, Marker, useMapEvents } from "react-leaflet";
 import ReactLeafletGoogleLayer from "react-leaflet-google-layer";
+import { useInView } from "react-intersection-observer";
 
 import { DefaultIcon } from "./location-marker";
 import React from "react";
@@ -21,6 +22,10 @@ export type LatLong = {
 export default function ReadOnlyMap({ markerPosition }: { markerPosition: { lat: number; lng: number } }) {
   const mapRef = useRef() as MutableRefObject<L.Map>;
 
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
   useEffect(() => {
     if (mapRef) {
       mapRef.current?.setView(markerPosition);
@@ -28,13 +33,13 @@ export default function ReadOnlyMap({ markerPosition }: { markerPosition: { lat:
   }, [markerPosition]);
 
   useEffect(() => {
-    setTimeout(function () {
+    if (inView) {
       window.dispatchEvent(new Event("resize"));
-    }, 200);
-  }, []);
+    }
+  }, [inView]);
 
   return (
-    <div className="space-y-2 overflow-hidden rounded">
+    <div ref={ref} className="space-y-2 overflow-hidden rounded">
       <MapContainer
         className="h-80 w-full"
         zoom={14}

@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import { useUser } from "@/hooks/use-user";
 import React from "react";
 import { BannerProvider } from "@/hooks/use-banner";
+import { TabProvider } from "@/components/tabs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,10 +38,12 @@ export default function App({
         >
           <Toaster richColors position="bottom-right" />
           <BannerProvider>
-            <BaseLayout>
-              <PageLoader />
-              <Component {...pageProps} />
-            </BaseLayout>
+            <TabProvider>
+              <BaseLayout>
+                <PageLoader />
+                <Component {...pageProps} />
+              </BaseLayout>
+            </TabProvider>
           </BannerProvider>
         </SWRConfig>
       </div>

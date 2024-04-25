@@ -1,12 +1,13 @@
 import React from "react";
 import { useUser } from "@/hooks/use-user";
 import useSWR from "swr";
-import { Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { Text } from "@tremor/react";
 import { Division } from "@/modules/divisions/division-list";
 import { VehicleListReadOnly } from "@/modules/vehicle/vehicle-list-read-only";
 import { ShipmentListReadOnly } from "@/modules/shipment/shipment-list-read-only";
 import { Info } from "@/components/info";
 import { DivisionDetailsManager } from "@/modules/divisions/division-details-manager";
+import { Tabs } from "@/components/tabs";
 
 export default function DashboardManajerPerusahaan() {
   const {
@@ -21,43 +22,30 @@ export default function DashboardManajerPerusahaan() {
       <Text className="mt-0.5">Informasi umum, kendaraan, dan riwayat perjalanan divisi terkait.</Text>
 
       <div className="mt-4">
-        <TabGroup className="mt-6">
-          <TabList>
-            <Tab>Rincian</Tab>
-            <Tab>Kendaraan</Tab>
-            <Tab>Riwayat Perjalanan</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <DivisionDetailsManager details={division?.data} isLoading={isLoading} />
-            </TabPanel>
-            <TabPanel>
-              <VehicleListReadOnly idDivisi={idDivisi} />
-            </TabPanel>
-            <TabPanel>
-              <div className="mt-4">
+        <Tabs
+          tabList={["Rincian", "Kendaraan", "Riwayat Perjalanan"]}
+          tabPanels={[
+            () => <DivisionDetailsManager details={division?.data} isLoading={isLoading} />,
+            () => <VehicleListReadOnly idDivisi={idDivisi} />,
+            () => (
+              <div key="perjalanan" className="mt-4">
                 <Info
                   title="Perjalanan yang tercatat"
                   description="Perjalanan adalah pengiriman barang antar divisi internal atau perusahaan lain."
                 />
-                <TabGroup className="mt-2">
-                  <TabList>
-                    <Tab>Menuju</Tab>
-                    <Tab>Mendatang</Tab>
-                  </TabList>
-                  <TabPanels>
-                    <TabPanel>
-                      <ShipmentListReadOnly idDivisi={idDivisi} type="divisi_pengirim" />
-                    </TabPanel>
-                    <TabPanel>
-                      <ShipmentListReadOnly idDivisi={idDivisi} type="divisi_penerima" />
-                    </TabPanel>
-                  </TabPanels>
-                </TabGroup>
+                <Tabs
+                  className="mt-2"
+                  prefix="shipment"
+                  tabList={["Menuju", "Mendatang"]}
+                  tabPanels={[
+                    () => <ShipmentListReadOnly idDivisi={idDivisi} type="divisi_pengirim" />,
+                    () => <ShipmentListReadOnly idDivisi={idDivisi} type="divisi_penerima" />,
+                  ]}
+                />
               </div>
-            </TabPanel>
-          </TabPanels>
-        </TabGroup>
+            ),
+          ]}
+        />
       </div>
     </main>
   );

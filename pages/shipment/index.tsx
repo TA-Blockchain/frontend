@@ -1,8 +1,9 @@
 import { Info } from "@/components/info";
 import { ShipmentList } from "@/modules/shipment/shipment-list";
 import { CreateShipment } from "@/modules/shipment/create-shipment";
-import { Divider, Text, Tab, TabGroup, TabList, TabPanels, TabPanel } from "@tremor/react";
+import { Divider, Text } from "@tremor/react";
 import React from "react";
+import { Tabs } from "@/components/tabs";
 
 const info = {
   title: "Buat perjalanan baru",
@@ -25,20 +26,12 @@ export default function ShipmentPage() {
 
         <div>
           <Info title="Perjalanan yang tercatat" />
-          <TabGroup className="mt-2">
-            <TabList>
-              <Tab>Menuju</Tab>
-              <Tab>Mendatang</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <ShipmentList type="divisi_pengirim" />
-              </TabPanel>
-              <TabPanel>
-                <ShipmentList type="divisi_penerima" />
-              </TabPanel>
-            </TabPanels>
-          </TabGroup>
+
+          <Tabs
+            className="mt-2"
+            tabList={["Menuju", "Mendatang"]}
+            tabPanels={[() => <ShipmentList type="divisi_pengirim" />, () => <ShipmentList type="divisi_penerima" />]}
+          />
         </div>
       </div>
     </main>

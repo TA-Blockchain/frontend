@@ -24,7 +24,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
   const { mutate } = useOptimistic(`/company/shipment/detail/${details?.id}`);
 
   const {
-    user: { userType, idPerusahaan, idDivisi },
+    user: { userType, idDivisi },
   } = useUser();
 
   const isOwner = details.divisiPengirim.id === idDivisi;
@@ -36,7 +36,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
   return (
     userType === "manager-perusahaan" && (
       <div className="flex justify-end gap-2">
-        {isOwner && !isRejected && (
+        {isOwner && !isRejected && !isApproved && (
           <Button
             loading={isMutating}
             onClick={async () => {

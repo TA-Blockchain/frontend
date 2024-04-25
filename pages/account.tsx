@@ -41,7 +41,12 @@ export default function AccountSettingsPage() {
           {user.idDivisi && (
             <div className="mt-4">
               <Label>Divisi</Label>
-              <TextInput value={divisi?.data.name} className="mt-2 w-full rounded-tremor-small sm:max-w-lg" disabled />
+              <TextInput
+                placeholder="Memuat divisi..."
+                value={divisi?.data.name}
+                className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+                disabled
+              />
             </div>
           )}
         </div>

@@ -74,7 +74,7 @@ export function CompanyDetails({ details, isLoading }: { details: Company | unde
 
         {(userType === "admin-kementerian" || userType === "staf-kementerian") && (
           <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+            <dt className="text-sm font-medium leading-6 text-gray-900">Lampiran</dt>
             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
               <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">

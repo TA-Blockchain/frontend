@@ -2,8 +2,7 @@ import React from "react";
 import { useMutation } from "@/hooks/use-mutation";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
 import { Vehicle } from "./vehicle-list";
-import Link from "next/link";
-import { RiArrowRightUpLine, RiCommunityLine } from "@remixicon/react";
+import { RiCommunityLine } from "@remixicon/react";
 
 export function VehicleDetails({ details, isLoading }: { details: Vehicle | undefined; isLoading: boolean }) {
   const { trigger } = useMutation(`/company/vehicle/${details?.id}`, undefined, {

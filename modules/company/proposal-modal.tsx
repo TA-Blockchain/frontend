@@ -57,7 +57,7 @@ export function ProposalModal(company: Company) {
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{company.deskripsi}</dd>
                 </div>
                 <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-2">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+                  <dt className="text-sm font-medium leading-6 text-gray-900">Lampiran</dt>
                   <dd className="mt-2 text-sm text-gray-900">
                     <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
                       <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">

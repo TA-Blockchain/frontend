@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useUser } from "@/hooks/use-user";
-import { RiUserLine } from "@remixicon/react";
+import { RiLogoutCircleLine, RiQrScan2Line, RiSettingsLine, RiUserLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 
 function classNames(...classes: any[]) {
@@ -47,7 +47,26 @@ export function ProfileMenu() {
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  Pengaturan akun
+                  <div className="flex gap-2 items-center">
+                    <RiSettingsLine className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />{" "}
+                    Pengaturan akun
+                  </div>
+                </button>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={() => router.push("/verification")}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block w-full px-4 py-2 text-left text-sm"
+                  )}
+                >
+                  <div className="flex gap-2 items-center">
+                    <RiQrScan2Line className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />{" "}
+                    Verifikasi Invoice
+                  </div>
                 </button>
               )}
             </Menu.Item>
@@ -63,7 +82,10 @@ export function ProfileMenu() {
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  Keluar
+                  <div className="flex gap-2 items-center">
+                    <RiLogoutCircleLine className={classNames(active ? "text-red-500" : "text-red-500", "w-4 h-4")} />{" "}
+                    Keluar
+                  </div>
                 </button>
               )}
             </Menu.Item>

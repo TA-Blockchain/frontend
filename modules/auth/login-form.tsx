@@ -1,12 +1,15 @@
 import { Button, TextInput } from "@tremor/react";
-import { TextLink } from "@/components/text";
 import { useForm } from "react-hook-form";
 import { LoginFormValues, useUser } from "@/hooks/use-user";
+import { RiQrScan2Line } from "@remixicon/react";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const { handleSubmit, register } = useForm<LoginFormValues>();
 
   const { login, isRequesting } = useUser();
+
+  const router = useRouter();
 
   return (
     <div className="relative flex flex-1 flex-col items-center justify-center pb-16 pt-12">
@@ -49,11 +52,16 @@ export function LoginForm() {
             Masuk
           </Button>
         </form>
-        {/* <div className="grid place-items-center mt-6">
-          <TextLink href="/password/reset" className="text-sm">
-            Lupa kata sandi Anda?
-          </TextLink>
-        </div> */}
+
+        {/* <Button
+          onClick={() => router.push("/verification")}
+          className="mt-6 rounded-tremor-small w-full"
+          variant="secondary"
+        >
+          <div className="flex gap-2 items-center">
+            <RiQrScan2Line className="w-4 h-4" /> Verifikasi Invoice
+          </div>
+        </Button> */}
       </div>
     </div>
   );

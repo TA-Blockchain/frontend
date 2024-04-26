@@ -4,7 +4,7 @@ import React from "react";
 import { Header } from "./header";
 import clsx from "clsx";
 
-const unauthenticatedPaths = ["/login", "/register", "/password/reset"];
+const unauthenticatedPaths = ["/login", "/register", "/password/reset", "/verification"];
 const authenticatedPaths = [
   "/dashboard",
   "/account",
@@ -17,6 +17,7 @@ const authenticatedPaths = [
   "/vehicle",
   "/marketplace",
   "/notifications",
+  // "/verification",
 ];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {

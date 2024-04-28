@@ -53,7 +53,7 @@ export function LoginForm() {
           </Button>
         </form>
 
-        {/* <Button
+        <Button
           onClick={() => router.push("/verification")}
           className="mt-6 rounded-tremor-small w-full"
           variant="secondary"
@@ -61,7 +61,7 @@ export function LoginForm() {
           <div className="flex gap-2 items-center">
             <RiQrScan2Line className="w-4 h-4" /> Verifikasi Invoice
           </div>
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

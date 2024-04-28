@@ -4,7 +4,7 @@ import React from "react";
 import { Header } from "./header";
 import clsx from "clsx";
 
-const unauthenticatedPaths = ["/login", "/register", "/password/reset"];
+const unauthenticatedPaths = ["/login", "/register", "/password/reset", "/verification"];
 const authenticatedPaths = [
   "/dashboard",
   "/account",
@@ -17,8 +17,8 @@ const authenticatedPaths = [
   "/vehicle",
   "/marketplace",
   "/notifications",
+  "/invoice/verification",
 ];
-const allCanAccessPaths = ["/verification"];
 
 export default function BaseLayout({ children }: { children: React.ReactNode }) {
   const { state, user } = useUser();
@@ -37,22 +37,6 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
       router.replace("/dashboard");
     }
   }, [pathname, router, state]);
-
-  if (allCanAccessPaths.includes(pathname)) {
-    if (user) {
-      const showHeader = authenticatedPaths.some((path) => pathname?.includes(path));
-      return (
-        <div className="pb-4">
-          {showHeader && <Header />}
-          <div className={clsx(showHeader && "min-h-dvh pt-4 pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8")}>
-            {children}
-          </div>
-        </div>
-      );
-    } else {
-      return children;
-    }
-  }
 
   if (state === "unauthenticated" && unauthenticatedPaths.includes(pathname)) return children;
   if (state === "unauthenticated" && authenticatedPaths.includes(pathname)) return null;

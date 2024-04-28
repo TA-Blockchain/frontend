@@ -34,8 +34,9 @@ export function FileInput({ onChange, disabled = false }: { onChange: (blob: str
   return (
     <div
       className={clsx(
-        "h-[calc(100dvh-240px)] rounded-md border border-gray-400 border-dashed w-full",
-        disabled && "cursor-not-allowed opacity-50"
+        "rounded-md border border-gray-400 border-dashed w-full",
+        disabled && "cursor-not-allowed opacity-50",
+        "max-md:min-h-80"
       )}
     >
       <div className={clsx("relative w-full h-full grid place-items-center", disabled && "pointer-events-none")}>

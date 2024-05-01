@@ -1,5 +1,4 @@
 import React from "react";
-import { useMutation } from "@/hooks/use-mutation";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
 import { Shipment, statuses, statusText } from "./shipment-list";
 import { getReadableDateTime } from "@/lib";
@@ -8,6 +7,8 @@ import { ShipmentApproval } from "./shipment-approval";
 import Link from "next/link";
 import { RiArrowRightUpLine, RiAttachment2, RiCarLine } from "@remixicon/react";
 import { Steps } from "@/components/steps";
+import { ShipmentInvoice } from "./shipment-invoice";
+import { useUser } from "@/hooks/use-user";
 
 function getSteps(details: Shipment) {
   const isWaitingBerangkat = new Date(details?.waktuBerangkat) > new Date() && details?.status === "Need Approval";
@@ -56,7 +57,7 @@ function getSteps(details: Shipment) {
 
       return steps;
 
-    case "Approved":
+    case "Completed":
       steps.push({
         name: "Perjalanan sedang berlangsung",
         description: (
@@ -109,9 +110,7 @@ function getSteps(details: Shipment) {
 }
 
 export function ShipmentDetails({ details, isLoading }: { details: Shipment | undefined; isLoading: boolean }) {
-  const { trigger } = useMutation(`/company/shipment/${details?.id}`, undefined, {
-    method: "DELETE",
-  });
+  const { user } = useUser();
 
   if (isLoading) {
     return <LoadingDetailsPlaceholder />;
@@ -124,7 +123,7 @@ export function ShipmentDetails({ details, isLoading }: { details: Shipment | un
   const vehicle = details?.transportasi;
 
   const isCanceled = details?.status === "Rejected";
-  const isApproved = details?.status === "Approved";
+  const isApproved = details?.status === "Completed";
 
   return (
     <div>
@@ -208,7 +207,7 @@ export function ShipmentDetails({ details, isLoading }: { details: Shipment | un
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <div className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis">Unduh</div>
+                    <ShipmentInvoice id={details.id} />
                   </div>
                 </li>
               </ul>
@@ -217,7 +216,7 @@ export function ShipmentDetails({ details, isLoading }: { details: Shipment | un
         )}
       </dl>
 
-      <ShipmentApproval details={details} />
+      {user && <ShipmentApproval details={details} />}
     </div>
   );
 }

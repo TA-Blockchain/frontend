@@ -10,6 +10,8 @@ export function useMutation<T, K = any>(
   key: string,
   mutatorFn: (url: string, payload: T) => Promise<AxiosResponse<K>> = async (url, payload) => {
     switch (options?.method) {
+      case "GET":
+        return await api.get(url);
       case "POST":
         return await api.post(url, payload);
       case "PUT":
@@ -24,7 +26,7 @@ export function useMutation<T, K = any>(
   },
   options?: {
     mutatedBy?: string;
-    method?: "POST" | "PUT" | "DELETE" | "PATCH";
+    method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   }
 ) {
   const [status, setStatus] = React.useState<MutationState>({

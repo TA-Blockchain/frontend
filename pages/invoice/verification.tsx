@@ -1,14 +1,10 @@
 import React from "react";
 import { Text } from "@tremor/react";
 import { Tabs } from "@/components/tabs";
-import { RiArrowGoBackLine } from "@remixicon/react";
-import { useRouter } from "next/navigation";
 import { ShipmentVerification } from "@/modules/verification/shipment-verification";
 import { CarbonTransactionVerification } from "@/modules/verification/carbon-transaction-verification";
 
 export default function Verification() {
-  const router = useRouter();
-
   return (
     <main>
       <h1 className="text-tremor-title font-semibold">Verifikasi Invoice</h1>
@@ -23,3 +19,5 @@ export default function Verification() {
     </main>
   );
 }
+
+Verification.title = "Verifikasi Invoice | Carbon Chain";

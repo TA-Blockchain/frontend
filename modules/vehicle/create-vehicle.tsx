@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Dialog, DialogPanel, NumberInput, TextInput } from "@tremor/react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, Controller } from "react-hook-form";
 import { useMutation } from "@/hooks/use-mutation";
 import { toast } from "sonner";
 import { useOptimisticList } from "@/hooks/use-optimistic";
 import { useUser } from "@/hooks/use-user";
 import { Label } from "@/components/label";
+import { Select, SelectItem } from "@tremor/react";
 
 type CreateVehiclePayload = {
   idDivisi: string;
@@ -27,7 +28,7 @@ export function CreateVehicle() {
     },
   });
 
-  const { register, handleSubmit, reset } = methods;
+  const { register, handleSubmit, reset, control } = methods;
 
   const { trigger, isMutating } = useMutation<CreateVehiclePayload>("/company/vehicle");
 
@@ -87,12 +88,25 @@ export function CreateVehicle() {
                 <Label htmlFor="fuelType" required>
                   Tipe Bahan Bakar
                 </Label>
-                <TextInput
-                  {...register("fuelType")}
-                  id="fuelType"
-                  placeholder="Contoh: Diesel"
-                  required
-                  className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+                <Controller
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      placeholder="Pilih tipe bahan bakar"
+                      className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+                      required
+                    >
+                      {["Petrol", "Diesel"].map((type) => {
+                        return (
+                          <SelectItem key={type} value={type.toLowerCase()}>
+                            {type}
+                          </SelectItem>
+                        );
+                      })}
+                    </Select>
+                  )}
+                  name="fuelType"
+                  control={control}
                 />
               </div>
               <div>

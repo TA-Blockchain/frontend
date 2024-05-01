@@ -22,7 +22,7 @@ export type Shipment = {
   idSupplyChain: string;
   divisiPengirim: Division;
   divisiPenerima: Division;
-  status: "Need Approval" | "Approved" | "Rejected";
+  status: "Need Approval" | "Completed" | "Rejected";
   waktuBerangkat: string;
   waktuSampai: string;
   transportasi: Vehicle;
@@ -32,13 +32,13 @@ export type Shipment = {
 
 export const statuses = {
   "Need Approval": "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-  Approved: "text-green-700 bg-green-50 ring-green-600/20",
+  Completed: "text-green-700 bg-green-50 ring-green-600/20",
   Rejected: "text-red-700 bg-red-50 ring-red-600/20",
 };
 
 export const statusText = {
   "Need Approval": "Dalam Perjalanan",
-  Approved: "Perjalanan Selesai",
+  Completed: "Perjalanan Selesai",
   Rejected: "Perjalanan Dibatalkan",
 };
 

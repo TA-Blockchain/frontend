@@ -8,7 +8,11 @@ export type ApiError = {
 };
 
 export type UninterceptedApiError = {
-  error: string;
+  error:
+    | {
+        message: string;
+      }
+    | string;
   message: string;
 };
 

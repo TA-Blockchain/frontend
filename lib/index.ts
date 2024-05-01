@@ -31,24 +31,29 @@ api.interceptors.response.use(
     return config;
   },
   (error: AxiosError<UninterceptedApiError>) => {
-    console.log(error);
     // Network Error
     if (error.code === "ERR_NETWORK") {
       toast.error("Terjadi kesalahan jaringan.");
-
-      // Interval Server Error
-    } else if (error.response?.status === 500) {
-      toast.error("Terjadi kesalahan pada server.");
 
       // API Error
     } else if (error.response?.data.error) {
       const errorMessage = error.response.data.error;
 
-      handleInvalidToken(errorMessage, () =>
-        toast.error(errorMessage, {
-          id: errorMessage,
-        })
-      );
+      if (typeof errorMessage === "string") {
+        handleInvalidToken(errorMessage, () =>
+          toast.error(errorMessage, {
+            id: errorMessage,
+          })
+        );
+      } else {
+        toast.error(errorMessage.message, {
+          id: errorMessage.message,
+        });
+      }
+
+      // Interval Server Error
+    } else if (error.response?.status === 500) {
+      toast.error("Terjadi kesalahan pada server.");
 
       // API Error with message
     } else if (error.response?.data?.message) {

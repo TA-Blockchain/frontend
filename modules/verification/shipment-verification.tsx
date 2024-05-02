@@ -5,10 +5,20 @@ import { ShipmentDetails } from "../shipment/shipment-details";
 import { Shipment } from "../shipment/shipment-list";
 import { toast } from "sonner";
 import { useMutation } from "@/hooks/use-mutation";
-import { RiCheckboxCircleFill, RiShieldCheckFill } from "@remixicon/react";
+import { RiCheckboxCircleFill } from "@remixicon/react";
+import { pdfjs, Document, Page } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
 export function ShipmentVerification() {
   const [pdfBlobUrl, setPdfBlobUrl] = React.useState<string | null>(null);
+
+  const [metaData, setMetaData] = React.useState<any>();
+
+  async function onLoadSuccess(pdf: any) {
+    const metadata = await pdf.getMetadata();
+    setMetaData(metadata);
+  }
 
   const { trigger, data, isMutating, reset } = useMutation("/company/shipment/verify");
 
@@ -25,6 +35,13 @@ export function ShipmentVerification() {
           }
         }}
       />
+      <div className="hidden">
+        {pdfBlobUrl && (
+          <Document file={pdfBlobUrl} onLoadSuccess={onLoadSuccess}>
+            <Page pageNumber={1} />
+          </Document>
+        )}
+      </div>
       <Divider className="md:hidden" />
       <div className="border max-md:-mt-4 space-y-2 md:overflow-y-scroll md:px-4 pb-4 scrollbar">
         {pdfBlobUrl && data ? (
@@ -46,10 +63,17 @@ export function ShipmentVerification() {
                   return;
                 }
 
+                const identifier = metaData?.info?.Title;
+                console.log(identifier);
+                if (!identifier) {
+                  toast.error("Tidak dapat menemukan identifier pada file PDF. Mohon unggah file yang valid.");
+                  return;
+                }
+
                 try {
                   await trigger({
                     identifier: {
-                      shipment: "4803efb126b0f844f559bb89812abccaa653afabe9d24c0dc570efd6af7dff7e",
+                      shipment: identifier,
                     },
                   });
                 } catch (error) {}

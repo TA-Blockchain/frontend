@@ -24,7 +24,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
 
   return (
     userType === "manager-perusahaan" && (
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-2 bg-white relative pb-6">
         {isOwner && !isRejected && !isApproved && (
           <Button
             loading={isMutating}

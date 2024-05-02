@@ -11,9 +11,7 @@ const doc = new jsPDF("p", "mm", "a4");
 export function ShipmentInvoice({ id }: { id: string }) {
   const { trigger, data, isMutating } = useMutation(`/company/shipment/identifier/${id}`);
 
-  const identifier = data?.data?.data?.shipment as string;
-
-  const downloadPDF = async () => {
+  const downloadPDF = async (identifier: string) => {
     const capture = document.querySelector(".shipment-details") as HTMLElement;
     const status = document.querySelector(".shipment-status") as HTMLElement;
 
@@ -37,6 +35,12 @@ export function ShipmentInvoice({ id }: { id: string }) {
     html2canvas(capture, options).then((canvas) => {
       const imgData = canvas.toDataURL("image/png", 1.0); // Set quality to 1.0 for maximum quality
 
+      console.log(identifier);
+
+      doc.setProperties({
+        title: identifier,
+      });
+
       doc.setDocumentProperties({
         title: identifier,
       });
@@ -51,7 +55,7 @@ export function ShipmentInvoice({ id }: { id: string }) {
       const offsetX = (pdfWidth - imgWidth) / 2;
       const offsetY = (pdfHeight - imgHeight) / 2;
 
-      doc.addImage(imgData, "PNG", offsetX, offsetY, imgWidth, imgHeight);
+      doc.addImage(imgData, "PNG", offsetX, offsetY, imgWidth, imgHeight, "", "FAST");
       doc.save("invoice-perjalanan.pdf");
 
       // Restore original component dimensions after capturing
@@ -72,11 +76,14 @@ export function ShipmentInvoice({ id }: { id: string }) {
         className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
         onClick={async () => {
           try {
-            if (!identifier) {
-              await trigger();
+            if (!data) {
+              const response = await trigger();
+              const identifier = response?.data?.data?.shipment as string;
+              downloadPDF(identifier);
+            } else {
+              const identifier = data?.data?.shipment as string;
+              downloadPDF(identifier);
             }
-
-            downloadPDF();
           } catch (e) {
             toast.error("Gagal memuat invoice.");
           }

@@ -5,6 +5,7 @@ import { useOptimistic } from "@/hooks/use-optimistic";
 import { Button } from "@tremor/react";
 import { toast } from "sonner";
 import { Shipment } from "./shipment-list";
+import axios from "axios";
 
 export function ShipmentApproval({ details }: { details: Shipment }) {
   const { trigger, isMutating } = useMutation("/company/shipment/complete");
@@ -49,10 +50,17 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
             disabled={isApproved}
             loading={isMutating}
             onClick={async () => {
+              const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/distance?latPenerima=${details.divisiPenerima.lat}&longPenerima=${details.divisiPenerima.long}&latPengirim=${details.divisiPengirim.lat}&longPengirim=${details.divisiPengirim.long}`
+              );
+              const data = response.data;
+
+              const distance = data?.rows?.[0]?.elements?.[0]?.distance?.value / 1000;
+
               await trigger({
                 id: details.id,
                 idVehicle: details.transportasi.id,
-                distance: 50,
+                distance,
                 idApprover: id,
               });
 

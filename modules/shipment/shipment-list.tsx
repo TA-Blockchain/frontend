@@ -28,12 +28,14 @@ export type Shipment = {
   transportasi: Vehicle;
   beratMuatan: number;
   emisiKarbon: number;
+  TxId: string;
+  approver: string;
 };
 
 export const statuses = {
-  "Need Approval": "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-  Completed: "text-green-700 bg-green-50 ring-green-600/20",
-  Rejected: "text-red-700 bg-red-50 ring-red-600/20",
+  "Need Approval": "text-yellow-800 bg-yellow-50 ring-yellow-600/20 border-yellow-600/20",
+  Completed: "text-green-700 bg-green-50 ring-green-600/20 border-green-600/20",
+  Rejected: "text-red-700 bg-red-50 ring-red-600/20 border-red-600/20",
 };
 
 export const statusText = {

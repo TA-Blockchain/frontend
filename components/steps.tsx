@@ -23,7 +23,7 @@ export function Steps({
     <nav aria-label="Progress">
       <ol role="list" className="overflow-hidden">
         {steps.map((step, stepIdx) => (
-          <li key={step.name} className={classNames(stepIdx !== steps.length - 1 ? "pb-10" : "", "relative")}>
+          <li key={step.name} className={classNames(stepIdx !== steps.length - 1 ? "pb-10" : "pb-2", "relative")}>
             {step.status === "complete" ? (
               <>
                 {stepIdx !== steps.length - 1 ? (

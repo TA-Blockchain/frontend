@@ -9,6 +9,11 @@ import { RiArrowRightUpLine, RiAttachment2, RiCarLine } from "@remixicon/react";
 import { Steps } from "@/components/steps";
 import { ShipmentInvoice } from "./shipment-invoice";
 import { useUser } from "@/hooks/use-user";
+import { Avatar } from "@/components/avatar";
+import { Text } from "@tremor/react";
+import Image from "next/image";
+import useSWR from "swr";
+import { Manager } from "../managers/manager-list";
 
 function getSteps(details: Shipment) {
   const isWaitingBerangkat = new Date(details?.waktuBerangkat) > new Date() && details?.status === "Need Approval";
@@ -112,111 +117,188 @@ function getSteps(details: Shipment) {
 export function ShipmentDetails({ details, isLoading }: { details: Shipment | undefined; isLoading: boolean }) {
   const { user } = useUser();
 
-  if (isLoading) {
+  const { data, isLoading: isLoadingManager } = useSWR<{ data: Manager }>(`/auth/user/${details?.approver}`);
+
+  if (isLoading || isLoadingManager) {
     return <LoadingDetailsPlaceholder />;
   }
 
   if (!details) return null;
 
-  const isWaitingBerangkat = new Date(details?.waktuBerangkat) > new Date() && details?.status === "Need Approval";
-
-  const vehicle = details?.transportasi;
-
-  const isCanceled = details?.status === "Rejected";
   const isApproved = details?.status === "Completed";
 
   return (
-    <div>
-      <dl className="divide-y divide-gray-100">
-        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt className="text-sm font-medium leading-6 text-gray-900">Status</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <div className="py-2">
-              <p
-                className={clsx(
-                  statuses[details?.status],
-                  "rounded-md w-fit mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset"
-                )}
-              >
-                {isWaitingBerangkat ? "Menunggu Waktu Berangkat" : statusText[details?.status]}
-              </p>
-            </div>
-          </dd>
-        </div>
+    <div className="relative bg-white">
+      <div className="shipment-details absolute inset-0 w-full h-full hidden">
+        <ShipmentDetailsComponent manager={data?.data} details={details} />
+      </div>
 
-        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt className="text-sm font-medium leading-6 text-gray-900">Riwayat Perjalanan</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <Steps steps={getSteps(details)} isCanceled={isCanceled} />
-          </dd>
-        </div>
+      <ShipmentDetailsComponent manager={data?.data} details={details} real />
 
-        {details?.waktuSampai && (
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Waktu Sampai</dt>
-            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-              {getReadableDateTime(details?.waktuSampai)}
-            </dd>
-          </div>
-        )}
-
-        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt className="text-sm font-medium leading-6 text-gray-900">Berat Muatan</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details?.beratMuatan} kg</dd>
-        </div>
-
-        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-          <dt className="text-sm font-medium leading-6 text-gray-900">Kendaraan</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <div className="group relative sm:max-w-lg border shadow-sm rounded-md">
-              <Link href={`/vehicle/${vehicle.id}`}>
-                <div className="group px-4 py-5">
-                  <div className="w-full flex items-center min-w-0 gap-x-4">
-                    <RiCarLine className="shrink-0 w-10 h-10 text-gray-500" />
-                    <div>
-                      <p className="text-sm font-semibold leading-6 text-gray-900">{vehicle.carModel}</p>
-                      <p className="flex text-xs leading-5 text-gray-500">
-                        <span>{vehicle.fuelType}</span>
-                        <span className="mx-1">•</span>
-                        <span>{vehicle.kmUsage} KM</span>
-                      </p>
-                    </div>
+      {isApproved && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 bg-white relative">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Invoice</dt>
+          <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
+              <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                <div className="flex w-0 flex-1 items-center">
+                  <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                  <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                    <span className="truncate font-medium">invoice_perjalanan.pdf</span>
                   </div>
-                  <span
-                    className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-content dark:text-dark-tremor-content-subtle group-hover:dark:text-dark-tremor-content"
-                    aria-hidden={true}
-                  >
-                    <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />
-                  </span>
                 </div>
-              </Link>
-            </div>
+                <div className="ml-4 flex-shrink-0">
+                  <ShipmentInvoice id={details.id} />
+                </div>
+              </li>
+            </ul>
           </dd>
         </div>
-
-        {isApproved && (
-          <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-            <dt className="text-sm font-medium leading-6 text-gray-900">Invoice</dt>
-            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                  <div className="flex w-0 flex-1 items-center">
-                    <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="truncate font-medium">invoice_perjalanan.pdf</span>
-                    </div>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <ShipmentInvoice id={details.id} />
-                  </div>
-                </li>
-              </ul>
-            </dd>
-          </div>
-        )}
-      </dl>
+      )}
 
       {user && <ShipmentApproval details={details} />}
     </div>
+  );
+}
+
+export function ShipmentDetailsComponent({
+  details,
+  manager,
+  real = false,
+}: {
+  details: Shipment;
+  manager?: Manager;
+  real?: boolean;
+}) {
+  const isWaitingBerangkat = new Date(details?.waktuBerangkat) > new Date() && details?.status === "Need Approval";
+  const vehicle = details?.transportasi;
+
+  const isCanceled = details?.status === "Rejected";
+  const carbonEmission = details?.emisiKarbon.toLocaleString("id-ID", {
+    style: "decimal",
+    maximumFractionDigits: 2,
+  });
+
+  const person = {
+    name: manager?.name,
+    email: manager?.email,
+  };
+
+  return (
+    <dl className={clsx("divide-y divide-gray-100", real && "relative bg-white z-10")}>
+      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt className="text-sm font-medium leading-6 text-gray-900">Status</dt>
+        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <p
+            className={clsx(
+              statuses[details?.status],
+              !real && "shipment-status",
+              "rounded-md w-fit my-1.5 px-1.5 py-0.5 text-xs font-medium border"
+            )}
+          >
+            {isWaitingBerangkat ? "Menunggu Waktu Berangkat" : statusText[details?.status]}
+          </p>
+        </dd>
+      </div>
+      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt className="text-sm font-medium leading-6 text-gray-900">Riwayat Perjalanan</dt>
+        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <Steps steps={getSteps(details)} isCanceled={isCanceled} />
+        </dd>
+      </div>
+      {details?.waktuSampai && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Waktu Sampai</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            {getReadableDateTime(details?.waktuSampai)}
+          </dd>
+        </div>
+      )}
+      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt className="text-sm font-medium leading-6 text-gray-900">Berat Muatan</dt>
+        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          {details?.beratMuatan.toLocaleString("id-ID")} kg
+        </dd>
+      </div>
+      {details?.emisiKarbon > 0 && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Emisi Karbon</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            {carbonEmission} <b>kgCO2e</b>
+          </dd>
+        </div>
+      )}
+      <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt className="text-sm font-medium leading-6 text-gray-900">Kendaraan</dt>
+        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <div className="group relative sm:max-w-sm border shadow-sm rounded-md">
+            <Link href={`/vehicle/${vehicle.id}`}>
+              <div className="group px-4 py-5">
+                <div className="w-full flex items-center min-w-0 gap-x-4">
+                  <RiCarLine className="shrink-0 w-10 h-10 text-gray-500" />
+                  <div>
+                    <p className="text-sm font-semibold leading-6 text-gray-900">{vehicle.carModel}</p>
+                    <p className="flex text-xs leading-5 text-gray-500">
+                      <span>{vehicle.fuelType}</span>
+                      <span className="mx-1">•</span>
+                      <span>{vehicle.kmUsage} KM</span>
+                    </p>
+                  </div>
+                </div>
+                <span
+                  className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-content dark:text-dark-tremor-content-subtle group-hover:dark:text-dark-tremor-content"
+                  aria-hidden={true}
+                >
+                  <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />
+                </span>
+              </div>
+            </Link>
+          </div>
+        </dd>
+      </div>
+
+      {real && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <div className="sm:max-w-sm flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
+              <div className="flex min-w-0 gap-x-4">
+                <Avatar />
+                <div className={clsx("min-w-0 flex-auto", !real && "manager")}>
+                  <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                  <p className="flex text-xs leading-5 text-gray-500">
+                    <a href={`mailto:${person.email}`} className="truncate hover:underline">
+                      {person.email}
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </dd>
+        </div>
+      )}
+
+      {!real && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <p>Disetujui oleh:</p>
+            <p>Manager Divisi {details.divisiPenerima.name}</p>
+
+            <div className="relative py-2 mt-4">
+              <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
+              <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
+                <span className="text-sm break-words leading-3">{details.TxId}</span>
+              </div>
+            </div>
+
+            <p>Nama: {person.name}</p>
+            <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
+              {person.email}
+            </a>
+          </dd>
+        </div>
+      )}
+    </dl>
   );
 }

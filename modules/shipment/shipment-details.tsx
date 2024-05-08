@@ -10,7 +10,6 @@ import { Steps } from "@/components/steps";
 import { ShipmentInvoice } from "./shipment-invoice";
 import { useUser } from "@/hooks/use-user";
 import { Avatar } from "@/components/avatar";
-import { Text } from "@tremor/react";
 import Image from "next/image";
 import useSWR from "swr";
 import { Manager } from "../managers/manager-list";
@@ -128,7 +127,7 @@ export function ShipmentDetails({ details, isLoading }: { details: Shipment | un
   const isApproved = details?.status === "Completed";
 
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-white overflow-hidden">
       <div className="shipment-details absolute inset-0 w-full h-full hidden">
         <ShipmentDetailsComponent manager={data?.data} details={details} />
       </div>
@@ -174,10 +173,7 @@ export function ShipmentDetailsComponent({
   const vehicle = details?.transportasi;
 
   const isCanceled = details?.status === "Rejected";
-  const carbonEmission = details?.emisiKarbon.toLocaleString("id-ID", {
-    style: "decimal",
-    maximumFractionDigits: 2,
-  });
+  const carbonEmission = details?.emisiKarbon.toFixed(3);
 
   const person = {
     name: manager?.name,
@@ -224,7 +220,9 @@ export function ShipmentDetailsComponent({
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Emisi Karbon</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            {carbonEmission} <b>kgCO2e</b>
+            <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+              {details?.emisiKarbon.toFixed(3)} kgCO2e
+            </span>
           </dd>
         </div>
       )}
@@ -257,7 +255,7 @@ export function ShipmentDetailsComponent({
         </dd>
       </div>
 
-      {real && (
+      {real && details.approver && (
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">

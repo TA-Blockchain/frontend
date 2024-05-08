@@ -39,13 +39,20 @@ export function ShipmentListVehicleReadOnly({ idDivisi }: { idDivisi: string }) 
                 <div className="p-2 shrink-0">
                   <RiTruckLine className="w-12 h-12 text-gray-600" />
                 </div>
-                <div className="mt-1 overflow-hidden">
+                <div className="mt-1 overflow-hidden space-y-1">
                   <p className="truncate text-tremor-default font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
                     {getReadableDateTime(shipment.waktuBerangkat)}
                   </p>
-                  <p className="mt-1 line-clamp-1 text-xs text-tremor-content dark:text-dark-tremor-content">
-                    {shipment.beratMuatan} kg
-                  </p>
+                  <div className="flex items-center gap-2">
+                    {shipment.status === "Completed" && (
+                      <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                        {shipment.emisiKarbon.toFixed(3)} kgCO2e
+                      </span>
+                    )}
+                    <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                      {shipment.beratMuatan} kg
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="mt-2 grid place-items-end divide-x divide-tremor-border border-t border-tremor-border dark:divide-dark-tremor-border dark:border-dark-tremor-border">

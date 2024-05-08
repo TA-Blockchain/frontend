@@ -74,7 +74,12 @@ export function CreateShipment() {
 
       setIsOpen(false);
 
-      await mutate(payload);
+      await mutate({
+        ...payload,
+        idSupplyChain: selectedSupplyChain ?? "",
+        waktuBerangkat: getDateTime(payload.tanggalBerangkat, payload.waktuBerangkat),
+        status: "Need Approval",
+      });
     } catch (error) {
       console.log(error);
     }

@@ -110,8 +110,6 @@ export function getCurrentTime() {
 }
 
 export function getReadableDateTime(date: string) {
-  const isAM = new Date(date).getHours() < 12;
-
   return (
     new Date(date).toLocaleDateString("id-ID", {
       year: "numeric",
@@ -124,4 +122,8 @@ export function getReadableDateTime(date: string) {
       minute: "2-digit",
     })
   );
+}
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }

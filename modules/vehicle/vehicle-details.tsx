@@ -3,6 +3,7 @@ import { useMutation } from "@/hooks/use-mutation";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
 import { Vehicle } from "./vehicle-list";
 import { RiCommunityLine } from "@remixicon/react";
+import { capitalize } from "@/lib";
 
 export function VehicleDetails({ details, isLoading }: { details: Vehicle | undefined; isLoading: boolean }) {
   const { trigger } = useMutation(`/company/vehicle/${details?.id}`, undefined, {
@@ -20,17 +21,25 @@ export function VehicleDetails({ details, isLoading }: { details: Vehicle | unde
       <dl className="divide-y divide-gray-100">
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Model Kendaraan</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details?.carModel}</dd>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.carModel}</dd>
         </div>
 
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Tipe Bahan Bakar</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details?.fuelType}</dd>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <span className="inline-flex items-center rounded-full bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
+              {capitalize(details.fuelType)}
+            </span>
+          </dd>
         </div>
 
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Penggunaan KM</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details?.kmUsage} km</dd>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+              {details.kmUsage} km
+            </span>
+          </dd>
         </div>
 
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

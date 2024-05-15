@@ -90,6 +90,8 @@ export function CreateShipment() {
 
   const isSameDate = watch("tanggalBerangkat")?.toDateString() === new Date().toDateString();
 
+  const supplyChains = supplyChain?.data.filter((sc) => sc.status === "approve") || [];
+
   return (
     <FormProvider {...methods}>
       <div className="mt-4 grid gap-3 sm:gap-2 sm:flex">
@@ -102,15 +104,14 @@ export function CreateShipment() {
             placeholder={
               isLoadingSupplyChain
                 ? "Memuat supply chain..."
-                : supplyChain?.data.length === 0
+                : supplyChains.length === 0
                 ? "Supply chain tidak tersedia"
                 : "Pilih supply chain"
             }
             className="rounded-tremor-small sm:max-w-xs"
             required
           >
-            {supplyChain?.data.map((sc) => {
-              if (sc.status !== "approve") return null;
+            {supplyChains.map((sc) => {
               return (
                 <SearchSelectItem key={sc.id} value={sc.id}>
                   {sc.Nama}

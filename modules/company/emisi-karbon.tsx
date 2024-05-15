@@ -23,18 +23,18 @@ type CarbonEmission = {
 };
 
 export function DetailEmisiKarbon({ details }: { details: Company | undefined }) {
-  const { data, isLoading } = useSWR<{ data: CarbonEmission }>(`/company/carbon_emission/perusahaan/${details?.id}`);
+  const { data, isLoading } = useSWR<{ data: CarbonEmission[] }>(`/company/carbon_emission/perusahaan/${details?.id}`);
   const router = useRouter();
 
   if (isLoading) {
     return <LoadingPlaceholder />;
   }
 
-  if (data?.data.isEmpty || !data) {
+  if (data?.data?.[0].isEmpty || !data) {
     return <EmptyPlaceholder {...placeholderProps} />;
   }
 
-  const perjalanan = data?.data.perjalanan.reverse() ?? [];
+  const perjalanan = data?.data?.[0].perjalanan.reverse() ?? [];
 
   return (
     <ul role="list" className="divide-y divide-gray-100">

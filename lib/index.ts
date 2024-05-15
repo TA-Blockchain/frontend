@@ -40,6 +40,10 @@ api.interceptors.response.use(
       const errorMessage = error.response.data.error;
 
       if (typeof errorMessage === "string") {
+        if (errorMessage === "Unexpected end of JSON input") {
+          return Promise.reject(error);
+        }
+
         handleInvalidToken(errorMessage, () =>
           toast.error(errorMessage, {
             id: errorMessage,

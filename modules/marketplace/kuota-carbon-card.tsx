@@ -33,7 +33,7 @@ export default function KuotaCarbonCard({ id }: { id: string }) {
             {getFormattedNumber(sisaKuota)}/{getCarbonEmissionFormatted(kuota)}
           </p>
           <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-            Kuota karbon perusahaan
+            Penggunaan kuota emisi karbon
           </p>
         </div>
       </div>

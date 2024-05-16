@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingDetailsPlaceholder } from "@/modules/template/loading-details-placeholder";
 
-import { ProposalKarbon, statuses, statusText } from "./proposal-karbon-list";
+import { ProposalKarbon, statuses, statusText } from "./proposal-karbon-list-readonly";
 import { CompanyItem } from "@/modules/supply-chain/details/supply-chain-details";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";

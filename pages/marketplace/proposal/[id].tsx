@@ -4,7 +4,7 @@ import React from "react";
 import useSWR from "swr";
 import { Text } from "@tremor/react";
 import { ProposalKarbonDetails } from "@/modules/marketplace/proposal-karbon-details";
-import { ProposalKarbon } from "@/modules/marketplace/proposal-karbon-list";
+import { ProposalKarbon } from "@/modules/marketplace/proposal-karbon-list-readonly";
 
 export default function ProposalKarbonDetailsPage() {
   const router = useRouter();

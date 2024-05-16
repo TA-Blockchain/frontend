@@ -1,5 +1,5 @@
 import React from "react";
-import { ProposalKarbon } from "./proposal-karbon-list";
+import { ProposalKarbon } from "./proposal-karbon-list-readonly";
 import { useMutation } from "@/hooks/use-mutation";
 import { useUser } from "@/hooks/use-user";
 import { useOptimistic, useOptimisticListUpdate } from "@/hooks/use-optimistic";

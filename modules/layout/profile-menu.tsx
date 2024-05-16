@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useUser } from "@/hooks/use-user";
-import { RiLogoutCircleLine, RiQrScan2Line, RiSettingsLine, RiUserLine } from "@remixicon/react";
+import { RiHistoryLine, RiLogoutCircleLine, RiQrScan2Line, RiSettingsLine, RiUserLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 
 function classNames(...classes: any[]) {
@@ -48,7 +48,7 @@ export function ProfileMenu() {
                   )}
                 >
                   <div className="flex gap-2 items-center">
-                    <RiSettingsLine className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />{" "}
+                    <RiSettingsLine className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />
                     Pengaturan akun
                   </div>
                 </button>
@@ -64,12 +64,30 @@ export function ProfileMenu() {
                   )}
                 >
                   <div className="flex gap-2 items-center">
-                    <RiQrScan2Line className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />{" "}
+                    <RiQrScan2Line className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />
                     Verifikasi Invoice
                   </div>
                 </button>
               )}
             </Menu.Item>
+            {user.userType === "admin-perusahaan" && (
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={() => router.push("/marketplace/transaction")}
+                    className={classNames(
+                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      "block w-full px-4 py-2 text-left text-sm"
+                    )}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <RiHistoryLine className={classNames(active ? "text-gray-800" : "text-gray-600", "w-4 h-4")} />
+                      Riwayat Transaksi
+                    </div>
+                  </button>
+                )}
+              </Menu.Item>
+            )}
           </div>
 
           <div className="py-1">

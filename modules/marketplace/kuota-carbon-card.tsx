@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { Company } from "@/modules/company/list";
 import { getCarbonEmissionFormatted, getFormattedNumber } from "@/lib";
 
-export default function KuotaCarbonCard({ id }: { id: string }) {
+export function KuotaCarbonCard({ id }: { id: string }) {
   const { data, isLoading } = useSWR<{ data: Company }>(`/company/${id}`);
 
   if (isLoading) {

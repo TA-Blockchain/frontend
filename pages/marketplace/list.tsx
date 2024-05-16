@@ -1,59 +1,41 @@
-import { DivisionDetails } from "@/modules/divisions/division-details";
-import { Division } from "@/modules/divisions/division-list";
-import { NotFoundPlaceholder } from "@/modules/template/not-found";
-import { useRouter } from "next/router";
-import React from "react";
-import useSWR from "swr";
-import { Text } from "@tremor/react";
-import { VehicleListReadOnly } from "@/modules/vehicle/vehicle-list-read-only";
-import { ShipmentListReadOnly } from "@/modules/shipment/shipment-list-read-only";
-import { Info } from "@/components/info";
 import { Tabs } from "@/components/tabs";
+import { useUser } from "@/hooks/use-user";
+import { ProposalKarbonCompanyList } from "@/modules/marketplace/proposal/proposal-karbon-company-list";
+import { ProposalKarbonList } from "@/modules/marketplace/proposal/proposal-karbon-list";
+import { Button, Text } from "@tremor/react";
+import { useRouter } from "next/navigation";
+import React from "react";
 
-export default function DivisionDetailsPage() {
+export default function MarketplaceListPage() {
+  const {
+    user: { userType, idPerusahaan },
+  } = useUser();
+
   const router = useRouter();
-
-  const id = router.query.id as string;
-
-  const { data: division, isLoading } = useSWR<{ data: Division }>(`/company/division/detail/${id}`);
-
-  if (!division && !isLoading) {
-    return <NotFoundPlaceholder description="Maaf, rincian penjualan karbon yang Anda cari tidak ditemukan." />;
-  }
 
   return (
     <main>
-      <h1 className="text-tremor-title font-semibold">Rincian Divisi</h1>
-      <Text className="mt-0.5">Informasi umum, kendaraan, dan riwayat perjalanan divisi terkait.</Text>
+      <h1 className="text-tremor-title font-semibold">Jual Beli Kuota Karbon</h1>
+      <Text className="mt-0.5">Kuota karbon perusahaan yang dijual di platform Carbon Chain.</Text>
 
-      <div className="mt-4">
+      <Button onClick={() => router.push("/marketplace/transaction")} className="rounded-tremor-small mt-4">
+        Lihat semua transaksi
+      </Button>
+
+      {userType === "admin-perusahaan" && (
         <Tabs
-          tabList={["Rincian", "Kendaraan", "Riwayat Perjalanan"]}
+          className="mt-2"
+          tabList={["Milik Anda", "Semua"]}
           tabPanels={[
-            () => <DivisionDetails details={division?.data} isLoading={isLoading} />,
-            () => <VehicleListReadOnly idDivisi={id} />,
-            () => (
-              <div className="mt-4">
-                <Info
-                  title="Perjalanan yang tercatat"
-                  description="Perjalanan adalah pengiriman barang antar divisi internal atau perusahaan lain."
-                />
-                <Tabs
-                  className="mt-2"
-                  prefix="shipment"
-                  tabList={["Menuju", "Mendatang"]}
-                  tabPanels={[
-                    () => <ShipmentListReadOnly idDivisi={id} type="divisi_pengirim" />,
-                    () => <ShipmentListReadOnly idDivisi={id} type="divisi_penerima" />,
-                  ]}
-                />
-              </div>
-            ),
+            () => <ProposalKarbonCompanyList idPerusahaan={idPerusahaan} />,
+            () => <ProposalKarbonList status={"1"} />,
           ]}
         />
-      </div>
+      )}
+
+      {(userType === "admin-kementerian" || userType === "staf-kementerian") && <ProposalKarbonList status={"1"} />}
     </main>
   );
 }
 
-DivisionDetailsPage.title = "Rincian Penjualan Karbon | Carbon Chain";
+MarketplaceListPage.title = "Jual Beli Kuota Karbon | Carbon Chain";

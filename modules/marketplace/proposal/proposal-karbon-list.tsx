@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { EmptyPlaceholder } from "../template/empty-placeholder";
-import { LoadingPlaceholder } from "../template/loading-placeholder";
+import { EmptyPlaceholder } from "../../template/empty-placeholder";
+import { LoadingPlaceholder } from "../../template/loading-placeholder";
 import { RiArrowRightUpLine, RiFileLine } from "@remixicon/react";
 import { Card } from "@tremor/react";
 import { getCarbonEmissionFormatted } from "@/lib";

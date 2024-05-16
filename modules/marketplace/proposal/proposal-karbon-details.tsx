@@ -6,7 +6,9 @@ import { CompanyItem } from "@/modules/supply-chain/details/supply-chain-details
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
 import { KementerianButtons } from "./kementrian-buttons";
-import KuotaCarbonCard from "./kuota-carbon-card";
+import { KuotaCarbonCard } from "../kuota-carbon-card";
+import { useUser } from "@/hooks/use-user";
+import { PerusahaanButtons } from "./perusahaan-buttons";
 
 export function ProposalKarbonDetails({
   details,
@@ -15,6 +17,10 @@ export function ProposalKarbonDetails({
   details: ProposalKarbon | undefined;
   isLoading: boolean;
 }) {
+  const {
+    user: { userType },
+  } = useUser();
+
   if (isLoading) {
     return <LoadingDetailsPlaceholder />;
   }
@@ -63,6 +69,8 @@ export function ProposalKarbonDetails({
       </dl>
 
       <KementerianButtons details={details} />
+
+      {userType === "admin-perusahaan" && <PerusahaanButtons details={details} />}
     </div>
   );
 }

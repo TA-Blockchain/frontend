@@ -1,10 +1,10 @@
 import { Info } from "@/components/info";
 import { Tabs } from "@/components/tabs";
 import { useUser } from "@/hooks/use-user";
-import { CreateProposalKarbon } from "@/modules/marketplace/create-proposal-karbon";
-import KuotaCarbonCard from "@/modules/marketplace/kuota-carbon-card";
-import { ProposalKarbonList } from "@/modules/marketplace/proposal-karbon-list";
-import { ProposalKarbonListReadOnly } from "@/modules/marketplace/proposal-karbon-list-readonly";
+import { CreateProposalKarbon } from "@/modules/marketplace/proposal/create-proposal-karbon";
+import { KuotaCarbonCard } from "@/modules/marketplace/kuota-carbon-card";
+import { ProposalKarbonList } from "@/modules/marketplace/proposal/proposal-karbon-list";
+import { ProposalKarbonListReadOnly } from "@/modules/marketplace/proposal/proposal-karbon-list-readonly";
 import { Button, Divider, Text } from "@tremor/react";
 import { useRouter } from "next/navigation";
 import React from "react";

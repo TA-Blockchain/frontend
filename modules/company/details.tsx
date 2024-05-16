@@ -9,7 +9,7 @@ import { useOptimistic, useOptimisticListUpdate } from "@/hooks/use-optimistic";
 import { toast } from "sonner";
 import { useUser } from "@/hooks/use-user";
 import { getCarbonEmissionFormatted } from "@/lib";
-import KuotaCarbonCard from "@/modules/marketplace/kuota-carbon-card";
+import { KuotaCarbonCard } from "@/modules/marketplace/kuota-carbon-card";
 
 export function CompanyDetails({ details, isLoading }: { details: Company | undefined; isLoading: boolean }) {
   const [kuota, setKuota] = React.useState<number>();

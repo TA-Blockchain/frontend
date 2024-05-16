@@ -4,6 +4,7 @@ import { LoadingDetailsPlaceholder } from "../template/loading-details-placehold
 import { Vehicle } from "./vehicle-list";
 import { RiCommunityLine } from "@remixicon/react";
 import { capitalize } from "@/lib";
+import clsx from "clsx";
 
 export function VehicleDetails({ details, isLoading }: { details: Vehicle | undefined; isLoading: boolean }) {
   const { trigger } = useMutation(`/company/vehicle/${details?.id}`, undefined, {
@@ -27,7 +28,13 @@ export function VehicleDetails({ details, isLoading }: { details: Vehicle | unde
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Tipe Bahan Bakar</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <span className="inline-flex items-center rounded-full bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
+            <span
+              className={clsx(
+                details.fuelType === "petrol" && "bg-cyan-50 text-cyan-700 ring-cyan-700/10",
+                details.fuelType === "diesel" && "bg-pink-50 text-pink-700 ring-pink-700/10",
+                "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset "
+              )}
+            >
               {capitalize(details.fuelType)}
             </span>
           </dd>

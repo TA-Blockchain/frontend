@@ -175,7 +175,6 @@ export function ShipmentDetailsComponent({
   const vehicle = details?.transportasi;
 
   const isCanceled = details?.status === "Rejected";
-  const carbonEmission = details?.emisiKarbon.toFixed(3);
 
   const person = {
     name: manager?.name,

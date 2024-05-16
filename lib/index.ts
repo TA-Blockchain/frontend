@@ -132,6 +132,10 @@ export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+export function getFormattedNumber(number: number) {
+  return `${parseFloat(number.toFixed(3)).toLocaleString("id-ID")}`;
+}
+
 export function getCarbonEmissionFormatted(emission: number) {
   return `${parseFloat(emission.toFixed(3)).toLocaleString("id-ID")} kgCO2e`;
 }

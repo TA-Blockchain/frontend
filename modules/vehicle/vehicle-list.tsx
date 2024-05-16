@@ -8,6 +8,7 @@ import { RiArrowRightUpLine, RiCarLine } from "@remixicon/react";
 import { Division } from "../divisions/division-list";
 import { Card } from "@tremor/react";
 import { capitalize } from "@/lib";
+import clsx from "clsx";
 
 const placeholderProps = {
   title: "Kendaraan tidak ditemukan",
@@ -48,7 +49,13 @@ export function VehicleList() {
                 <div className="space-y-1">
                   <p className="text-sm font-semibold leading-6 text-gray-900">{vehicle.carModel}</p>
                   <p className="flex gap-2 text-xs leading-5 text-gray-500">
-                    <span className="inline-flex items-center rounded-full bg-pink-50 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
+                    <span
+                      className={clsx(
+                        vehicle.fuelType === "petrol" && "bg-cyan-50 text-cyan-700 ring-cyan-700/10",
+                        vehicle.fuelType === "diesel" && "bg-pink-50 text-pink-700 ring-pink-700/10",
+                        "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset "
+                      )}
+                    >
                       {capitalize(vehicle.fuelType)}
                     </span>
                     <span className="inline-flex items-center rounded-full bg-white px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">

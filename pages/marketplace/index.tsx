@@ -1,6 +1,8 @@
 import { Info } from "@/components/info";
+import { useUser } from "@/hooks/use-user";
 import { ManagerList } from "@/modules/managers/manager-list";
 import { CreateProposalKarbon } from "@/modules/marketplace/create-proposal-karbon";
+import { ProposalKarbonListReadOnly } from "@/modules/marketplace/proposal-karbon-list";
 import { Divider, Text } from "@tremor/react";
 import React from "react";
 
@@ -10,6 +12,9 @@ const info = {
 };
 
 export default function MarketplacePage() {
+  const {
+    user: { idPerusahaan, userType },
+  } = useUser();
   return (
     <main>
       <h1 className="text-tremor-title font-semibold">Jual Beli Kuota Karbon</h1>
@@ -24,8 +29,12 @@ export default function MarketplacePage() {
         <Divider />
 
         <div>
-          <Info title="Proposal penjualan Anda" />
-          <ManagerList />
+          {userType === "admin-perusahaan" && (
+            <>
+              <Info title="Proposal penjualan Anda" />
+              <ProposalKarbonListReadOnly idPerusahaan={idPerusahaan} />
+            </>
+          )}
         </div>
       </div>
     </main>

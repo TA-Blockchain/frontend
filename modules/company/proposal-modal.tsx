@@ -1,5 +1,5 @@
 import { RiAttachment2 } from "@remixicon/react";
-import { Button, Dialog, DialogPanel } from "@tremor/react";
+import { Button, Dialog, DialogPanel, NumberInput } from "@tremor/react";
 import { useState } from "react";
 import { Company } from "./list";
 import { useMutation } from "@/hooks/use-mutation";
@@ -8,6 +8,8 @@ import { useOptimisticListUpdate } from "@/hooks/use-optimistic";
 
 export function ProposalModal(company: Company) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [kuota, setKuota] = useState<number>();
 
   const { trigger, isMutating: isApproving } = useMutation(`/company/approve/${company.id}`, undefined, {
     method: "PUT",
@@ -25,14 +27,32 @@ export function ProposalModal(company: Company) {
         onClick={() => setIsOpen(true)}
         className="rounded-md bg-white px-2.5 py-1.5 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition block"
       >
-        View proposal<span className="sr-only">, {company.nama}</span>
+        Lihat proposal<span className="sr-only">, {company.nama}</span>
       </button>
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} static={true} className="z-[100]">
         <DialogPanel className="sm:max-w-2xl">
-          <div>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await trigger({
+                kuota,
+              });
+              mutate(
+                {
+                  approvalStatus: 1,
+                  kuota,
+                  sisaKuota: kuota,
+                },
+                (item) => item.id === company.id
+              );
+              toast.success("Proposal perusahaan disetujui.");
+            }}
+          >
             <div>
-              <h3 className="text-base font-semibold leading-7 text-gray-900">Applicant Information</h3>
-              <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and application.</p>
+              <h3 className="text-base font-semibold leading-7 text-gray-900">Rincian Perusahaan</h3>
+              <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                Informasi umum proposal perusahaan terkait.
+              </p>
             </div>
             <div className="mt-6">
               <dl className="grid grid-cols-1 sm:grid-cols-2">
@@ -41,7 +61,7 @@ export function ProposalModal(company: Company) {
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{company.nama}</dd>
                 </div>
                 <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-1">
-                  <dt className="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+                  <dt className="text-sm font-medium leading-6 text-gray-900">Alamat Email</dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{company.email}</dd>
                 </div>
                 <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-1">
@@ -52,9 +72,22 @@ export function ProposalModal(company: Company) {
                   <dt className="text-sm font-medium leading-6 text-gray-900">Lokasi</dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{company.lokasi}</dd>
                 </div>
-                <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-2">
+                <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-1">
                   <dt className="text-sm font-medium leading-6 text-gray-900">Deskripsi Perusahaan</dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{company.deskripsi}</dd>
+                </div>
+                <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-1">
+                  <dt className="text-sm font-medium leading-6 text-gray-900">Kuota Karbon</dt>
+                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">
+                    <NumberInput
+                      value={kuota}
+                      onValueChange={(value) => setKuota(value)}
+                      min={1}
+                      placeholder="Alokasi kuota awal (kgCO2e)"
+                      className="w-full sm:w-full rounded-tremor-small"
+                      required
+                    />
+                  </dd>
                 </div>
                 <div className="border-t border-gray-100 py-4 sm:py-5 sm:col-span-2">
                   <dt className="text-sm font-medium leading-6 text-gray-900">Lampiran</dt>
@@ -85,6 +118,7 @@ export function ProposalModal(company: Company) {
             </div>
             <div className="flex justify-end gap-2">
               <Button
+                type="button"
                 loading={isRejecting || isApproving}
                 onClick={async () => {
                   await reject();
@@ -101,24 +135,11 @@ export function ProposalModal(company: Company) {
               >
                 Tolak proposal
               </Button>
-              <Button
-                loading={isRejecting || isApproving}
-                onClick={async () => {
-                  await trigger();
-                  mutate(
-                    {
-                      approvalStatus: 1,
-                    },
-                    (item) => item.id === company.id
-                  );
-                  toast.success("Proposal perusahaan disetujui.");
-                }}
-                className="rounded-tremor-small"
-              >
+              <Button type="submit" loading={isRejecting || isApproving} className="rounded-tremor-small">
                 Setujui Proposal
               </Button>
             </div>
-          </div>
+          </form>
         </DialogPanel>
       </Dialog>
     </>

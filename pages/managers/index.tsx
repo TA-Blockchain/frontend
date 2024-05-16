@@ -13,7 +13,7 @@ export default function ManagersPage() {
   return (
     <main>
       <h1 className="text-tremor-title font-semibold">Manajemen Manajer</h1>
-      <Text className="mt-0.5">Daftar Manajer Perusahaan yang terdaftar di platform Carbon Chain.</Text>
+      <Text className="mt-0.5">Manajer Perusahaan yang terdaftar di platform Carbon Chain.</Text>
 
       <div className="mt-8 space-y-8">
         <div>

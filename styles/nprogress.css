@@ -7,7 +7,7 @@
   background: var(--progressbar-color);
 
   position: fixed;
-  top: 64px;
+  top: var(--progressbar-top);
   left: 0;
 
   width: 100%;

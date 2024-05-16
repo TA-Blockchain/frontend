@@ -131,3 +131,7 @@ export function getReadableDateTime(date: string) {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function getCarbonEmissionFormatted(emission: number) {
+  return `${parseFloat(emission.toFixed(3)).toLocaleString("id-ID")} kgCO2e`;
+}

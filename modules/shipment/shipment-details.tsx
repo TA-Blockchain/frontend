@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingDetailsPlaceholder } from "../template/loading-details-placeholder";
 import { Shipment, statuses, statusText } from "./shipment-list";
-import { getReadableDateTime } from "@/lib";
+import { getCarbonEmissionFormatted, getReadableDateTime } from "@/lib";
 import clsx from "clsx";
 import { ShipmentApproval } from "./shipment-approval";
 import Link from "next/link";
@@ -116,7 +116,9 @@ function getSteps(details: Shipment) {
 export function ShipmentDetails({ details, isLoading }: { details: Shipment | undefined; isLoading: boolean }) {
   const { user } = useUser();
 
-  const { data, isLoading: isLoadingManager } = useSWR<{ data: Manager }>(`/auth/user/${details?.approver}`);
+  const { data, isLoading: isLoadingManager } = useSWR<{ data: Manager }>(
+    details?.approver ? `/auth/user/${details?.approver}` : null
+  );
 
   if (isLoading || isLoadingManager) {
     return <LoadingDetailsPlaceholder />;
@@ -221,7 +223,7 @@ export function ShipmentDetailsComponent({
           <dt className="text-sm font-medium leading-6 text-gray-900">Emisi Karbon</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
             <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-              {details?.emisiKarbon.toFixed(3)} kgCO2e
+              {getCarbonEmissionFormatted(details?.emisiKarbon)}
             </span>
           </dd>
         </div>

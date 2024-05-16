@@ -7,7 +7,7 @@ import { RiTruckLine } from "@remixicon/react";
 import { Shipment } from "@/modules/shipment/shipment-list";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import { getReadableDateTime } from "@/lib";
+import { getCarbonEmissionFormatted, getReadableDateTime } from "@/lib";
 
 const placeholderProps = {
   title: "Emisi karbon kosong",
@@ -49,7 +49,7 @@ export function DetailEmisiKarbon({ details }: { details: Company | undefined })
                 </p>
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                    {shipment.emisiKarbon.toFixed(3)} kgCO2e
+                    {getCarbonEmissionFormatted(shipment.emisiKarbon)}
                   </span>
                   <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
                     {shipment.beratMuatan} kg

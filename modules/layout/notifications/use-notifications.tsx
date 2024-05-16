@@ -1,4 +1,5 @@
 import {
+  DocumentIcon,
   ExclamationTriangleIcon,
   HandThumbUpIcon,
   MegaphoneIcon,
@@ -10,7 +11,7 @@ import { Notification } from "./notifications-menu";
 
 import { Company } from "@/modules/company/list";
 import { Shipment } from "@/modules/shipment/shipment-list";
-import { getReadableDateTime } from "@/lib";
+import { getCarbonEmissionFormatted, getReadableDateTime } from "@/lib";
 import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
 import { UserData, useUser } from "@/hooks/use-user";
 
@@ -24,9 +25,15 @@ function handleNotificationType(key: keyof Notification, value: any, currentUser
   switch (key) {
     // Cases for different notification types
     case "carbonSalesProposal":
-      content = "Menunggu persetujuan proposal penjualan karbon";
-      icon = HandThumbUpIcon;
+      content = (
+        <span>
+          Menunggu persetujuan proposal penjualan sebanyak <b>{getCarbonEmissionFormatted(value.kuotaYangDijual)}</b>{" "}
+          kuota karbon.
+        </span>
+      );
+      icon = DocumentIcon;
       iconBackground = "bg-blue-500";
+      href = `/marketplace/proposal/${value.id}`;
       break;
     case "company":
       const company = value as Company;
@@ -48,7 +55,7 @@ function handleNotificationType(key: keyof Notification, value: any, currentUser
       break;
     case "carbonTransaction":
       content = "Menunggu persetujuan Anda untuk memvalidasi transaksi karbon";
-      icon = HandThumbUpIcon;
+      icon = DocumentIcon;
       iconBackground = "bg-blue-500";
       break;
     case "supplyChainPending":

@@ -56,4 +56,4 @@ export default function DivisionDetailsPage() {
   );
 }
 
-DivisionDetailsPage.title = "Division Details | Carbon Chain";
+DivisionDetailsPage.title = "Rincian Divisi | Carbon Chain";

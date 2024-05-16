@@ -34,7 +34,6 @@ export default function Map({ children }: { children: React.ReactNode }) {
   };
 
   // Move map if input is changing
-  // TODO Optimize setView calling
   useEffect(() => {
     if (isDragging) return;
 

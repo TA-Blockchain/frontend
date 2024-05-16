@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/use-user";
 import Link from "next/link";
 import { Card } from "@tremor/react";
 import { RiArrowRightUpLine, RiTruckLine } from "@remixicon/react";
-import { getReadableDateTime } from "@/lib";
+import { getCarbonEmissionFormatted, getReadableDateTime } from "@/lib";
 import clsx from "clsx";
 import { Shipment, statuses, statusText } from "./shipment-list";
 
@@ -52,7 +52,7 @@ export function ShipmentListReadOnly({
                   <div className="flex items-center gap-2">
                     {shipment.status === "Completed" && (
                       <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                        {shipment.emisiKarbon.toFixed(3)} kgCO2e
+                        {getCarbonEmissionFormatted(shipment.emisiKarbon)}
                       </span>
                     )}
                     <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">

@@ -86,12 +86,12 @@ export function NotificationsMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute -right-16 max-w-[calc(100vw-2.5rem)] sm:-right-4 z-10 mt-2.5 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute -right-16 max-w-[calc(100vw-1.25rem)] sm:-right-4 z-10 mt-2.5 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-4 py-3">
             <p className="font-medium text-gray-900">Pesan masuk</p>
           </div>
 
-          <div className="max-sm:w-[calc(100vw-2.5rem)]">
+          <div className="max-sm:w-[calc(100vw-1.25rem)]">
             {!hasNotifications && <EmptyNotifications />}
 
             {hasNotifications && (

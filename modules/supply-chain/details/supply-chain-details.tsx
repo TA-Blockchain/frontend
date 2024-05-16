@@ -63,7 +63,7 @@ export function SupplyChainDetails({ details, isLoading }: { details: SupplyChai
   );
 }
 
-function CompanyItem({ id }: { id: string }) {
+export function CompanyItem({ id }: { id: string }) {
   const { data, isLoading } = useSWR<{ data: Company }>(`/company/${id}`);
 
   if (isLoading) {

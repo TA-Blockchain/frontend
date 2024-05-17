@@ -5,7 +5,7 @@ import { statuses, statusText } from "./transaksi-karbon-list";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
 import { UserType, useUser } from "@/hooks/use-user";
-import { TransaksiKarbonDetailsType } from "./types";
+import { Signature, TransaksiKarbonDetailsType } from "./types";
 import { Steps } from "@/components/steps";
 import { RiAttachment2 } from "@remixicon/react";
 import { KementrianApproval } from "./kementrian-approval";
@@ -266,21 +266,11 @@ export function TransaksiKarbonDetailsComponent({
             <p>Disetujui oleh:</p>
             <div className="w-full grid md:grid-cols-2 gap-4">
               {details.approvers.map((approver, index) => {
-                if (typeof details.HistoryTxId[index] === "string") {
-                  return (
-                    <UserInfoPDF
-                      key={approver}
-                      id={approver}
-                      txId={details.HistoryTxId[index]}
-                      idPerusahaanPembeli={details.perusahaanPembeli.id}
-                    />
-                  );
-                }
                 return (
                   <UserInfoPDF
                     key={approver}
                     id={approver}
-                    txId={details.HistoryTxId[index]?.signature}
+                    signature={details.signatures[index]}
                     idPerusahaanPembeli={details.perusahaanPembeli.id}
                   />
                 );
@@ -350,7 +340,15 @@ function UserInfo({ id, idPerusahaanPembeli }: { id: string; idPerusahaanPembeli
   );
 }
 
-function UserInfoPDF({ id, txId, idPerusahaanPembeli }: { id: string; txId: string; idPerusahaanPembeli: string }) {
+function UserInfoPDF({
+  id,
+  signature,
+  idPerusahaanPembeli,
+}: {
+  id: string;
+  signature: Signature;
+  idPerusahaanPembeli: string;
+}) {
   const { data, isLoading: isLoading } = useSWR<{
     data: {
       name: string;
@@ -379,15 +377,16 @@ function UserInfoPDF({ id, txId, idPerusahaanPembeli }: { id: string; txId: stri
       : "Perusahaan Penjual";
 
   return (
-    <div>
+    <div className="font-mono text-xs">
       <div className="relative py-2 mt-4">
         <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
-        <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
-          <p className="text-sm">{role}</p>
-          <p className="max-w-[200px] text-xs break-words leading-4">{txId}</p>
+        <div className="absolute top-2 pb-4 left-14 overflow-hidden max-w-xs">
+          <p>{signature.signTime}</p>
+          <p className="max-w-[200px] break-words leading-4">{signature.signature}</p>
         </div>
       </div>
 
+      <p>{role}</p>
       <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
         {person.email}
       </a>

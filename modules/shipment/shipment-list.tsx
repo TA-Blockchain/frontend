@@ -28,6 +28,11 @@ export type Shipment = {
   beratMuatan: number;
   emisiKarbon: number;
   TxId: string;
+  signature?: {
+    signature: string;
+    signTime: string;
+    signerPubKey: string;
+  };
   approver: string;
 };
 

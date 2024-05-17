@@ -24,7 +24,7 @@ export function TransactionInvoice({ id }: { id: string }) {
     status.style.paddingBottom = "10px";
 
     // Increase the DPI for clearer image
-    const dpi = 240; // Example DPI
+    const dpi = 220; // Example DPI
     const scale = dpi / 96; // 96 DPI is the default browser resolution
     const options = {
       scale: scale,

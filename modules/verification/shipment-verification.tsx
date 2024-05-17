@@ -100,6 +100,11 @@ export function ShipmentVerification() {
                   emisiKarbon: 15824.984412000002,
                   approver: "0bb9525a-a1a2-457a-923f-1cc09e91fa8f",
                   TxId: "5a4e7d8fcd3afb3e8d10511136b6d7913031d1b2fbc4192d04a95bd549aca54d",
+                  signature: {
+                    signature: "",
+                    signTime: "",
+                    signerPubKey: "",
+                  },
                 }}
               />
             </div>

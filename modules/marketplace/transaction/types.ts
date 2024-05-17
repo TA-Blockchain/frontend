@@ -10,11 +10,12 @@ export interface TransaksiKarbonDetailsType {
   status: TransaksiKarbonStatus;
   urlBuktiTransaksi: string;
   approvers: string[];
-  HistoryTxId:
-    | Array<string>
-    | Array<{
-        signature: string;
-        signTime: string;
-        signerPubKey: string;
-      }>;
+  HistoryTxId: Array<string>;
+  signatures: Array<Signature>;
 }
+
+export type Signature = {
+  signature: string;
+  signTime: string;
+  signerPubKey: string;
+};

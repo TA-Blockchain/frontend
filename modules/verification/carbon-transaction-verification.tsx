@@ -44,7 +44,7 @@ export function CarbonTransactionVerification() {
         )}
       </div>
       <Divider className="md:hidden" />
-      <div className="border max-md:-mt-4 space-y-2 md:overflow-y-auto scrollbar">
+      <div className="border max-md:-mt-4 space-y-2 md:overflow-auto scrollbar">
         {pdfBlobUrl && data ? (
           <div className="px-4 md:px-8 pb-4">
             <Text className="mt-4 text-xl font-medium text-black flex gap-2 items-center">
@@ -53,7 +53,7 @@ export function CarbonTransactionVerification() {
             <TransaksiKarbonDetails details={carbonTransactionData} isLoading={isMutating} />
           </div>
         ) : (
-          <div className="relative max-md:h-64 w-full h-full overflow-hidden">
+          <div className="relative max-md:h-64 w-full h-full">
             <div className="absolute inset-0 w-full h-full -z-10 px-4 opacity-20">
               <ShipmentDetailsComponent
                 details={{
@@ -100,6 +100,11 @@ export function CarbonTransactionVerification() {
                   emisiKarbon: 15824.984412000002,
                   approver: "0bb9525a-a1a2-457a-923f-1cc09e91fa8f",
                   TxId: "5a4e7d8fcd3afb3e8d10511136b6d7913031d1b2fbc4192d04a95bd549aca54d",
+                  signature: {
+                    signature: "",
+                    signTime: "",
+                    signerPubKey: "",
+                  },
                 }}
               />
             </div>

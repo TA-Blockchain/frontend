@@ -26,7 +26,7 @@ export function KuotaCarbonCard({ id }: { id: string }) {
           size="md"
           color={percentage > 50 ? "emerald" : percentage > 20 ? "yellow" : "red"}
         >
-          <span className="text-xs font-medium text-slate-700">{percentage}%</span>
+          <span className="text-xs font-medium text-slate-700">{percentage.toFixed(0)}%</span>
         </ProgressCircle>
         <div>
           <p className="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">

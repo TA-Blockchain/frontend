@@ -50,6 +50,7 @@ export function NotificationsMenu() {
         carbonSalesProposal: data?.data.carbonSalesProposal,
         company: data?.data.company,
         supplyChain: data?.data.supplyChain,
+        carbonTransaction: data?.data.carbonTransaction,
       };
       break;
     case "admin-perusahaan":

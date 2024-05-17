@@ -22,11 +22,13 @@ export default function NotificationsPage() {
         carbonSalesProposal: data?.data.carbonSalesProposal,
         company: data?.data.company,
         supplyChain: data?.data.supplyChain,
+        carbonTransaction: data?.data.carbonTransaction,
       };
       break;
     case "admin-perusahaan":
       notificationObject = {
         carbonTransaction: data?.data.carbonTransaction,
+        carbonTransactionByProposal: data?.data.carbonTransactionByProposal,
         supplyChainPending: data?.data.supplyChainPending,
       };
       break;

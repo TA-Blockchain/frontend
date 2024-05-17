@@ -55,16 +55,6 @@ function handleNotificationType(key: keyof Notification, value: any, currentUser
       iconBackground = "bg-yellow-500";
       break;
     case "carbonTransaction":
-      content = "Menunggu persetujuan Anda untuk memvalidasi transaksi karbon";
-      icon = RiExchangeFundsLine as React.ForwardRefExoticComponent<
-        Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
-          title?: string;
-          titleId?: string;
-        } & React.RefAttributes<SVGSVGElement>
-      >;
-      iconBackground = "bg-orange-500";
-      href = `/supply-chain/${value.id}`;
-      break;
     case "carbonTransactionByProposal":
       content = (
         <span>

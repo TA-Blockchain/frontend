@@ -53,7 +53,7 @@ export function ProposalKarbonListReadOnly({ idPerusahaan }: { idPerusahaan: str
               <div className="text-xs space-y-2 leading-5 text-gray-500">
                 <div className="flex items-center">
                   <span>Kuota yang dijual:</span>
-                  <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-blue-700">
+                  <span className="inline-flex items-center rounded-full pl-1 pr-2 py-1 text-xs font-medium text-blue-700">
                     {getCarbonEmissionFormatted(proposalKarbon.kuotaYangDijual)}
                   </span>
                 </div>

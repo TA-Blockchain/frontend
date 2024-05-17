@@ -12,7 +12,7 @@ export default function Verification() {
 
       <div className="mt-4">
         <Tabs
-          tabList={["Invoice Perjalanan", "Invoice Transaksi"]}
+          tabList={["Invoice Perjalanan", "Invoice Transaksi Karbon"]}
           tabPanels={[() => <ShipmentVerification />, () => <CarbonTransactionVerification />]}
         />
       </div>

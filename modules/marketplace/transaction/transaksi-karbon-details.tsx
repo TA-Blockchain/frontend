@@ -12,6 +12,8 @@ import { Steps } from "@/components/steps";
 import { RiAttachment2 } from "@remixicon/react";
 import { KementrianApproval } from "./kementrian-approval";
 import { PerusahaanApproval } from "./perusahaan-approval";
+import { Avatar } from "@/components/avatar";
+import { TransactionInvoice } from "./transaksi-invoice";
 
 function getSteps(details: TransaksiKarbonDetailsType) {
   const steps = [
@@ -140,7 +142,7 @@ export function TransaksiKarbonDetails({
 
   return (
     <div className="relative bg-white overflow-hidden">
-      <div className="shipment-details absolute inset-0 w-full h-full hidden">
+      <div className="transaction-details absolute inset-0 w-full h-full hidden">
         <TransaksiKarbonDetailsComponent details={details} />
       </div>
 
@@ -155,10 +157,12 @@ export function TransaksiKarbonDetails({
                 <div className="flex w-0 flex-1 items-center">
                   <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                   <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                    <span className="truncate font-medium">invoice_perjalanan.pdf</span>
+                    <span className="truncate font-medium">invoice_transaksi_karbon.pdf</span>
                   </div>
                 </div>
-                <div className="ml-4 flex-shrink-0">{/* <ShipmentInvoice id={details.id} /> */}</div>
+                <div className="ml-4 flex-shrink-0">
+                  <TransactionInvoice id={details.id} />
+                </div>
               </li>
             </ul>
           </dd>
@@ -190,7 +194,7 @@ export function TransaksiKarbonDetailsComponent({
           <p
             className={clsx(
               statuses[details?.status],
-              !real && "shipment-status",
+              !real && "transaction-status",
               "rounded-md w-fit my-1.5 px-1.5 py-0.5 text-xs font-medium border"
             )}
           >
@@ -214,6 +218,81 @@ export function TransaksiKarbonDetailsComponent({
           </span>
         </dd>
       </div>
+
+      {real && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Bukti Transaksi</dt>
+          <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
+              <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                <div className="flex w-0 flex-1 items-center">
+                  <RiAttachment2 className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                  <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                    <span className="truncate font-medium">bukti_transaksi.pdf</span>
+                  </div>
+                </div>
+                <div className="ml-4 flex-shrink-0">
+                  <a
+                    href={details.urlBuktiTransaksi}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-tremor-brand hover:text-tremor-brand-emphasis"
+                  >
+                    Lihat
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </dd>
+        </div>
+      )}
+
+      {real && details.approvers.length === 3 && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Approvers</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 grid md:grid-cols-2 gap-4">
+            {details.approvers.map((approver) => {
+              return (
+                <div key={approver} className="flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
+                  <div className="flex min-w-0 gap-x-4">
+                    <Avatar />
+                    <div className={clsx("min-w-0 flex-auto", !real && "manager")}>
+                      {/* <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                      <p className="flex text-xs leading-5 text-gray-500">
+                        <a href={`mailto:${person.email}`} className="truncate hover:underline">
+                          {person.email}
+                        </a>
+                      </p> */}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </dd>
+        </div>
+      )}
+
+      {!real && details.approvers.length === 3 && (
+        <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+          <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+            <p>Disetujui oleh:</p>
+            {/* <p>Manager Divisi {details.divisiPenerima.name}</p>
+
+            <div className="relative py-2 mt-4">
+              <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
+              <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
+                <span className="text-sm break-words leading-3">{details.TxId}</span>
+              </div>
+            </div>
+
+            <p>Nama: {person.name}</p>
+            <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
+              {person.email}
+            </a> */}
+          </dd>
+        </div>
+      )}
     </dl>
   );
 }

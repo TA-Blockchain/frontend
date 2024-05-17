@@ -30,7 +30,7 @@ export const statuses = {
 export const statusText = {
   pending: "Menunggu Persetujuan Penjual",
   "approve penjual": "Menunggu Persetujuan Kementrian",
-  approve: "Disetujui",
+  approve: "Berhasil",
   reject: "Ditolak",
 };
 
@@ -44,55 +44,76 @@ export function TransaksiKarbonList({ status }: { status: "pending" | "approve" 
     user: { idPerusahaan },
   } = useUser();
 
-  const { data, isLoading } = useSWR<{ data: Array<TransaksiKarbon> }>(
+  const { data: dataSebagaiPenjual, isLoading: isLoadingPenjual } = useSWR<{ data: Array<TransaksiKarbon> }>(
     `/carbon_trading/transactions/penjual/${idPerusahaan}`
   );
 
-  const filteredData = data?.data.filter((transaksiKarbon) => transaksiKarbon.status === status) ?? [];
+  const { data: dataSebagaiPembeli, isLoading: isLoadingPembeli } = useSWR<{ data: Array<TransaksiKarbon> }>(
+    `/carbon_trading/transactions/perusahaan/${idPerusahaan}`
+  );
 
-  if (isLoading) {
+  const filteredData = [
+    ...(dataSebagaiPenjual?.data.filter((transaksiKarbon) => transaksiKarbon.status === status) ?? []),
+    ...(dataSebagaiPembeli?.data.filter((transaksiKarbon) => transaksiKarbon.status === status) ?? []),
+  ];
+
+  if (isLoadingPenjual || isLoadingPembeli) {
     return <LoadingPlaceholder />;
   }
 
-  if (filteredData.length === 0 || !data) {
+  if (filteredData.length === 0) {
     return <EmptyPlaceholder {...placeholderProps} />;
   }
 
   return (
     <ul role="list" className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {filteredData.map((transaksiKarbon) => (
-        <li key={transaksiKarbon.id}>
-          <Link href={`/marketplace/transaction/${transaksiKarbon.id}`}>
-            <Card className="group px-4 py-5">
-              <div className="w-full flex items-center min-w-0 gap-x-4">
-                <RiExchangeFundsLine className="shrink-0 w-10 h-10 text-gray-500" />
-                <div className="text-xs space-y-2 leading-5 text-gray-500">
-                  <div className="flex items-center">
-                    <span>Penjualan kuota karbon:</span>
-                    <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-blue-700">
-                      {getCarbonEmissionFormatted(transaksiKarbon.kuota)}
-                    </span>
-                  </div>
-                  <div
-                    className={clsx(
-                      statuses[transaksiKarbon.status],
-                      "w-fit rounded-md whitespace-nowrap mt-0.5 px-2 py-1 text-xs font-medium ring-1 ring-inset"
-                    )}
-                  >
-                    {statusText[transaksiKarbon.status]}
+      {filteredData.map((transaksiKarbon) => {
+        const isPembeli = transaksiKarbon.idPerusahaanPembeli === idPerusahaan;
+        return (
+          <li key={transaksiKarbon.id}>
+            <Link href={`/marketplace/transaction/${transaksiKarbon.id}`}>
+              <Card className="group px-4 py-5">
+                <div className="w-full flex items-center min-w-0 gap-x-4">
+                  <RiExchangeFundsLine className="shrink-0 w-10 h-10 text-gray-500" />
+                  <div className="text-xs space-y-2 leading-5 text-gray-500">
+                    <div className="flex items-center">
+                      <span>{isPembeli ? "Pembelian" : "Penjualan"} kuota karbon:</span>
+                      <span className="inline-flex items-center rounded-full pl-1 pr-2 py-1 text-xs font-medium text-blue-700">
+                        {getCarbonEmissionFormatted(transaksiKarbon.kuota)}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      <div
+                        className={clsx(
+                          isPembeli && "text-cyan-800 bg-cyan-50 ring-cyan-600/20",
+                          !isPembeli && "text-lime-800 bg-lime-50 ring-lime-600/20",
+                          "w-fit rounded-md whitespace-nowrap mt-0.5 px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                        )}
+                      >
+                        {isPembeli ? "Pembelian" : "Penjualan"}
+                      </div>
+                      <div
+                        className={clsx(
+                          statuses[transaksiKarbon.status],
+                          "w-fit rounded-md whitespace-nowrap mt-0.5 px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                        )}
+                      >
+                        {statusText[transaksiKarbon.status]}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <span
-                className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-content dark:text-dark-tremor-content-subtle group-hover:dark:text-dark-tremor-content"
-                aria-hidden={true}
-              >
-                <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />
-              </span>
-            </Card>
-          </Link>
-        </li>
-      ))}
+                <span
+                  className="pointer-events-none absolute right-4 top-4 text-tremor-content-subtle group-hover:text-tremor-content dark:text-dark-tremor-content-subtle group-hover:dark:text-dark-tremor-content"
+                  aria-hidden={true}
+                >
+                  <RiArrowRightUpLine className="h-4 w-4" aria-hidden={true} />
+                </span>
+              </Card>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }

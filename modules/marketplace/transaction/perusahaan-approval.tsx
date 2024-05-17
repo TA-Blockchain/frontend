@@ -50,7 +50,7 @@ export function PerusahaanApproval({ details }: { details: TransaksiKarbonDetail
           onClick={async () => {
             await trigger({
               id: details.id,
-              status: "approve penjual",
+              status: "approve",
               idApproval: idApprover,
             });
 

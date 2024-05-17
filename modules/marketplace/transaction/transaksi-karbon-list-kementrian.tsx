@@ -30,13 +30,13 @@ export function TransaksiKarbonListKementrian({ status }: { status: "approve pen
     <ul role="list" className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {filteredData.map((transaksiKarbon) => (
         <li key={transaksiKarbon.id}>
-          <Link href={`/marketplace/proposal/${transaksiKarbon.id}`}>
+          <Link href={`/marketplace/transaction/${transaksiKarbon.id}`}>
             <Card className="group px-4 py-5">
               <div className="w-full flex items-center min-w-0 gap-x-4">
                 <RiExchangeFundsLine className="shrink-0 w-10 h-10 text-gray-500" />
                 <div className="text-xs space-y-2 leading-5 text-gray-500">
                   <div className="flex items-center">
-                    <span>Kuota yang dibeli:</span>
+                    <span>Kuota dalam transaksi:</span>
                     <span className="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-blue-700">
                       {getCarbonEmissionFormatted(transaksiKarbon.kuota)}
                     </span>

@@ -23,7 +23,7 @@ export function ShipmentVerification() {
 
   const { trigger, data, isMutating, reset } = useMutation("/company/shipment/verify");
 
-  const shipmentData = data?.data?.data?.data?.shipment as Shipment;
+  const shipmentData = data?.data?.data?.data?.shipment;
 
   return (
     <div className="mt-3 grid md:grid-cols-2 gap-4 md:h-[calc(100dvh-240px)]">
@@ -120,7 +120,6 @@ export function ShipmentVerification() {
                   }
 
                   const identifier = metaData?.info?.Title;
-                  console.log(identifier);
                   if (!identifier) {
                     toast.error("Tidak dapat menemukan identifier pada file PDF. Mohon unggah file yang valid.");
                     return;

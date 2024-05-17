@@ -9,6 +9,9 @@ import axios from "axios";
 
 export function ShipmentApproval({ details }: { details: Shipment }) {
   const { trigger, isMutating } = useMutation("/company/shipment/complete");
+  const { trigger: reject, isMutating: isRejecting } = useMutation("/company/shipment", undefined, {
+    method: "PUT",
+  });
 
   const { mutate } = useOptimistic(`/company/shipment/detail/${details?.id}`);
 
@@ -22,14 +25,16 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
   const canApprove = details.divisiPenerima.id === idDivisi;
   const isApproved = details.status === "Completed";
 
+  const isLoading = isMutating || isRejecting;
+
   return (
     userType === "manager-perusahaan" && (
       <div className="flex justify-end gap-2 bg-white relative pb-6">
         {isOwner && !isRejected && !isApproved && (
           <Button
-            loading={isMutating}
+            loading={isLoading}
             onClick={async () => {
-              await trigger({
+              await reject({
                 id: details.id,
                 status: "Rejected",
               });
@@ -48,7 +53,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
         {canApprove && (isPending || isApproved) && (
           <Button
             disabled={isApproved}
-            loading={isMutating}
+            loading={isLoading}
             onClick={async () => {
               const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/distance?latPenerima=${details.divisiPenerima.lat}&longPenerima=${details.divisiPenerima.long}&latPengirim=${details.divisiPengirim.lat}&longPengirim=${details.divisiPengirim.long}`

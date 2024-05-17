@@ -260,16 +260,21 @@ export function ShipmentDetailsComponent({
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-            <div className="sm:max-w-sm flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
-              <div className="flex min-w-0 gap-x-4">
+            <div className="sm:max-w-sm flex justify-between gap-x-6 p-4 border shadow-sm rounded-md">
+              <div className="flex gap-x-4 w-full">
                 <Avatar />
-                <div className={clsx("min-w-0 flex-auto", !real && "manager")}>
+                <div className="flex-1">
                   <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
                   <p className="flex text-xs leading-5 text-gray-500">
                     <a href={`mailto:${person.email}`} className="truncate hover:underline">
                       {person.email}
                     </a>
                   </p>
+                  <div className="mt-2 flex justify-end">
+                    <div className="inline-flex items-center rounded-md bg-lime-50 px-2 py-1 text-xs font-medium text-lime-700 ring-1 ring-inset ring-lime-700/10">
+                      Manajer
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -282,16 +287,15 @@ export function ShipmentDetailsComponent({
           <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
             <p>Disetujui oleh:</p>
-            <p>Manager Divisi {details.divisiPenerima.name}</p>
 
             <div className="relative py-2 mt-4">
               <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
               <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
-                <span className="text-sm break-words leading-3">{details.TxId}</span>
+                <p className="text-sm">Manager Divisi {details.divisiPenerima.name}</p>
+                <p className="text-xs break-words leading-4">{details.TxId}</p>
               </div>
             </div>
 
-            <p>Nama: {person.name}</p>
             <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
               {person.email}
             </a>

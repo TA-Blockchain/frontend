@@ -1,8 +1,9 @@
 import { loadingPlaceholder } from "@/lib";
+import clsx from "clsx";
 
 export function SmallLoadingPlaceholder({ amount = 2 }: { amount?: number }) {
   return (
-    <ul className="mt-4 grid sm:grid-cols-2 gap-4">
+    <ul className={clsx("mt-4 grid gap-4", amount > 1 ? "sm:grid-cols-2" : "sm:grid-cols-1")}>
       {loadingPlaceholder(amount).map((index) => (
         <li key={index} className="flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
           <div className="flex min-w-0 gap-x-4">

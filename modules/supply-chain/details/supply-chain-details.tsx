@@ -67,7 +67,7 @@ export function CompanyItem({ id }: { id: string }) {
   const { data, isLoading } = useSWR<{ data: Company }>(`/company/${id}`);
 
   if (isLoading) {
-    return <SmallLoadingPlaceholder />;
+    return <SmallLoadingPlaceholder amount={1} />;
   }
 
   if (!data) return null;

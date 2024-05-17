@@ -2,11 +2,9 @@ import React from "react";
 import { LoadingDetailsPlaceholder } from "@/modules/template/loading-details-placeholder";
 
 import { statuses, statusText } from "./transaksi-karbon-list";
-import { CompanyItem } from "@/modules/supply-chain/details/supply-chain-details";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
-import { KuotaCarbonCard } from "../kuota-carbon-card";
-import { useUser } from "@/hooks/use-user";
+import { UserType, useUser } from "@/hooks/use-user";
 import { TransaksiKarbonDetailsType } from "./types";
 import { Steps } from "@/components/steps";
 import { RiAttachment2 } from "@remixicon/react";
@@ -14,6 +12,9 @@ import { KementrianApproval } from "./kementrian-approval";
 import { PerusahaanApproval } from "./perusahaan-approval";
 import { Avatar } from "@/components/avatar";
 import { TransactionInvoice } from "./transaksi-invoice";
+import useSWR from "swr";
+import { SmallLoadingPlaceholder } from "@/modules/template";
+import Image from "next/image";
 
 function getSteps(details: TransaksiKarbonDetailsType) {
   const steps = [
@@ -204,7 +205,7 @@ export function TransaksiKarbonDetailsComponent({
       </div>
 
       <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt className="text-sm font-medium leading-6 text-gray-900">Riwayat Perjalanan</dt>
+        <dt className="text-sm font-medium leading-6 text-gray-900">Riwayat Transaksi</dt>
         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
           <Steps steps={getSteps(details)} isCanceled={isCanceled} />
         </dd>
@@ -250,23 +251,9 @@ export function TransaksiKarbonDetailsComponent({
       {real && details.approvers.length === 3 && (
         <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
           <dt className="text-sm font-medium leading-6 text-gray-900">Approvers</dt>
-          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 grid md:grid-cols-2 gap-4">
+          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex flex-wrap gap-4">
             {details.approvers.map((approver) => {
-              return (
-                <div key={approver} className="flex justify-between gap-x-6 p-5 border shadow-sm rounded-md">
-                  <div className="flex min-w-0 gap-x-4">
-                    <Avatar />
-                    <div className={clsx("min-w-0 flex-auto", !real && "manager")}>
-                      {/* <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
-                      <p className="flex text-xs leading-5 text-gray-500">
-                        <a href={`mailto:${person.email}`} className="truncate hover:underline">
-                          {person.email}
-                        </a>
-                      </p> */}
-                    </div>
-                  </div>
-                </div>
-              );
+              return <UserInfo key={approver} id={approver} idPerusahaanPembeli={details.perusahaanPembeli.id} />;
             })}
           </dd>
         </div>
@@ -277,22 +264,133 @@ export function TransaksiKarbonDetailsComponent({
           <dt className="text-sm font-medium leading-6 text-gray-900">Approver</dt>
           <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
             <p>Disetujui oleh:</p>
-            {/* <p>Manager Divisi {details.divisiPenerima.name}</p>
-
-            <div className="relative py-2 mt-4">
-              <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
-              <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
-                <span className="text-sm break-words leading-3">{details.TxId}</span>
-              </div>
+            <div className="w-full grid md:grid-cols-2 gap-4">
+              {details.approvers.map((approver, index) => {
+                if (typeof details.HistoryTxId[index] === "string") {
+                  return (
+                    <UserInfoPDF
+                      key={approver}
+                      id={approver}
+                      txId={details.HistoryTxId[index]}
+                      idPerusahaanPembeli={details.perusahaanPembeli.id}
+                    />
+                  );
+                }
+                return (
+                  <UserInfoPDF
+                    key={approver}
+                    id={approver}
+                    txId={details.HistoryTxId[index]?.signature}
+                    idPerusahaanPembeli={details.perusahaanPembeli.id}
+                  />
+                );
+              })}
             </div>
-
-            <p>Nama: {person.name}</p>
-            <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
-              {person.email}
-            </a> */}
           </dd>
         </div>
       )}
     </dl>
+  );
+}
+
+function UserInfo({ id, idPerusahaanPembeli }: { id: string; idPerusahaanPembeli: string }) {
+  const { data, isLoading: isLoading } = useSWR<{
+    data: {
+      name: string;
+      email: string;
+      "data-admin": {
+        idPerusahaan: string;
+      };
+      role: UserType;
+    };
+  }>(`/auth/user/${id}`);
+
+  if (isLoading) {
+    return <SmallLoadingPlaceholder amount={1} />;
+  }
+
+  if (!data) return null;
+
+  const person = data?.data;
+  const isPembeli = person["data-admin"]?.idPerusahaan === idPerusahaanPembeli;
+
+  return (
+    <div className="min-w-[320px] flex-1 flex justify-between gap-x-6 p-4 border shadow-sm rounded-md">
+      <div className="flex gap-x-4 w-full">
+        <Avatar />
+        <div className="flex-1">
+          <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+          <p className="flex text-xs leading-5 text-gray-500">
+            <a href={`mailto:${person.email}`} className="truncate hover:underline">
+              {person.email}
+            </a>
+          </p>
+          <div className="mt-2 flex justify-end">
+            {(person.role === "admin-kementerian" || person.role === "staf-kementerian") && (
+              <div className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
+                Kementrian
+              </div>
+            )}
+            {person.role === "admin-perusahaan" && (
+              <div
+                className={clsx(
+                  isPembeli
+                    ? "bg-cyan-50 text-cyan-700 ring-cyan-700/10"
+                    : "bg-yellow-50 text-yellow-700 ring-yellow-700/10",
+                  "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset"
+                )}
+              >
+                {isPembeli ? "Pembeli" : "Penjual"}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UserInfoPDF({ id, txId, idPerusahaanPembeli }: { id: string; txId: string; idPerusahaanPembeli: string }) {
+  const { data, isLoading: isLoading } = useSWR<{
+    data: {
+      name: string;
+      email: string;
+      "data-admin": {
+        idPerusahaan: string;
+      };
+      role: UserType;
+    };
+  }>(`/auth/user/${id}`);
+
+  if (isLoading) {
+    return <SmallLoadingPlaceholder amount={1} />;
+  }
+
+  if (!data) return null;
+
+  const person = data?.data;
+  const isPembeli = person["data-admin"]?.idPerusahaan === idPerusahaanPembeli;
+
+  const role =
+    person.role === "admin-kementerian" || person.role === "staf-kementerian"
+      ? "Kementrian"
+      : isPembeli
+      ? "Perusahaan Pembeli"
+      : "Perusahaan Penjual";
+
+  return (
+    <div>
+      <div className="relative py-2 mt-4">
+        <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
+        <div className="absolute top-4 pb-4 left-12 overflow-hidden max-w-xs">
+          <p className="text-sm">{role}</p>
+          <p className="max-w-[200px] text-xs break-words leading-4">{txId}</p>
+        </div>
+      </div>
+
+      <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
+        {person.email}
+      </a>
+    </div>
   );
 }

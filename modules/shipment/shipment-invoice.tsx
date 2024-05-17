@@ -35,8 +35,6 @@ export function ShipmentInvoice({ id }: { id: string }) {
     html2canvas(capture, options).then((canvas) => {
       const imgData = canvas.toDataURL("image/png", 1.0); // Set quality to 1.0 for maximum quality
 
-      console.log(identifier);
-
       doc.setProperties({
         title: identifier,
       });

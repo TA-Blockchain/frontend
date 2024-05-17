@@ -7,7 +7,6 @@ import { useOptimisticList } from "@/hooks/use-optimistic";
 import useSWR from "swr";
 import { ProposalKarbon } from "./proposal-karbon-list-readonly";
 import { TransaksiKarbon } from "../transaction/transaksi-karbon-list";
-import { Company } from "@/modules/company/list";
 import { RiAttachment2 } from "@remixicon/react";
 
 type CreateTransaksiKarbon = {
@@ -21,7 +20,7 @@ type CreateTransaksiKarbon = {
 
 export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
   const {
-    user: { idPerusahaan },
+    user: { id, idPerusahaan },
   } = useUser();
 
   const [urlBuktiTransaksi, setUrlBuktiTransaksi] = React.useState<string>("");
@@ -31,8 +30,6 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
   const { data, isLoading } = useSWR<{ data: Array<TransaksiKarbon> }>(
     `/carbon_trading/transactions/perusahaan/${idPerusahaan}`
   );
-
-  const { data: company, isLoading: isLoadingCompany } = useSWR<{ data: Company }>(`/company/${details.idPerusahaan}`);
 
   const [isClicked, setIsClicked] = React.useState(false);
 
@@ -54,7 +51,7 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
           kuota: details.kuotaYangDijual,
           status: "pending",
           urlBuktiTransaksi,
-          approvers: [company?.data.adminPerusahaan.id as string],
+          approvers: [id],
         });
 
         toast.success("Pembelian kuota karbon telah diajukan.");
@@ -75,11 +72,7 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
             required
           />
         )}
-        <Button
-          className="rounded-tremor-small"
-          disabled={isLoading || isLoadingCompany || hasDiajukan || isClicked}
-          loading={isMutating}
-        >
+        <Button className="rounded-tremor-small" disabled={isLoading || hasDiajukan || isClicked} loading={isMutating}>
           {hasDiajukan ? "Pembelian telah diajukan" : "Ajukan Pembelian"}
         </Button>
       </div>

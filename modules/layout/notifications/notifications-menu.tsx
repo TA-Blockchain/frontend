@@ -7,22 +7,28 @@ import useSWR from "swr";
 import { Company } from "@/modules/company/list";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/use-user";
+import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
+import { ProposalKarbon } from "@/modules/marketplace/proposal/proposal-karbon-list-readonly";
+import { TransaksiKarbon } from "@/modules/marketplace/transaction/transaksi-karbon-list";
+import { Shipment } from "@/modules/shipment/shipment-list";
 
 export type Notification = {
   // waiting for approval (admin/staf kementerian)
-  carbonSalesProposal: Array<any>;
+  carbonSalesProposal: Array<ProposalKarbon>;
   // waiting for approval (admin/staf kementerian)
   company: Array<Company>;
   // waiting for approval (admin/staf kementerian)
-  supplyChain: Array<any>;
+  supplyChain: Array<SupplyChain>;
+  // waiting for approval (admin/staf kementrian)
+  carbonTransaction: Array<TransaksiKarbon>;
 
   // waiting for approval (admin perusahaan)
-  carbonTransaction: Array<any>;
+  carbonTransactionByProposal: Array<TransaksiKarbon>;
   // waiting for approval (admin perusahaan)
-  supplyChainPending: Array<any>;
+  supplyChainPending: Array<SupplyChain>;
 
   // waiting for approval (manager perusahaan)
-  shipment: Array<any>;
+  shipment: Array<Shipment>;
 };
 
 export type NotificationKey = keyof Notification;
@@ -49,6 +55,7 @@ export function NotificationsMenu() {
     case "admin-perusahaan":
       notificationObject = {
         carbonTransaction: data?.data.carbonTransaction,
+        carbonTransactionByProposal: data?.data.carbonTransactionByProposal,
         supplyChainPending: data?.data.supplyChainPending,
       };
       break;

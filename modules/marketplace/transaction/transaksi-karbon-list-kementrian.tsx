@@ -6,47 +6,15 @@ import { Card } from "@tremor/react";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
 import Link from "next/link";
-import { useUser } from "@/hooks/use-user";
-
-export type TransaksiKarbonStatus = "pending" | "approve penjual" | "approve" | "reject";
-
-export type TransaksiKarbon = {
-  id: string;
-  idPerusahaanPembeli: string;
-  idProposalPenjual: string;
-  kuota: number;
-  status: TransaksiKarbonStatus;
-  urlBuktiTransaksi: string;
-  approvers: [string];
-};
-
-export const statuses = {
-  pending: "text-orange-800 bg-orange-50 ring-orange-600/20",
-  "approve penjual": "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
-  approve: "text-green-700 bg-green-50 ring-green-600/20",
-  reject: "text-red-700 bg-red-50 ring-red-600/20",
-};
-
-export const statusText = {
-  pending: "Menunggu Persetujuan Perusahaan Penjual",
-  "approve penjual": "Menunggu Persetujuan Admin Kementerian",
-  approve: "Disetujui",
-  reject: "Ditolak",
-};
+import { statuses, statusText, TransaksiKarbon } from "./transaksi-karbon-list";
 
 const placeholderProps = {
   title: "Transaksi jual beli karbon tidak ditemukan",
-  description: "Transaksi jual beli karbon Anda akan tercatat disini.",
+  description: "Transaksi jual beli karbon di platform Carbon Chain akan tercatat disini.",
 };
 
-export function TransaksiKarbonList({ status }: { status: "pending" | "approve" | "reject" }) {
-  const {
-    user: { idPerusahaan },
-  } = useUser();
-
-  const { data, isLoading } = useSWR<{ data: Array<TransaksiKarbon> }>(
-    `/carbon_trading/transactions/penjual/${idPerusahaan}`
-  );
+export function TransaksiKarbonListKementrian({ status }: { status: "approve penjual" | "approve" | "reject" }) {
+  const { data, isLoading } = useSWR<{ data: Array<TransaksiKarbon> }>("/carbon_trading/transactions");
 
   const filteredData = data?.data.filter((transaksiKarbon) => transaksiKarbon.status === status) ?? [];
 

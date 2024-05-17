@@ -14,6 +14,7 @@ import { Shipment } from "@/modules/shipment/shipment-list";
 import { getCarbonEmissionFormatted, getReadableDateTime } from "@/lib";
 import { SupplyChain } from "@/modules/supply-chain/supply-chain-list";
 import { UserData, useUser } from "@/hooks/use-user";
+import { RiExchangeFundsLine } from "@remixicon/react";
 
 function handleNotificationType(key: keyof Notification, value: any, currentUser: UserData) {
   // Handle single values
@@ -55,8 +56,30 @@ function handleNotificationType(key: keyof Notification, value: any, currentUser
       break;
     case "carbonTransaction":
       content = "Menunggu persetujuan Anda untuk memvalidasi transaksi karbon";
-      icon = DocumentIcon;
-      iconBackground = "bg-blue-500";
+      icon = RiExchangeFundsLine as React.ForwardRefExoticComponent<
+        Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+          title?: string;
+          titleId?: string;
+        } & React.RefAttributes<SVGSVGElement>
+      >;
+      iconBackground = "bg-orange-500";
+      href = `/supply-chain/${value.id}`;
+      break;
+    case "carbonTransactionByProposal":
+      content = (
+        <span>
+          Menunggu persetujuan Anda untuk memvalidasi transaksi sebanyak{" "}
+          <b>{getCarbonEmissionFormatted(value.kuota)}</b> kuota karbon.
+        </span>
+      );
+      icon = RiExchangeFundsLine as React.ForwardRefExoticComponent<
+        Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+          title?: string;
+          titleId?: string;
+        } & React.RefAttributes<SVGSVGElement>
+      >;
+      iconBackground = "bg-orange-500";
+      href = `/marketplace/transaction/${value.id}`;
       break;
     case "supplyChainPending":
       const supplyChainPending = value as SupplyChain;

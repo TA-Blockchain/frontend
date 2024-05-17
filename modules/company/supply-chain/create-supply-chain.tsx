@@ -44,11 +44,12 @@ export function CreateSupplyChain({ details }: { details: Company | undefined })
     } catch (error) {}
   };
 
-  const companies = data?.data.filter((perusahaan) => perusahaan.id !== details?.id) ?? [];
+  const companies =
+    data?.data.filter((perusahaan) => perusahaan.id !== details?.id && perusahaan.approvalStatus === 1) ?? [];
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} className="mt-2 rounded-tremor-small">
+      <Button onClick={() => setIsOpen(true)} className="rounded-tremor-small">
         Buat supply chain baru
       </Button>
       <Dialog

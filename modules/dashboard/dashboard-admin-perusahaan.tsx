@@ -37,7 +37,7 @@ export default function DashboardAdminPerusahaan() {
             supply chain, Anda dapat memulai perjalanan antar divisi dan menghitung emisi karbon yang dihasilkan.
           </p>
           <div className="mt-6 flex items-center space-x-5">
-            <CreateSupplyChain details={company?.data} />
+            <CreateSupplyChain details={company?.data} withMarginTop={false} />
             <button
               onClick={closeBanner}
               type="button"

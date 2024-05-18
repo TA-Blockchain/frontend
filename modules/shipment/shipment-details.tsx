@@ -292,7 +292,7 @@ export function ShipmentDetailsComponent({
               <div className="relative py-2 mt-4">
                 <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
                 <div className="absolute top-2 pb-4 left-14 overflow-hidden max-w-xs">
-                  <p>{details.signature?.signTime}</p>
+                  <p>{new Date(details.signature?.signTime + " UTC").toString()}</p>
                   <p className="text-xs break-words leading-4">{details.signature?.signature}</p>
                 </div>
               </div>

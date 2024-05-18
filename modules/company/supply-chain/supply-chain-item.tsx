@@ -12,7 +12,11 @@ export function SupplyChainItem({ id }: { id: string }) {
   const { data, isLoading } = useSWR<{ data: SupplyChain }>(`/company/supply_chain/${id}`);
 
   if (isLoading) {
-    return <SmallLoadingPlaceholder amount={1} />;
+    return (
+      <div className="-mt-4">
+        <SmallLoadingPlaceholder amount={1} />
+      </div>
+    );
   }
 
   if (!data) return null;

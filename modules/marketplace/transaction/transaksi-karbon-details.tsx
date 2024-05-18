@@ -381,12 +381,12 @@ function UserInfoPDF({
       <div className="relative py-2 mt-4">
         <Image src="/logo/cc-stamp.png" width={72} height={72} alt="carbon chain stamp" />
         <div className="absolute top-2 pb-4 left-14 overflow-hidden max-w-xs">
-          <p>{signature.signTime}</p>
+          <p>{new Date(signature.signTime + " UTC").toString()}</p>
           <p className="max-w-[200px] break-words leading-4">{signature.signature}</p>
         </div>
       </div>
 
-      <p>{role}</p>
+      <p className="mt-8">{role}</p>
       <a href={`mailto:${person.email}`} className="underline text-tremor-brand">
         {person.email}
       </a>

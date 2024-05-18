@@ -6,6 +6,7 @@ import { useMutation } from "@/hooks/use-mutation";
 import { toast } from "sonner";
 import useSWR, { useSWRConfig } from "swr";
 import { Label } from "@/components/label";
+import clsx from "clsx";
 
 type CreateSupplyChainPayload = {
   nama: string;
@@ -13,7 +14,13 @@ type CreateSupplyChainPayload = {
   listPerusahaan: Array<string>;
 };
 
-export function CreateSupplyChain({ details }: { details: Company | undefined }) {
+export function CreateSupplyChain({
+  details,
+  withMarginTop = true,
+}: {
+  details: Company | undefined;
+  withMarginTop?: boolean;
+}) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const { mutate } = useSWRConfig();
@@ -49,7 +56,7 @@ export function CreateSupplyChain({ details }: { details: Company | undefined })
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} className="rounded-tremor-small">
+      <Button onClick={() => setIsOpen(true)} className={clsx("rounded-tremor-small", withMarginTop && "mt-2")}>
         Buat supply chain baru
       </Button>
       <Dialog

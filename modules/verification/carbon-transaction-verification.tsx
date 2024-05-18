@@ -53,7 +53,7 @@ export function CarbonTransactionVerification() {
             <TransaksiKarbonDetails details={carbonTransactionData} isLoading={isMutating} />
           </div>
         ) : (
-          <div className="relative max-md:h-64 w-full h-full">
+          <div className="relative max-md:h-64 w-full h-full overflow-hidden">
             <div className="absolute inset-0 w-full h-full -z-10 px-4 opacity-20">
               <ShipmentDetailsComponent
                 details={{

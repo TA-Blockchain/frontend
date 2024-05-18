@@ -10,19 +10,21 @@ export type ProposalKarbon = {
   id: string;
   idPerusahaan: string;
   kuotaYangDijual: number;
-  status: "0" | "1" | "2";
+  status: "0" | "1" | "2" | "Sudah Habis";
 };
 
 export const statuses = {
   "0": "text-yellow-800 bg-yellow-50 ring-yellow-600/20",
   "1": "text-green-700 bg-green-50 ring-green-600/20",
   "2": "text-red-700 bg-red-50 ring-red-600/20",
+  "Sudah Habis": "text-gray-700 bg-gray-50 ring-gray-600/20",
 };
 
 export const statusText = {
   "0": "Menunggu Persetujuan Admin Kementerian",
   "1": "Disetujui",
   "2": "Ditolak",
+  "Sudah Habis": "Sudah Habis",
 };
 
 const placeholderProps = {
@@ -43,9 +45,11 @@ export function ProposalKarbonListReadOnly({ idPerusahaan }: { idPerusahaan: str
     return <EmptyPlaceholder {...placeholderProps} />;
   }
 
+  const filteredData = data.data.filter((proposalKarbon) => proposalKarbon.status !== "Sudah Habis");
+
   return (
     <ul role="list" className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {data?.data.map((proposalKarbon) => (
+      {filteredData.map((proposalKarbon) => (
         <li key={proposalKarbon.id}>
           <Card className="group px-4 py-5">
             <div className="w-full flex items-center min-w-0 gap-x-4">

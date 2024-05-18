@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { ProposalKarbon } from "./proposal-karbon-list-readonly";
 import { TransaksiKarbon } from "../transaction/transaksi-karbon-list";
 import { RiAttachment2 } from "@remixicon/react";
+import { Company } from "@/modules/company/list";
 
 type CreateTransaksiKarbon = {
   idPerusahaanPembeli: string;
@@ -22,6 +23,10 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
   const {
     user: { id, idPerusahaan },
   } = useUser();
+
+  const { data: dataPerusahaan, isLoading: isLoadingPerusahaan } = useSWR<{ data: Company }>(
+    `/company/${details.idPerusahaan}`
+  );
 
   const [urlBuktiTransaksi, setUrlBuktiTransaksi] = React.useState<string>("");
 
@@ -38,6 +43,8 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
   const hasDiajukan = data?.data.some((item) => item.idProposalPenjual === details.id && item.status === "pending");
 
   const isOwner = details.idPerusahaan === idPerusahaan;
+
+  const cannotBuy = dataPerusahaan && details.kuotaYangDijual > dataPerusahaan?.data.sisaKuota;
 
   if (isOwner) return null;
 
@@ -64,6 +71,7 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
       <div className="sm:max-w-sm ml-auto grid place-items-end gap-4">
         {!hasDiajukan && (
           <TextInput
+            disabled={cannotBuy}
             icon={RiAttachment2}
             value={urlBuktiTransaksi}
             onChange={(e) => setUrlBuktiTransaksi(e.target.value)}
@@ -72,8 +80,12 @@ export function PerusahaanButtons({ details }: { details: ProposalKarbon }) {
             required
           />
         )}
-        <Button className="rounded-tremor-small" disabled={isLoading || hasDiajukan || isClicked} loading={isMutating}>
-          {hasDiajukan ? "Pembelian telah diajukan" : "Ajukan Pembelian"}
+        <Button
+          className="rounded-tremor-small"
+          disabled={isLoading || isLoadingPerusahaan || hasDiajukan || isClicked || cannotBuy}
+          loading={isMutating}
+        >
+          {hasDiajukan ? "Pembelian telah diajukan" : cannotBuy ? "Kuota tersisa tidak mencukupi" : "Ajukan Pembelian"}
         </Button>
       </div>
     </form>

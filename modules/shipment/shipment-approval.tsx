@@ -32,7 +32,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
       <div className="flex justify-end gap-2 bg-white relative pb-6">
         {isOwner && !isRejected && !isApproved && (
           <Button
-            loading={isLoading}
+            loading={isLoading || isRejecting}
             onClick={async () => {
               await reject({
                 id: details.id,
@@ -53,7 +53,7 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
         {canApprove && (isPending || isApproved) && (
           <Button
             disabled={isApproved}
-            loading={isLoading}
+            loading={isLoading || isMutating}
             onClick={async () => {
               const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/distance?latPenerima=${details.divisiPenerima.lat}&longPenerima=${details.divisiPenerima.long}&latPengirim=${details.divisiPengirim.lat}&longPengirim=${details.divisiPengirim.long}`

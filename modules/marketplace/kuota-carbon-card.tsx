@@ -29,11 +29,12 @@ export function KuotaCarbonCard({ id }: { id: string }) {
           <span className="text-xs font-medium text-slate-700">{percentage.toFixed(0)}%</span>
         </ProgressCircle>
         <div>
-          <p className="text-tremor-default text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-            {getFormattedNumber(sisaKuota)}/{getCarbonEmissionFormatted(kuota)}
+          <p className="text-tremor-default font-medium text-gray-600">
+            <span className="text-xl text-tremor-content-strong">{getFormattedNumber(sisaKuota)}</span>/
+            {getCarbonEmissionFormatted(kuota)}
           </p>
           <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">
-            Penggunaan kuota emisi karbon
+            Sisa kuota emisi karbon
           </p>
         </div>
       </div>

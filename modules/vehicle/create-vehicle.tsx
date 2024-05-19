@@ -76,12 +76,25 @@ export function CreateVehicle() {
                 <Label htmlFor="carModel" required>
                   Model Kendaraan
                 </Label>
-                <TextInput
-                  {...register("carModel")}
-                  id="carModel"
-                  placeholder="Contoh: Kijang Innova"
-                  required
-                  className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+                <Controller
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      placeholder="Pilih model kendaraan"
+                      className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
+                      required
+                    >
+                      {["Mobil Biasa", "Truk Ringan"].map((type) => {
+                        return (
+                          <SelectItem key={type} value={type.toLowerCase()}>
+                            {type}
+                          </SelectItem>
+                        );
+                      })}
+                    </Select>
+                  )}
+                  name="carModel"
+                  control={control}
                 />
               </div>
               <div>

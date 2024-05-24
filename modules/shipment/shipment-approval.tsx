@@ -27,6 +27,8 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
 
   const isLoading = isMutating || isRejecting;
 
+  const [isGettingDistance, setIsGettingDistance] = React.useState(false);
+
   return (
     userType === "manager-perusahaan" && (
       <div className="flex justify-end gap-2 bg-white relative pb-6">
@@ -53,12 +55,14 @@ export function ShipmentApproval({ details }: { details: Shipment }) {
         {canApprove && (isPending || isApproved) && (
           <Button
             disabled={isApproved}
-            loading={isLoading || isMutating}
+            loading={isLoading || isGettingDistance}
             onClick={async () => {
+              setIsGettingDistance(true);
               const response = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/distance?latPenerima=${details.divisiPenerima.lat}&longPenerima=${details.divisiPenerima.long}&latPengirim=${details.divisiPengirim.lat}&longPengirim=${details.divisiPengirim.long}`
               );
               const data = response.data;
+              setIsGettingDistance(false);
 
               const distance = data?.rows?.[0]?.elements?.[0]?.distance?.value / 1000;
 

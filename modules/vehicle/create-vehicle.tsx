@@ -84,10 +84,10 @@ export function CreateVehicle() {
                       className="mt-2 w-full rounded-tremor-small sm:max-w-lg"
                       required
                     >
-                      {["Mobil Biasa", "Truk Ringan"].map((type) => {
+                      {["Mobil Biasa", "Truk Ringan"].map((item) => {
                         return (
-                          <SelectItem key={type} value={type.toLowerCase()}>
-                            {type}
+                          <SelectItem key={item} value={item}>
+                            {item}
                           </SelectItem>
                         );
                       })}

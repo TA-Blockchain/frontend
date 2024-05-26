@@ -25,10 +25,10 @@ export default function MarketplaceListPage() {
       {userType === "admin-perusahaan" && (
         <Tabs
           className="mt-2"
-          tabList={["Milik Anda", "Semua"]}
+          tabList={["Semua", "Milik Anda"]}
           tabPanels={[
-            () => <ProposalKarbonCompanyList idPerusahaan={idPerusahaan} />,
             () => <ProposalKarbonList status={"1"} />,
+            () => <ProposalKarbonCompanyList idPerusahaan={idPerusahaan} />,
           ]}
         />
       )}

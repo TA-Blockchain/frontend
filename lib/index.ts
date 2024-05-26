@@ -11,7 +11,7 @@ export const fetcher = async (url: string) => {
 };
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_ROUTE,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "/api/v1",
   headers: {
     "Content-Type": "application/json",
   },

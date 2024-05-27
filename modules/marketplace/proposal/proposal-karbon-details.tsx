@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingDetailsPlaceholder } from "@/modules/template/loading-details-placeholder";
 
-import { ProposalKarbon, statuses, statusText } from "./proposal-karbon-list-readonly";
+import { ProposalKarbon, statuses } from "./proposal-karbon-list-readonly";
 import { CompanyItem } from "@/modules/supply-chain/details/supply-chain-details";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
@@ -9,6 +9,13 @@ import { KementerianButtons } from "./kementrian-buttons";
 import { KuotaCarbonCard } from "../kuota-carbon-card";
 import { useUser } from "@/hooks/use-user";
 import { PerusahaanButtons } from "./perusahaan-buttons";
+
+export const statusText = {
+  "0": "Menunggu Persetujuan Admin Kementerian",
+  "1": "Dijual",
+  "2": "Ditolak",
+  "Sudah Habis": "Sudah Habis",
+};
 
 export function ProposalKarbonDetails({
   details,

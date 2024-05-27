@@ -5,13 +5,20 @@ import { RiArrowRightUpLine, RiFileLine } from "@remixicon/react";
 import { Card } from "@tremor/react";
 import { getCarbonEmissionFormatted } from "@/lib";
 import clsx from "clsx";
-import { ProposalKarbon, statuses, statusText } from "./proposal-karbon-list-readonly";
+import { ProposalKarbon, statuses } from "./proposal-karbon-list-readonly";
 import Link from "next/link";
 import { useUser } from "@/hooks/use-user";
 
 const placeholderProps = {
   title: "Proposal penjualan karbon tidak ditemukan",
   description: "Proposal penjualan karbon Anda akan tercatat disini.",
+};
+
+export const statusText = {
+  "0": "Menunggu Persetujuan Admin Kementerian",
+  "1": "Dijual",
+  "2": "Ditolak",
+  "Sudah Habis": "Sudah Habis",
 };
 
 export function ProposalKarbonList({ status }: { status: "0" | "1" | "2" }) {

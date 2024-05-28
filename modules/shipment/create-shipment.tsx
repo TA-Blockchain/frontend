@@ -142,7 +142,7 @@ export function CreateShipment() {
           <DialogPanel className="sm:max-w-xl">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <input className="hidden" {...register("idSupplyChain")} value="" />
-              <div>
+              <div className="-mt-4">
                 <Label htmlFor="idDivisiPenerima" required>
                   Divisi Penerima
                 </Label>

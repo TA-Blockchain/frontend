@@ -44,3 +44,5 @@ Dokumen ini memberikan panduan untuk melakukan deployment frontend CarbonChain m
    - Pastikan semua fitur dan fungsionalitas berjalan dengan baik.
 
 Dengan langkah-langkah di atas, frontend CarbonChain Anda seharusnya telah berhasil di-deploy dan dapat diakses. Pastikan untuk memantau dan melakukan penyesuaian sesuai kebutuhan.
+
+User manual frontend CarbonChain dapat diakses pada [tautan berikut](https://docs.google.com/document/d/1e4_k_kwpr3bARGIg7elhRvK1cYdBaZX5OVyJIYOLXWo/edit?usp=sharing).

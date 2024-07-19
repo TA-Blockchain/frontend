@@ -1,0 +1,10 @@
+version: "3"
+services:
+  carbonchain-frontend:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: carbonchain-frontend
+    ports:
+      - "80:8080"
